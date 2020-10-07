@@ -60,7 +60,10 @@ class CoursesPage extends React.Component {
               Add Course
             </button>
 
-            <CourseList onDeleteClick={this.handleDeleteCourse} courses={this.props.courses} />
+            <CourseList
+              onDeleteClick={this.handleDeleteCourse}
+              courses={this.props.courses}
+            />
           </div>
         )}
       </div>
