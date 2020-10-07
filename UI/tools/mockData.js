@@ -53,7 +53,7 @@ const notes = [
   },
 ];
 
-const categories = [
+const projects = [
   { id: 1, name: "Home" },
   { id: 2, name: "Work" }
 ];
@@ -69,5 +69,5 @@ const newNote = {
 module.exports = {
   newNote,
   notes,
-  categories
+  projects
 };
