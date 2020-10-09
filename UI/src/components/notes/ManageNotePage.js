@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadNotes, saveNote } from '../../redux/actions/noteActions';
 import { loadProjects } from '../../redux/actions/projectActions';
 import PropTypes from 'prop-types';
-import CourseForm from './NoteForm';
+import NoteForm from './NoteForm';
 import { newNote } from '../../../tools/mockData';
 import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
@@ -48,9 +48,9 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     const { date, projectId, content } = note;
     const errors = {};
 
-    if (!date) errors.title = 'Date is required.';
-    if (!projectId) errors.author = 'Project is required.';
-    if (!content) errors.category = 'Content is required.';
+    if (!date) errors.date = 'Date is required.';
+    if (!projectId) errors.project = 'Project is required.';
+    if (!content) errors.content = 'Content is required.';
 
     setErrors(errors);
     // Form is valid if the rrors object still has no properties
@@ -75,7 +75,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
   return projects.length === 0 || notes.length === 0 ? (
     <Spinner />
   ) : (
-    <CourseForm
+    <NoteForm
       note={note}
       errors={errors}
       projects={projects}
