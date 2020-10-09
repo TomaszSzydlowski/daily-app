@@ -1,20 +1,20 @@
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 import initialState from './reducers/initialState';
-import * as courseActions from './actions/courseActions';
+import * as noteActions from './actions/noteActions';
 
 it('Should handle creating courses', function() {
   // arrange
   const store = createStore(rootReducer, initialState);
-  const course = {
-    title: 'Clean Code'
+  const note = {
+    content: 'Clean Code'
   };
 
   // act
-  const action = courseActions.createCourseSuccess(course);
+  const action = noteActions.createNoteSuccess(note);
   store.dispatch(action);
 
   // assert
-  const createdCourse = store.getState().courses[0];
-  expect(createdCourse).toEqual(course);
+  const createdNote = store.getState().notes[0];
+  expect(createdNote).toEqual(note);
 });
