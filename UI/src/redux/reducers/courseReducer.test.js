@@ -1,7 +1,7 @@
-import courseReducer from './courseReducer';
-import * as actions from '../actions/courseActions';
+import noteReducer from './noteReducer';
+import * as actions from '../actions/noteActions';
 
-it('should add course when passed CREATE_COURSE_SUCCESS', () => {
+it('should add note when passed CREATE_NOTES_SUCCESS', () => {
   // arrange
   const initialState = [
     {
@@ -12,14 +12,14 @@ it('should add course when passed CREATE_COURSE_SUCCESS', () => {
     }
   ];
 
-  const newCourse = {
+  const newNote = {
     title: 'C'
   };
 
-  const action = actions.createCourseSuccess(newCourse);
+  const action = actions.createNoteSuccess(newNote);
 
   // act
-  const newState = courseReducer(initialState, action);
+  const newState = noteReducer(initialState, action);
 
   // assert
   expect(newState.length).toEqual(3);
@@ -28,20 +28,20 @@ it('should add course when passed CREATE_COURSE_SUCCESS', () => {
   expect(newState[2].title).toEqual('C');
 });
 
-it('should update course when passed UPDATE_COURSE_SUCCESS', () => {
+it('should update note when passed UPDATE_NOTES_SUCCESS', () => {
   // arrange
   const initialState = [ { id: 1, title: 'A' }, { id: 2, title: 'B' }, { id: 3, title: 'C' } ];
 
-  const course = { id: 2, title: 'New Title' };
-  const action = actions.updateCourseSuccess(course);
+  const note = { id: 2, title: 'New Title' };
+  const action = actions.updateNoteSuccess(note);
 
   // act
-  const newState = courseReducer(initialState, action);
-  const updatedCourse = newState.find((a) => a.id == course.id);
-  const untouchedCourse = newState.find((a) => a.id == 1);
+  const newState = noteReducer(initialState, action);
+  const updatedNote = newState.find((a) => a.id == note.id);
+  const untouchedNote = newState.find((a) => a.id == 1);
 
   // assert
-  expect(updatedCourse.title).toEqual('New Title');
-  expect(untouchedCourse.title).toEqual('A');
+  expect(updatedNote.title).toEqual('New Title');
+  expect(untouchedNote.title).toEqual('A');
   expect(newState.length).toEqual(3);
 });

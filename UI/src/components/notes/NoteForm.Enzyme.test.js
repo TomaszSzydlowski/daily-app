@@ -1,11 +1,11 @@
 import React from 'react';
-import CourseForm from './CourseForm';
+import NoteForm from './NoteForm';
 import { shallow } from 'enzyme';
 
-function renderCourseForm(args) {
+function renderNoteForm(args) {
   const defaultProps = {
-    authors: [],
-    course: {},
+    projects: [],
+    note: {},
     saving: false,
     errors: {},
     onSave: () => {},
@@ -13,22 +13,22 @@ function renderCourseForm(args) {
   };
 
   const props = { ...defaultProps, ...args };
-  return shallow(<CourseForm {...props} />);
+  return shallow(<NoteForm {...props} />);
 }
 
 it('renders form and header', () => {
-  const wrapper = renderCourseForm();
+  const wrapper = renderNoteForm();
   // console.log(wrapper.debug());
   expect(wrapper.find('form').length).toBe(1);
-  expect(wrapper.find('h2').text()).toEqual('Add Course');
+  expect(wrapper.find('h2').text()).toEqual('Add Note');
 });
 
 it('label save button as "Save" when not saving', () => {
-  const wrapper = renderCourseForm();
+  const wrapper = renderNoteForm();
   expect(wrapper.find('button').text()).toBe('Save');
 });
 
 it('label save button as "Saving..." when saving', () => {
-  const wrapper = renderCourseForm({ saving: true });
+  const wrapper = renderNoteForm({ saving: true });
   expect(wrapper.find('button').text()).toBe('Saving...');
 });

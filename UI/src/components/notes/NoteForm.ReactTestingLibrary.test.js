@@ -1,13 +1,13 @@
 import React from 'react';
-import CourseForm from './CourseForm';
+import NoteForm from './NoteForm';
 import { cleanup, render } from 'react-testing-library';
 
 afterEach(cleanup);
 
-function renderCourseForm(args) {
+function renderNoteForm(args) {
   const defaultProps = {
-    authors: [],
-    course: {},
+    projects: [],
+    note: {},
     saving: false,
     errors: {},
     onSave: () => {},
@@ -15,21 +15,21 @@ function renderCourseForm(args) {
   };
 
   const props = { ...defaultProps, ...args };
-  return render(<CourseForm {...props} />);
+  return render(<NoteForm {...props} />);
 }
 
-it('should render Add Course header', () => {
-  const { getByText } = renderCourseForm();
-  getByText('Add Course');
+it('should render Add Note header', () => {
+  const { getByText } = renderNoteForm();
+  getByText('Add Note');
 });
 
 it('should label save button as "Save" when not saving', () => {
-  const { getByText } = renderCourseForm();
+  const { getByText } = renderNoteForm();
   getByText('Save');
 });
 
 it('should label save button as "Saving..." when saving', () => {
-  const { getByText /*,debug*/ } = renderCourseForm({ saving: true });
+  const { getByText /*,debug*/ } = renderNoteForm({ saving: true });
   // debug();
   getByText('Saving...');
 });

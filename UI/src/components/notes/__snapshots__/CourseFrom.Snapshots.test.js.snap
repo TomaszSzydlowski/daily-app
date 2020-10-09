@@ -6,25 +6,25 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
 >
   <h2>
     Edit
-     Course
+     Note
   </h2>
   <div
     className="form-group"
   >
     <label
-      htmlFor="title"
+      htmlFor="date"
     >
-      Title
+      Date
     </label>
     <div
       className="field"
     >
       <input
         className="form-control"
-        name="title"
+        name="date"
         onChange={[MockFunction]}
         type="text"
-        value="Securing React Apps with Auth0"
+        value="23/09/2020"
       />
     </div>
   </div>
@@ -32,38 +32,33 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
     className="form-group"
   >
     <label
-      htmlFor="authorId"
+      htmlFor="projectId"
     >
-      Author
+      Project
     </label>
     <div
       className="field"
     >
       <select
         className="form-control"
-        name="authorId"
+        name="projectId"
         onChange={[MockFunction]}
         value={1}
       >
         <option
           value=""
         >
-          Select Author
+          Select Project
         </option>
         <option
           value={1}
         >
-          Cory House
+          Home
         </option>
         <option
           value={2}
         >
-          Scott Allen
-        </option>
-        <option
-          value={3}
-        >
-          Dan Wahlin
+          Work
         </option>
       </select>
     </div>
@@ -72,19 +67,19 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
     className="form-group"
   >
     <label
-      htmlFor="category"
+      htmlFor="content"
     >
-      Category
+      Content
     </label>
     <div
       className="field"
     >
       <input
         className="form-control"
-        name="category"
+        name="content"
         onChange={[MockFunction]}
         type="text"
-        value="JavaScript"
+        value="Securing React Apps with Auth0"
       />
     </div>
   </div>
@@ -104,25 +99,25 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
 >
   <h2>
     Edit
-     Course
+     Note
   </h2>
   <div
     className="form-group"
   >
     <label
-      htmlFor="title"
+      htmlFor="date"
     >
-      Title
+      Date
     </label>
     <div
       className="field"
     >
       <input
         className="form-control"
-        name="title"
+        name="date"
         onChange={[MockFunction]}
         type="text"
-        value="Securing React Apps with Auth0"
+        value="23/09/2020"
       />
     </div>
   </div>
@@ -130,38 +125,33 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
     className="form-group"
   >
     <label
-      htmlFor="authorId"
+      htmlFor="projectId"
     >
-      Author
+      Project
     </label>
     <div
       className="field"
     >
       <select
         className="form-control"
-        name="authorId"
+        name="projectId"
         onChange={[MockFunction]}
         value={1}
       >
         <option
           value=""
         >
-          Select Author
+          Select Project
         </option>
         <option
           value={1}
         >
-          Cory House
+          Home
         </option>
         <option
           value={2}
         >
-          Scott Allen
-        </option>
-        <option
-          value={3}
-        >
-          Dan Wahlin
+          Work
         </option>
       </select>
     </div>
@@ -170,19 +160,19 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
     className="form-group"
   >
     <label
-      htmlFor="category"
+      htmlFor="content"
     >
-      Category
+      Content
     </label>
     <div
       className="field"
     >
       <input
         className="form-control"
-        name="category"
+        name="content"
         onChange={[MockFunction]}
         type="text"
-        value="JavaScript"
+        value="Securing React Apps with Auth0"
       />
     </div>
   </div>
