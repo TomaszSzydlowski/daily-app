@@ -8,19 +8,19 @@ const notes = [
   {
     id: '2',
     date: '2020-10-08T20:00',
-    content: 'Securing React Apps with Auth0',
+    content: 'Secur2ing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '3',
     date: '2020-10-07T20:00',
-    content: 'Securing React Apps with Auth0',
+    content: 'Securin3g React Apps with Auth0',
     projectId: 1
   },
   {
     id: '4',
     date: '2020-10-06T20:00',
-    content: 'Securing React Apps with Auth0',
+    content: 'Secur4ing React Apps with Auth0',
     projectId: 1
   },
   {
@@ -67,7 +67,7 @@ const newNote = {
   id: null,
   date: '',
   content: '',
-  projectId: null
+  projectId: 1
 };
 
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
