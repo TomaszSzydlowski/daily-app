@@ -7,68 +7,68 @@ using netCoreMongoDbApi.Domain.Services.Communication;
 
 namespace netCoreMongoDbApi.Services
 {
-    public class StudentService : IStudentService
+    public class StudentService : INoteService
     {
-        private readonly IStudentRepository _studentRepository;
+        private readonly INoteRepository _studentRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public StudentService(IStudentRepository studentRepository, IUnitOfWork unitOfWork)
+        public StudentService(INoteRepository studentRepository, IUnitOfWork unitOfWork)
         {
             _studentRepository = studentRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<StudentResponse> FindAsync(int id)
+        public async Task<NoteResponse> FindAsync(int id)
         {
             try
             {
                 var result = await _studentRepository.GetById(id);
-                return new StudentResponse(result);
+                return new NoteResponse(result);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentResponse($"An error occurred when getting the student: {ex.Message}");
+                return new NoteResponse($"An error occurred when getting the student: {ex.Message}");
             }
         }
 
-        public async Task<StudentsResponse> ListAsync()
+        public async Task<NotesResponse> ListAsync()
         {
             try
             {
                 var result = await _studentRepository.ListAsync();
-                return new StudentsResponse(result);
+                return new NotesResponse(result);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentsResponse($"An error occurred when getting list of students: {ex.Message}");
+                return new NotesResponse($"An error occurred when getting list of students: {ex.Message}");
             }
         }
 
-        public async Task<StudentResponse> AddAsync(Student student)
+        public async Task<NoteResponse> AddAsync(Note student)
         {
             try
             {
                 _studentRepository.Add(student);
                 await _unitOfWork.Commit();
 
-                return new StudentResponse(student);
+                return new NoteResponse(student);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentResponse($"An error occurred when saving the student: {ex.Message}");
+                return new NoteResponse($"An error occurred when saving the student: {ex.Message}");
             }
         }
 
-        public async Task<StudentResponse> UpdateAsync(Student student)
+        public async Task<NoteResponse> UpdateAsync(Note student)
         {
             var exisitngStudent = await _studentRepository.GetById(student.Id);
 
             if (exisitngStudent == null)
             {
-                return new StudentResponse("Student not found.");
+                return new NoteResponse("Student not found.");
             }
 
             try
@@ -76,22 +76,22 @@ namespace netCoreMongoDbApi.Services
                 _studentRepository.Update(student);
                 await _unitOfWork.Commit();
 
-                return new StudentResponse(student);
+                return new NoteResponse(student);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentResponse($"An error occurred when updating the student: {ex.Message}");
+                return new NoteResponse($"An error occurred when updating the student: {ex.Message}");
             }
         }
 
-        public async Task<StudentResponse> DeleteAsync(int id)
+        public async Task<NoteResponse> DeleteAsync(int id)
         {
             var exisitngStudent = await _studentRepository.GetById(id);
 
             if (exisitngStudent == null)
             {
-                return new StudentResponse("Student not found.");
+                return new NoteResponse("Student not found.");
             }
 
             try
@@ -99,22 +99,22 @@ namespace netCoreMongoDbApi.Services
                 _studentRepository.Remove(id);
                 await _unitOfWork.Commit();
 
-                return new StudentResponse(exisitngStudent);
+                return new NoteResponse(exisitngStudent);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentResponse($"An error occurred when removing the student: {ex.Message}");
+                return new NoteResponse($"An error occurred when removing the student: {ex.Message}");
             }
         }
 
-        public async Task<StudentsResponse> DeleteAllAsync()
+        public async Task<NotesResponse> DeleteAllAsync()
         {
             var exisitngStudents = await _studentRepository.ListAsync();
 
             if (exisitngStudents == null)
             {
-                return new StudentsResponse("Students not found.");
+                return new NotesResponse("Students not found.");
             }
 
             try
@@ -122,12 +122,12 @@ namespace netCoreMongoDbApi.Services
                 _studentRepository.RemoveAll();
                 await _unitOfWork.Commit();
 
-                return new StudentsResponse(exisitngStudents);
+                return new NotesResponse(exisitngStudents);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new StudentsResponse($"An error occurred when removing the student: {ex.Message}");
+                return new NotesResponse($"An error occurred when removing the student: {ex.Message}");
             }
         }
     }

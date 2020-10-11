@@ -1,7 +1,6 @@
 using AutoMapper;
 using netCoreMongoDbApi.Resources;
 using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Extensions;
 
 namespace Supermarket.Mapping
 {
@@ -9,9 +8,7 @@ namespace Supermarket.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<Student, StudentResource>()
-            .ForMember(src => src.Semester,
-            opt => opt.MapFrom(src => src.Semester.ToDescriptionString()));
+            CreateMap<Note, NoteResource>();
         }
     }
 }

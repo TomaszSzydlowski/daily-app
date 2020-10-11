@@ -8,9 +8,7 @@ namespace netCoreMongoDbApi.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<SaveStudentResource, Student>()
-            .ForMember(src => src.Semester,
-            opt => opt.MapFrom(src => (ESemester)src.Semester));
+            CreateMap<SaveNoteResource, Note>();
         }
     }
 }

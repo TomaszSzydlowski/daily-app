@@ -14,11 +14,11 @@ namespace netCoreMongoDbApi.Controllers
     [ApiController]
     public class StudentsController : Controller
     {
-        private readonly IStudentService _studentService;
+        private readonly INoteService _studentService;
 
         private readonly IMapper _mapper;
 
-        public StudentsController(IStudentService studentService, IMapper mapper)
+        public StudentsController(INoteService studentService, IMapper mapper)
         {
             _studentService = studentService;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace netCoreMongoDbApi.Controllers
 
         //GET:api/students
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Student>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> ListAsync()
         {
@@ -35,14 +35,14 @@ namespace netCoreMongoDbApi.Controllers
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentsResource = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentResource>>(result.Students);
+            var studentsResource = _mapper.Map<IEnumerable<Note>, IEnumerable<NoteResource>>(result.Students);
 
             return Ok(studentsResource);
         }
 
         //GET:api/students/id
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(IEnumerable<Student>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> FindAsync(int id)
         {
@@ -51,46 +51,46 @@ namespace netCoreMongoDbApi.Controllers
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentResource = _mapper.Map<Student, StudentResource>(result.Student);
+            var studentResource = _mapper.Map<Note, NoteResource>(result.Student);
             return Ok(studentResource);
         }
 
         //POST:api/students
         [HttpPost]
-        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveStudentResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveNoteResource resource)
         {
-            var student = _mapper.Map<SaveStudentResource, Student>(resource);
+            var student = _mapper.Map<SaveNoteResource, Note>(resource);
             var result = await _studentService.AddAsync(student);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentResource = _mapper.Map<Student, StudentResource>(result.Student);
+            var studentResource = _mapper.Map<Note, NoteResource>(result.Student);
             return Ok(studentResource);
         }
 
         // Put: api/students/id
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(StudentResource), 201)]
+        [ProducesResponseType(typeof(NoteResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveStudentResource resource)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveNoteResource resource)
         {
-            var student = _mapper.Map<SaveStudentResource, Student>(resource);
+            var student = _mapper.Map<SaveNoteResource, Note>(resource);
             student.Id=id;
             var result = await _studentService.UpdateAsync(student);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentsResource = _mapper.Map<Student, StudentResource>(result.Student);
+            var studentsResource = _mapper.Map<Note, NoteResource>(result.Student);
             return Ok(studentsResource);
         }
 
         // DELETE: api/students/id
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
@@ -99,13 +99,13 @@ namespace netCoreMongoDbApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentsResource = _mapper.Map<Student, StudentResource>(result.Student);
+            var studentsResource = _mapper.Map<Note, NoteResource>(result.Student);
             return Ok(studentsResource);
         }
 
         // DELETE: api/students
         [HttpDelete]
-        [ProducesResponseType(typeof(StudentResource), 200)]
+        [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> DeleteAllAsync()
         {
@@ -114,7 +114,7 @@ namespace netCoreMongoDbApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var studentsResource = _mapper.Map<IEnumerable<Student>, IEnumerable<StudentResource>>(result.Students);
+            var studentsResource = _mapper.Map<IEnumerable<Note>, IEnumerable<NoteResource>>(result.Students);
             return Ok(studentsResource);
         }
     }

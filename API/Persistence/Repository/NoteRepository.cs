@@ -4,9 +4,9 @@ using netCoreMongoDbApi.Persistence.Repositories;
 
 namespace netCoreMongoDbApi.Persistence.Repository
 {
-    public class StudentRepository : BaseRepository<Student>, IStudentRepository
+    public class NoteRepository : BaseRepository<Note>, INoteRepository
     {
-        public StudentRepository( IAppDbContext context ) : base(context)
+        public NoteRepository( IAppDbContext context ) : base(context)
         {
 
         }

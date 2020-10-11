@@ -2,12 +2,12 @@ using netCoreMongoDbApi.Domain.Models;
 
 namespace netCoreMongoDbApi.Domain.Services.Communication
 {
-    public class StudentResponse : BaseResponse
+    public class NoteResponse : BaseResponse
     {
 
-        public Student Student { get; private set; }
+        public Note Student { get; private set; }
 
-        private StudentResponse(bool success, string message, Student student) : base(success, message)
+        private NoteResponse(bool success, string message, Note student) : base(success, message)
         {
             Student = student;
         }
@@ -17,7 +17,7 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
         /// </summary>
         /// <param name="student">Saved student.</param>
         /// <returns>Response.</returns>
-        public StudentResponse(Student student) : this(true, string.Empty, student)
+        public NoteResponse(Note student) : this(true, string.Empty, student)
         { }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public StudentResponse(string message) : this(false, message, null)
+        public NoteResponse(string message) : this(false, message, null)
         { }
     }
 }

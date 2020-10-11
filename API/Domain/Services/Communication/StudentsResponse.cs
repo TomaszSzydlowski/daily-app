@@ -4,12 +4,12 @@ using netCoreMongoDbApi.Domain.Models;
 
 namespace netCoreMongoDbApi.Domain.Services.Communication
 {
-    public class StudentsResponse : BaseResponse
+    public class NotesResponse : BaseResponse
     {
 
-        public IEnumerable<Student> Students { get; private set; } = new List<Student>();
+        public IEnumerable<Note> Students { get; private set; } = new List<Note>();
 
-        private StudentsResponse(bool success, string message, IEnumerable<Student> students) : base(success, message)
+        private NotesResponse(bool success, string message, IEnumerable<Note> students) : base(success, message)
         {
             if (students != null)
             {
@@ -24,7 +24,7 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
         /// </summary>
         /// <param name="students">Saved students.</param>
         /// <returns>Response.</returns>
-        public StudentsResponse(IEnumerable<Student> students) : this(true, string.Empty, students)
+        public NotesResponse(IEnumerable<Note> students) : this(true, string.Empty, students)
         { }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public StudentsResponse(string message) : this(false, message, null)
+        public NotesResponse(string message) : this(false, message, null)
         { }
     }
 }

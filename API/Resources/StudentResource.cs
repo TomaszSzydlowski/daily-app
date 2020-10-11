@@ -1,6 +1,6 @@
 namespace netCoreMongoDbApi.Resources
 {
-    public class StudentResource
+    public class NoteResource
     {
         public string Id { get; set; }
         public string Name { get; set; }
