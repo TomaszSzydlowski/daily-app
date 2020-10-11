@@ -1,4 +1,4 @@
-namespace netCoreMongoDbApi.Domain.Services.Communication
+namespace dailyApi.Domain.Services.Communication
 {
     public class RegisterUserResponse : BaseResponse
     {

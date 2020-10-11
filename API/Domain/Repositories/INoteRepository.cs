@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Models;
+using dailyApi.Domain.Models;
 
-namespace netCoreMongoDbApi.Domain.Repositories
+namespace dailyApi.Domain.Repositories
 {
     public interface INoteRepository : IRepository<Note>
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace netCoreMongoDbApi.Resources
+namespace dailyApi.Resources
 {
     public class NoteResource
     {

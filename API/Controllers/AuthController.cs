@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Resources;
+using dailyApi.Resources;
 using Microsoft.AspNetCore.Mvc;
-using netCoreMongoDbApi.Domain.Services;
+using dailyApi.Domain.Services;
 using AutoMapper;
 
-namespace netCoreMongoDbApi.Controllers
+namespace dailyApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

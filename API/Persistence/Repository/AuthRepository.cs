@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Domain.Repositories;
-using netCoreMongoDbApi.Persistence.Contexts;
+using dailyApi.Domain.Models;
+using dailyApi.Domain.Repositories;
+using dailyApi.Persistence.Contexts;
 
-namespace netCoreMongoDbApi.Persistence.Repositories
+namespace dailyApi.Persistence.Repositories
 {
     public class AuthRepository : BaseRepository<User>, IAuthRepository
     {

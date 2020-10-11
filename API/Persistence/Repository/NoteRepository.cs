@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using netCoreMongoDbApi.Domain.Repositories;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Persistence.Repositories;
+using dailyApi.Domain.Repositories;
+using dailyApi.Domain.Models;
+using dailyApi.Persistence.Repositories;
 using System.Threading.Tasks;
 using System;
 using MongoDB.Driver;
 
-namespace netCoreMongoDbApi.Persistence.Repository
+namespace dailyApi.Persistence.Repository
 {
     public class NoteRepository : BaseRepository<Note>, INoteRepository
     {

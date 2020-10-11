@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Repositories;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Domain.Services;
-using netCoreMongoDbApi.Domain.Services.Communication;
+using dailyApi.Domain.Repositories;
+using dailyApi.Domain.Models;
+using dailyApi.Domain.Services;
+using dailyApi.Domain.Services.Communication;
 
-namespace netCoreMongoDbApi.Services
+namespace dailyApi.Services
 {
     public class NoteService : INoteService
     {

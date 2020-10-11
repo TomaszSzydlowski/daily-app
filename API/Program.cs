@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace netCoreMongoDbApi
+namespace dailyApi
 {
     public class Program
     {

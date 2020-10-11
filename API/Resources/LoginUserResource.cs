@@ -1,4 +1,4 @@
-namespace netCoreMongoDbApi.Resources
+namespace dailyApi.Resources
 {
     public class LoginUserResource
     {

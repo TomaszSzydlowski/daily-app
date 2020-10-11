@@ -1,6 +1,6 @@
 using AutoMapper;
-using netCoreMongoDbApi.Resources;
-using netCoreMongoDbApi.Domain.Models;
+using dailyApi.Resources;
+using dailyApi.Domain.Models;
 
 namespace Supermarket.Mapping
 {

@@ -1,7 +1,7 @@
 using AutoMapper;
-using netCoreMongoDbApi.Resources;
+using dailyApi.Resources;
 
-namespace netCoreMongoDbApi.Mapping
+namespace dailyApi.Mapping
 {
     public class SaveUserRegisterResourceToLoginUserResource : Profile
     {

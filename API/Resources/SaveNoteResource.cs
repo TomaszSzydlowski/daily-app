@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace netCoreMongoDbApi.Resources
+namespace dailyApi.Resources
 {
     public class SaveNoteResource
     {

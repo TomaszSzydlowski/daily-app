@@ -1,6 +1,6 @@
 using System;
 
-namespace netCoreMongoDbApi.Domain.Models
+namespace dailyApi.Domain.Models
 {
     public class Note
     {

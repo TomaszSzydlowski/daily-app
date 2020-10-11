@@ -4,21 +4,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using netCoreMongoDbApi.Domain.Repositories;
-using netCoreMongoDbApi.Persistence.Contexts;
-using netCoreMongoDbApi.Persistence.Repository;
+using dailyApi.Domain.Repositories;
+using dailyApi.Persistence.Contexts;
+using dailyApi.Persistence.Repository;
 using AutoMapper;
-using netCoreMongoDbApi.Services;
-using netCoreMongoDbApi.Domain.Services;
+using dailyApi.Services;
+using dailyApi.Domain.Services;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
-using netCoreMongoDbApi.Persistence.Repositories;
+using dailyApi.Persistence.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using netCoreMongoDbApi.Controllers.Config;
+using dailyApi.Controllers.Config;
 
-namespace netCoreMongoDbApi
+namespace dailyApi
 {
     public class Startup
     {
@@ -54,7 +54,7 @@ namespace netCoreMongoDbApi
                     Contact = new OpenApiContact
                     {
                         Name = "Tomasz Szydlowski",
-                        Url = new Uri("https://github.com/TomaszSzydlowski/.netCoreMongoDbApi-Templete"),
+                        Url = new Uri("https://github.com/TomaszSzydlowski/.dailyApi-Templete"),
                         Email = "Tomasz.Piotr.Szydlowski@gmail.com"
                     },
                     License = new OpenApiLicense

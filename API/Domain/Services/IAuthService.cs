@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Services.Communication;
-using netCoreMongoDbApi.Resources;
+using dailyApi.Domain.Services.Communication;
+using dailyApi.Resources;
 
-namespace netCoreMongoDbApi.Domain.Services
+namespace dailyApi.Domain.Services
 {
     public interface IAuthService
     {

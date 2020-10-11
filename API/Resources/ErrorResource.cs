@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace netCoreMongoDbApi.Resources
+namespace dailyApi.Resources
 {
     public class ErrorResource
     {

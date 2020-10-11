@@ -1,8 +1,8 @@
-using netCoreMongoDbApi.Extensions;
-using netCoreMongoDbApi.Resources;
+using dailyApi.Extensions;
+using dailyApi.Resources;
 using Microsoft.AspNetCore.Mvc;
 
-namespace netCoreMongoDbApi.Controllers.Config
+namespace dailyApi.Controllers.Config
 {
     public static class InvalidModelStateResponseFactory
     {

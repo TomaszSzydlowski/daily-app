@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace netCoreMongoDbApi.Extensions
+namespace dailyApi.Extensions
 {
     public static class EnumExtensions
     {

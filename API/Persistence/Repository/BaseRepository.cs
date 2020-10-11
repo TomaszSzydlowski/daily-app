@@ -1,12 +1,12 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
-using netCoreMongoDbApi.Domain.Repositories;
+using dailyApi.Domain.Repositories;
 using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace netCoreMongoDbApi.Persistence.Repositories
+namespace dailyApi.Persistence.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {

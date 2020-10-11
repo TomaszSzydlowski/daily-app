@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using netCoreMongoDbApi.Domain.Models;
+using dailyApi.Domain.Models;
 
-namespace netCoreMongoDbApi.Domain.Services.Communication
+namespace dailyApi.Domain.Services.Communication
 {
     public class NotesResponse : BaseResponse
     {
@@ -16,7 +16,7 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
                 var result = Notes.Concat(notes).ToList();
                 Notes = result;
             }
-  
+
         }
 
         /// <summary>

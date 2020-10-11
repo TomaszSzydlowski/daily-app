@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Repositories;
+using dailyApi.Domain.Repositories;
 
-namespace netCoreMongoDbApi.Persistence.Repository
+namespace dailyApi.Persistence.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {

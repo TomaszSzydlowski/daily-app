@@ -1,8 +1,8 @@
 using AutoMapper;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Resources;
+using dailyApi.Domain.Models;
+using dailyApi.Resources;
 
-namespace netCoreMongoDbApi.Mapping
+namespace dailyApi.Mapping
 {
     public class ResourceToModelProfile : Profile
     {

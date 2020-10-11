@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using netCoreMongoDbApi.Resources;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Domain.Services;
+using dailyApi.Resources;
+using dailyApi.Domain.Models;
+using dailyApi.Domain.Services;
 using System;
 
-namespace netCoreMongoDbApi.Controllers
+namespace dailyApi.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace netCoreMongoDbApi.Domain.Repositories
+namespace dailyApi.Domain.Repositories
 {
     public interface IAppDbContext : IDisposable
     {

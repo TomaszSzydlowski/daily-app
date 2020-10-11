@@ -1,13 +1,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using netCoreMongoDbApi.Domain.Repositories;
+using dailyApi.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace netCoreMongoDbApi.Persistence.Contexts
+namespace dailyApi.Persistence.Contexts
 {
     public class AppDbContext : IAppDbContext
     {
@@ -21,7 +21,7 @@ namespace netCoreMongoDbApi.Persistence.Contexts
         public AppDbContext(IConfiguration configuration, IOptions<Settings> settings)
         {
             _configuration = configuration;
-            _settings=settings;
+            _settings = settings;
             _commands = new List<Func<Task>>();
         }
 

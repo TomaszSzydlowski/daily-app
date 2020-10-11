@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "netCoreMongoDbApi": {
+    "dailyApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

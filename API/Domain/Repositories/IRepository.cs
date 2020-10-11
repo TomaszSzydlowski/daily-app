@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace netCoreMongoDbApi.Domain.Repositories
+namespace dailyApi.Domain.Repositories
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : class
     {

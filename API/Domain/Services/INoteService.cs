@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using netCoreMongoDbApi.Domain.Models;
-using netCoreMongoDbApi.Domain.Services.Communication;
+using dailyApi.Domain.Models;
+using dailyApi.Domain.Services.Communication;
 
-namespace netCoreMongoDbApi.Domain.Services
+namespace dailyApi.Domain.Services
 {
     public interface INoteService
     {

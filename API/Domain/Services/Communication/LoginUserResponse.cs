@@ -1,6 +1,6 @@
-using netCoreMongoDbApi.Domain.Models;
+using dailyApi.Domain.Models;
 
-namespace netCoreMongoDbApi.Domain.Services.Communication
+namespace dailyApi.Domain.Services.Communication
 {
     public class LoginUserResponse : BaseResponse
     {

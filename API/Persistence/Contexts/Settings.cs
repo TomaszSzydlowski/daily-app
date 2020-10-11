@@ -1,4 +1,4 @@
-namespace netCoreMongoDbApi.Persistence.Contexts
+namespace dailyApi.Persistence.Contexts
 {
     public class Settings
     {

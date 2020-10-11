@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace netCoreMongoDbApi.Domain.Repositories
+namespace dailyApi.Domain.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
