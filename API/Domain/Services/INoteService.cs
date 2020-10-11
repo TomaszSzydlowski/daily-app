@@ -7,14 +7,15 @@ namespace netCoreMongoDbApi.Domain.Services
 {
     public interface INoteService
     {
-        Task<NoteResponse> FindAsync(Guid id);
-        Task<NotesResponse> ListAsync();
+        Task<NotesResponse> ListAsync(Guid userId);
+        Task<NoteResponse> FindAsync(Guid noteId, Guid userId);
 
-        Task<NoteResponse> AddAsync(Note student);
 
-        Task<NoteResponse> UpdateAsync(Note student);
+        Task<NoteResponse> SaveAsync(Note note, Guid userId);
 
-        Task<NoteResponse> DeleteAsync(Guid id);
-        Task<NotesResponse> DeleteAllAsync();
+        Task<NoteResponse> UpdateAsync(Note note, Guid userId);
+
+        Task<NoteResponse> DeleteAsync(Guid noteId, Guid userId);
+        Task<NotesResponse> DeleteAllAsync(Guid userId);
     }
 }

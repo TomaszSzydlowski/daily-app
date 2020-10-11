@@ -4,6 +4,8 @@ namespace netCoreMongoDbApi.Resources
 {
     public class SaveNoteResource
     {
+        public string Id { get; set; }
+
         [Required]
         public string Date { get; set; }
         [Required]

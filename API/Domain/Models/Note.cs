@@ -8,5 +8,6 @@ namespace netCoreMongoDbApi.Domain.Models
         public DateTime Date { get; set; }
         public string Content { get; set; }
         public int projectId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

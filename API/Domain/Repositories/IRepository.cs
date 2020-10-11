@@ -13,6 +13,6 @@ namespace netCoreMongoDbApi.Domain.Repositories
         void Update(TEntity obj);
         void Remove(Guid id);
         void Remove(int id);
-        void RemoveAll();
+        void RemoveAll(Guid userId);
     }
 }

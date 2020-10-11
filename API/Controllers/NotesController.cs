@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,7 +31,8 @@ namespace netCoreMongoDbApi.Controllers
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> ListAsync()
         {
-            var result = await _noteService.ListAsync();
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _noteService.ListAsync(userId);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -44,9 +46,10 @@ namespace netCoreMongoDbApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> FindAsync(Guid id)
+        public async Task<IActionResult> FindAsync(Guid noteId)
         {
-            var result = await _noteService.FindAsync(id);
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _noteService.FindAsync(noteId, userId);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -61,8 +64,10 @@ namespace netCoreMongoDbApi.Controllers
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> PostAsync([FromBody] SaveNoteResource resource)
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
             var note = _mapper.Map<SaveNoteResource, Note>(resource);
-            var result = await _noteService.AddAsync(note);
+            var result = await _noteService.SaveAsync(note, userId);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -72,14 +77,15 @@ namespace netCoreMongoDbApi.Controllers
         }
 
         // Put: api/notes/id
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(typeof(NoteResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] SaveNoteResource resource)
+        public async Task<IActionResult> UpdateAsync([FromBody] SaveNoteResource resource)
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
             var note = _mapper.Map<SaveNoteResource, Note>(resource);
-            note.Id = id;
-            var result = await _noteService.UpdateAsync(note);
+            var result = await _noteService.UpdateAsync(note, userId);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -92,9 +98,11 @@ namespace netCoreMongoDbApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid noteId)
         {
-            var result = await _noteService.DeleteAsync(id);
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var result = await _noteService.DeleteAsync(noteId, userId);
 
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));
@@ -109,7 +117,9 @@ namespace netCoreMongoDbApi.Controllers
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> DeleteAllAsync()
         {
-            var result = await _noteService.DeleteAllAsync();
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var result = await _noteService.DeleteAllAsync(userId);
 
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));

@@ -12,6 +12,7 @@ namespace netCoreMongoDbApi.Persistence.Repositories
     {
         protected readonly IAppDbContext Context;
         protected IMongoCollection<TEntity> DbSet;
+        protected virtual string _collectionName { get { return typeof(TEntity).Name; } }
 
         protected BaseRepository(IAppDbContext context)
         {
@@ -24,9 +25,9 @@ namespace netCoreMongoDbApi.Persistence.Repositories
             Context.AddCommand(() => DbSet.InsertOneAsync(obj));
         }
 
-        private void ConfigDbSet()
+        protected void ConfigDbSet()
         {
-            DbSet = Context.GetCollection<TEntity>(typeof(TEntity).Name);
+            DbSet = Context.GetCollection<TEntity>(_collectionName);
         }
 
         public virtual async Task<TEntity> GetById(int id)
@@ -75,10 +76,10 @@ namespace netCoreMongoDbApi.Persistence.Repositories
             Context.AddCommand(() => DbSet.DeleteOneAsync(Builders<TEntity>.Filter.Eq("_id", id)));
         }
 
-        public void RemoveAll()
+        public void RemoveAll(Guid userId)
         {
             ConfigDbSet();
-            Context.AddCommand(() => DbSet.DeleteManyAsync(new BsonDocument()));
+            Context.AddCommand(() => DbSet.DeleteManyAsync(Builders<TEntity>.Filter.Eq("userId", userId)));
         }
 
         public void Dispose()

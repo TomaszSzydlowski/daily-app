@@ -10,33 +10,28 @@ namespace netCoreMongoDbApi.Services
     public class NoteService : INoteService
     {
         private readonly INoteRepository _noteRepository;
+
+        private readonly IAuthRepository _authRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public NoteService(INoteRepository noteRepository, IUnitOfWork unitOfWork)
+        public NoteService(INoteRepository noteRepository, IAuthRepository authRepository, IUnitOfWork unitOfWork)
         {
             _noteRepository = noteRepository;
+            _authRepository = authRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<NoteResponse> FindAsync(Guid id)
+        public async Task<NotesResponse> ListAsync(Guid userId)
         {
-            try
+            var isUserExist = await _authRepository.UserExists(userId);
+            if (!isUserExist)
             {
-                var result = await _noteRepository.GetById(id);
-                return new NoteResponse(result);
+                return new NotesResponse("Invalid user.");
             }
-            catch (Exception ex)
-            {
-                // Do some logging stuff
-                return new NoteResponse($"An error occurred when getting the note: {ex.Message}");
-            }
-        }
 
-        public async Task<NotesResponse> ListAsync()
-        {
             try
             {
-                var result = await _noteRepository.ListAsync();
+                var result = await _noteRepository.ListAsync(userId);
                 return new NotesResponse(result);
             }
             catch (Exception ex)
@@ -46,8 +41,42 @@ namespace netCoreMongoDbApi.Services
             }
         }
 
-        public async Task<NoteResponse> AddAsync(Note note)
+        public async Task<NoteResponse> FindAsync(Guid noteId, Guid userId)
         {
+            var isUserExist = await _authRepository.UserExists(userId);
+            if (!isUserExist)
+            {
+                return new NoteResponse("Invalid user.");
+            }
+
+            var exisitingNote = await _noteRepository.GetById(noteId);
+
+            if (exisitingNote == null)
+            {
+                return new NoteResponse("Note not found.");
+            }
+
+            try
+            {
+                return new NoteResponse(exisitingNote);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new NoteResponse($"An error occurred when getting the note: {ex.Message}");
+            }
+        }
+
+        public async Task<NoteResponse> SaveAsync(Note note, Guid userId)
+        {
+            var isUserExist = await _authRepository.UserExists(userId);
+            if (!isUserExist)
+            {
+                return new NoteResponse("Invalid user.");
+            }
+
+            note.UserId = userId;
+
             try
             {
                 _noteRepository.Add(note);
@@ -62,21 +91,27 @@ namespace netCoreMongoDbApi.Services
             }
         }
 
-        public async Task<NoteResponse> UpdateAsync(Note note)
+        public async Task<NoteResponse> UpdateAsync(Note note, Guid userId)
         {
-            var exisitngNote = await _noteRepository.GetById(note.Id);
+            var isUserExist = await _authRepository.UserExists(userId);
+            if (!isUserExist)
+            {
+                return new NoteResponse("Invalid user.");
+            }
 
-            if (exisitngNote == null)
+            var exisitingNote = await _noteRepository.GetById(note.Id);
+
+            if (exisitingNote == null)
             {
                 return new NoteResponse("Note not found.");
             }
 
             try
             {
-                _noteRepository.Update(note);
+                _noteRepository.Update(exisitingNote);
                 await _unitOfWork.Commit();
 
-                return new NoteResponse(note);
+                return new NoteResponse(exisitingNote);
             }
             catch (Exception ex)
             {
@@ -85,49 +120,57 @@ namespace netCoreMongoDbApi.Services
             }
         }
 
-        public async Task<NoteResponse> DeleteAsync(Guid id)
+        public async Task<NoteResponse> DeleteAsync(Guid noteId, Guid userId)
         {
-            var exisitngNote = await _noteRepository.GetById(id);
+            var note = await _noteRepository.GetById(noteId);
+            var isUserExist = await _authRepository.UserExists(userId);
 
-            if (exisitngNote == null)
+            if (!isUserExist)
             {
-                return new NoteResponse("Note not found.");
+                return new NoteResponse("Invalid user.");
+            }
+
+            if (note.UserId != userId)
+            {
+                return new NoteResponse("The user is not authorized to delete this note.");
             }
 
             try
             {
-                _noteRepository.Remove(id);
+                _noteRepository.Remove(noteId);
                 await _unitOfWork.Commit();
 
-                return new NoteResponse(exisitngNote);
+                return new NoteResponse(note);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new NoteResponse($"An error occurred when removing the note: {ex.Message}");
+                return new NoteResponse($"An error occurred when deleting the note: {ex.Message}");
             }
         }
 
-        public async Task<NotesResponse> DeleteAllAsync()
+        public async Task<NotesResponse> DeleteAllAsync(Guid userId)
         {
-            var exisitngNotes = await _noteRepository.ListAsync();
+            var isUserExist = await _authRepository.UserExists(userId);
 
-            if (exisitngNotes == null)
+            if (!isUserExist)
             {
-                return new NotesResponse("Notes not found.");
+                return new NotesResponse("Invalid user.");
             }
 
             try
             {
-                _noteRepository.RemoveAll();
+                var removedNotes = await _noteRepository.ListAsync(userId);
+
+                _noteRepository.RemoveAll(userId);
                 await _unitOfWork.Commit();
 
-                return new NotesResponse(exisitngNotes);
+                return new NotesResponse(removedNotes);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new NotesResponse($"An error occurred when removing the note: {ex.Message}");
+                return new NotesResponse($"An error occurred when deleting the note: {ex.Message}");
             }
         }
     }
