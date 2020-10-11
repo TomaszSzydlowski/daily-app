@@ -1,61 +1,61 @@
 const notes = [
   {
     id: '1',
-    date: '23/09/2020',
+    date: '2020-10-09T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '2',
-    date: '24/09/2020',
-    content: 'Securing React Apps with Auth0',
+    date: '2020-10-08T20:00',
+    content: 'Secur2ing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '3',
-    date: '25/09/2020',
-    content: 'Securing React Apps with Auth0',
+    date: '2020-10-07T20:00',
+    content: 'Securin3g React Apps with Auth0',
     projectId: 1
   },
   {
     id: '4',
-    date: '26/09/2020',
-    content: 'Securing React Apps with Auth0',
+    date: '2020-10-06T20:00',
+    content: 'Secur4ing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '5',
-    date: '27/09/2020',
+    date: '2020-10-05T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '6',
-    date: '30/09/2020',
+    date: '2020-10-05T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 1
   },
   {
     id: '7',
-    date: '30/09/2020',
+    date: '2020-10-05T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 2
   },
   {
     id: '8',
-    date: '01/10/2020',
+    date: '2020-10-04T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 2
   },
   {
     id: '9',
-    date: '02/10/2020',
+    date: '2020-10-03T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 2
   },
   {
     id: '10',
-    date: '03/10/2020',
+    date: '2020-10-02T20:00',
     content: 'Securing React Apps with Auth0',
     projectId: 2
   }
@@ -67,7 +67,7 @@ const newNote = {
   id: null,
   date: '',
   content: '',
-  projectId: null
+  projectId: 1
 };
 
 // Using CommonJS style export so we can consume via Node (without using Babel-node)

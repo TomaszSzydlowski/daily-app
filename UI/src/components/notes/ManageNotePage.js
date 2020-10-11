@@ -7,6 +7,7 @@ import NoteForm from './NoteForm';
 import { newNote } from '../../../tools/mockData';
 import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
+import { getCurrentTime } from '../../../utils/time';
 
 export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveNote, history, ...props }) {
   const [ note, setNote ] = useState({ ...props.note });
@@ -22,7 +23,11 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
           alert('Loading notes failed' + error);
         }
       } else {
-        setNote({ ...props.note });
+        const newNote = { ...props.note };
+        if (!newNote.id) {
+          newNote.date = getCurrentTime();
+        }
+        setNote(newNote);
       }
 
       if (projects.length === 0) {
@@ -96,7 +101,7 @@ ManageNotePage.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export function getNoteById(notes, id) {
+function getNoteById(notes, id) {
   return notes.find((note) => note.id === id) || null;
 }
 
