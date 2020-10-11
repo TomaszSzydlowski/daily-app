@@ -44,7 +44,7 @@ namespace netCoreMongoDbApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> FindAsync(int id)
+        public async Task<IActionResult> FindAsync(Guid id)
         {
             var result = await _noteService.FindAsync(id);
 
@@ -75,10 +75,10 @@ namespace netCoreMongoDbApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(NoteResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveNoteResource resource)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] SaveNoteResource resource)
         {
             var note = _mapper.Map<SaveNoteResource, Note>(resource);
-            note.Id=id;
+            note.Id = id;
             var result = await _noteService.UpdateAsync(note);
 
             if (!result.Success)
@@ -92,7 +92,7 @@ namespace netCoreMongoDbApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var result = await _noteService.DeleteAsync(id);
 

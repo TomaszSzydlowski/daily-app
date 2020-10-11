@@ -63,6 +63,12 @@ namespace netCoreMongoDbApi.Persistence.Repositories
             Context.AddCommand(() => DbSet.ReplaceOneAsync(Builders<TEntity>.Filter.Eq("_id", obj.GetId()), obj));
         }
 
+        public virtual void Remove(Guid id)
+        {
+            ConfigDbSet();
+            Context.AddCommand(() => DbSet.DeleteOneAsync(Builders<TEntity>.Filter.Eq("_id", id)));
+        }
+
         public virtual void Remove(int id)
         {
             ConfigDbSet();
