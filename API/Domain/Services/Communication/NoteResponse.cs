@@ -5,19 +5,19 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
     public class NoteResponse : BaseResponse
     {
 
-        public Note Student { get; private set; }
+        public Note Note { get; private set; }
 
-        private NoteResponse(bool success, string message, Note student) : base(success, message)
+        private NoteResponse(bool success, string message, Note note) : base(success, message)
         {
-            Student = student;
+            Note = note;
         }
 
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="student">Saved student.</param>
+        /// <param name="note">Saved note.</param>
         /// <returns>Response.</returns>
-        public NoteResponse(Note student) : this(true, string.Empty, student)
+        public NoteResponse(Note note) : this(true, string.Empty, note)
         { }
 
         /// <summary>

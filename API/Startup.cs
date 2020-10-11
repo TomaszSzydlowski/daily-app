@@ -66,7 +66,7 @@ namespace netCoreMongoDbApi
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<INoteRepository, NoteRepository>();
-            services.AddScoped<INoteService, StudentService>();
+            services.AddScoped<INoteService, NoteService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

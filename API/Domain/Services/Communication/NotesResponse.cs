@@ -7,14 +7,14 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
     public class NotesResponse : BaseResponse
     {
 
-        public IEnumerable<Note> Students { get; private set; } = new List<Note>();
+        public IEnumerable<Note> Notes { get; private set; } = new List<Note>();
 
-        private NotesResponse(bool success, string message, IEnumerable<Note> students) : base(success, message)
+        private NotesResponse(bool success, string message, IEnumerable<Note> notes) : base(success, message)
         {
-            if (students != null)
+            if (notes != null)
             {
-                var result = Students.Concat(students).ToList();
-                Students = result;
+                var result = Notes.Concat(notes).ToList();
+                Notes = result;
             }
   
         }
@@ -22,9 +22,9 @@ namespace netCoreMongoDbApi.Domain.Services.Communication
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="students">Saved students.</param>
+        /// <param name="notes">Saved notes.</param>
         /// <returns>Response.</returns>
-        public NotesResponse(IEnumerable<Note> students) : this(true, string.Empty, students)
+        public NotesResponse(IEnumerable<Note> notes) : this(true, string.Empty, notes)
         { }
 
         /// <summary>
