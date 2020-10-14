@@ -108,10 +108,10 @@ namespace DailyApi.Services
 
             try
             {
-                _noteRepository.Update(exisitingNote);
+                _noteRepository.Update(note);
                 await _unitOfWork.Commit();
 
-                return new NoteResponse(exisitingNote);
+                return new NoteResponse(note);
             }
             catch (Exception ex)
             {

@@ -12,13 +12,13 @@ namespace DailyApi.IntegrationTest.Tests
 {
     //This tag is added to stop running paraller test in diffrent classes
     [Collection("IntegrationTest")]
-    public class MeasurementsControllerTests : TestFixture
+    public class NotesControllerTest : TestFixture
     {
-        private readonly string _dateTimeFake = "2020-10-11T21:19";
-        private readonly string _dateTimeSecondFake = "2020-10-11T21:19";
+        private readonly string _dateTimeRequestFake = "2020-10-11T21:19Z";
+        private readonly string _dateTimeSecondRequestFake = "2020-10-12T21:19Z";
         private readonly string _contentFake = "Integration test content";
         private readonly string _contentSecondFake = "Integration test second content";
-        public MeasurementsControllerTests() : base()
+        public NotesControllerTest() : base()
         {
         }
 
@@ -30,7 +30,7 @@ namespace DailyApi.IntegrationTest.Tests
             var createdNote = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
@@ -44,9 +44,10 @@ namespace DailyApi.IntegrationTest.Tests
 
             var responseNote = await response.Content.ReadAsAsync<NoteResource>();
 
-            Assert.Equal(responseNote.Date, _dateTimeFake);
-            Assert.Equal(responseNote.Content, _contentFake);
-            Assert.Equal(responseNote.ProjectId, 1);
+            Assert.NotEmpty(createdNote.Id.ToString());
+            Assert.Equal(_dateTimeRequestFake, responseNote.Date);
+            Assert.Equal(_contentFake, responseNote.Content);
+            Assert.Equal(1, responseNote.ProjectId);
         }
 
         [Fact]
@@ -57,33 +58,35 @@ namespace DailyApi.IntegrationTest.Tests
             var createdNote = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
             var createdNote2 = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeSecondFake,
+                    Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
                     ProjectId = 2
                 });
 
             //Act
-            var response = await TestClient.GetAsync(ApiRoutes.Notes.Get.Replace("{noteId}", createdNote.Id.ToString()));
+            var response = await TestClient.GetAsync(ApiRoutes.Notes.GetAll); // by userId
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
             var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
 
-            Assert.Equal(responseNote.FirstOrDefault().Date, _dateTimeFake);
-            Assert.Equal(responseNote.FirstOrDefault().Content, _contentFake);
-            Assert.Equal(responseNote.FirstOrDefault().ProjectId, 1);
+            Assert.NotEmpty(createdNote.Id.ToString());
+            Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
+            Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
+            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
 
-            Assert.Equal(responseNote.LastOrDefault().Date, _dateTimeSecondFake);
-            Assert.Equal(responseNote.LastOrDefault().Content, _contentSecondFake);
-            Assert.Equal(responseNote.LastOrDefault().ProjectId, 2);
+            Assert.NotEmpty(createdNote2.Id.ToString());
+            Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
+            Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
+            Assert.Equal(2, responseNote.LastOrDefault().ProjectId);
         }
 
         [Fact]
@@ -96,7 +99,7 @@ namespace DailyApi.IntegrationTest.Tests
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Notes.Post,
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
@@ -107,9 +110,9 @@ namespace DailyApi.IntegrationTest.Tests
 
             var responseNote = await response.Content.ReadAsAsync<NoteResource>();
 
-            Assert.Equal(responseNote.Date, _dateTimeFake);
-            Assert.Equal(responseNote.Content, _contentFake);
-            Assert.Equal(responseNote.ProjectId, 1);
+            Assert.Equal(_dateTimeRequestFake, responseNote.Date);
+            Assert.Equal(_contentFake, responseNote.Content);
+            Assert.Equal(1, responseNote.ProjectId);
         }
 
         [Fact]
@@ -120,7 +123,7 @@ namespace DailyApi.IntegrationTest.Tests
             var createdNote = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
@@ -130,7 +133,7 @@ namespace DailyApi.IntegrationTest.Tests
                 new SaveNoteResource
                 {
                     Id = createdNote.Id.ToString(),
-                    Date = _dateTimeSecondFake,
+                    Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
                     ProjectId = 2
                 });
@@ -141,10 +144,10 @@ namespace DailyApi.IntegrationTest.Tests
 
             var responseNote = await response.Content.ReadAsAsync<NoteResource>();
 
-            Assert.Equal(responseNote.Id, createdNote.Id);
-            Assert.Equal(responseNote.Date, _dateTimeSecondFake);
-            Assert.Equal(responseNote.Content, _contentSecondFake);
-            Assert.Equal(responseNote.ProjectId, 2);
+            Assert.Equal(createdNote.Id, responseNote.Id);
+            Assert.Equal(_dateTimeSecondRequestFake, responseNote.Date);
+            Assert.Equal(_contentSecondFake, responseNote.Content);
+            Assert.Equal(2, responseNote.ProjectId);
         }
 
         [Fact]
@@ -155,7 +158,7 @@ namespace DailyApi.IntegrationTest.Tests
             var createdNote = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
@@ -169,10 +172,10 @@ namespace DailyApi.IntegrationTest.Tests
 
             var responseNote = await response.Content.ReadAsAsync<NoteResource>();
 
-            Assert.Equal(responseNote.Id, createdNote.Id);
-            Assert.Equal(responseNote.Date, _dateTimeFake);
-            Assert.Equal(responseNote.Content, _contentFake);
-            Assert.Equal(responseNote.ProjectId, 1);
+            Assert.Equal(createdNote.Id, responseNote.Id);
+            Assert.Equal(_dateTimeRequestFake, responseNote.Date);
+            Assert.Equal(_contentFake, responseNote.Content);
+            Assert.Equal(1, responseNote.ProjectId);
         }
 
         [Fact]
@@ -183,14 +186,14 @@ namespace DailyApi.IntegrationTest.Tests
             var createdNote = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeFake,
+                    Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
             var createdNote2 = await CreateNoteAsync(
                 new SaveNoteResource
                 {
-                    Date = _dateTimeSecondFake,
+                    Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
                     ProjectId = 2
                 });
@@ -203,13 +206,15 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
             var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
 
-            Assert.Equal(responseNote.FirstOrDefault().Date, _dateTimeFake);
-            Assert.Equal(responseNote.FirstOrDefault().Content, _contentFake);
-            Assert.Equal(responseNote.FirstOrDefault().ProjectId, 1);
+            Assert.NotEmpty(createdNote.Id.ToString());
+            Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
+            Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
+            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
 
-            Assert.Equal(responseNote.LastOrDefault().Date, _dateTimeSecondFake);
-            Assert.Equal(responseNote.LastOrDefault().Content, _contentSecondFake);
-            Assert.Equal(responseNote.LastOrDefault().ProjectId, 2);
+            Assert.NotEmpty(createdNote2.Id.ToString());
+            Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
+            Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
+            Assert.Equal(2, responseNote.LastOrDefault().ProjectId);
         }
     }
 }

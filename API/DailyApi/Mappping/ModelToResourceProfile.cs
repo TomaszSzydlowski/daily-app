@@ -8,7 +8,11 @@ namespace Supermarket.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<Note, NoteResource>();
+            CreateMap<Note, NoteResource>()
+            .ForMember(
+                desc => desc.Date,
+                opt => opt.MapFrom(src => src.Date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
+            );
         }
     }
 }

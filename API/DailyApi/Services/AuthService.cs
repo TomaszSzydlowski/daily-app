@@ -57,7 +57,7 @@ namespace DailyApi.Services
             }
             catch (Exception ex)
             {
-                return new LoginUserResponse($"An error occurred when saving the product: {ex.Message}");
+                return new LoginUserResponse($"An error occurred when loging the user: {ex.Message}");
             }
 
         }
@@ -69,7 +69,7 @@ namespace DailyApi.Services
                 saveRegisterUserResource.Email = saveRegisterUserResource.Email.ToLower();
 
                 if (await _authRepository.UserExists(saveRegisterUserResource.Email))
-                    return new RegisterUserResponse("Email adress is already taken");
+                    return new RegisterUserResponse("Email is already taken");
 
                 var userToCreate = new User
                 {
@@ -84,7 +84,7 @@ namespace DailyApi.Services
             }
             catch (Exception ex)
             {
-                return new RegisterUserResponse($"An error occurred when saving the product: {ex.Message}");
+                return new RegisterUserResponse($"An error occurred when registering the user: {ex.Message}");
             }
         }
     }
