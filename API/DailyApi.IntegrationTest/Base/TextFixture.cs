@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DailyApi.Controllers.Config;
-using DailyApi.Resources;
 using MongoDB.Driver;
+using DailyApi.Resources;
+using DailyApi.Commands.NoteCommands;
+using DailyApi.Commands.AuthCommands;
 
 namespace DailyApi.IntegrationTest.Base
 {
@@ -21,7 +23,7 @@ namespace DailyApi.IntegrationTest.Base
             TestClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetJwtAsync());
         }
 
-        protected async Task<NoteResource> CreateNoteAsync(SaveNoteResource request)
+        protected async Task<NoteResource> CreateNoteAsync(CreateNoteCommand request)
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Notes.Post, request);
             return await response.Content.ReadAsAsync<NoteResource>();
@@ -29,7 +31,7 @@ namespace DailyApi.IntegrationTest.Base
         private async Task<string> GetJwtAsync()
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Register,
-                new SaveUserRegisterResource
+                new CreateUserRegisterCommand
                 {
                     Email = IntegrationUserEmail,
                     Password = IntegrationUserPassword

@@ -21,7 +21,7 @@ namespace DailyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<NotesResponse> ListAsync(Guid userId)
+        public async Task<NotesResponse> GetNotesAsync(Guid userId)
         {
             var isUserExist = await _authRepository.UserExists(userId);
             if (!isUserExist)
@@ -41,7 +41,7 @@ namespace DailyApi.Services
             }
         }
 
-        public async Task<NoteResponse> FindAsync(Guid noteId, Guid userId)
+        public async Task<NoteResponse> GetNoteAsync(Guid noteId, Guid userId)
         {
             var isUserExist = await _authRepository.UserExists(userId);
             if (!isUserExist)

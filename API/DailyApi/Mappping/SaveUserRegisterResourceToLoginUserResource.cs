@@ -1,4 +1,5 @@
 using AutoMapper;
+using DailyApi.Commands.AuthCommands;
 using DailyApi.Resources;
 
 namespace DailyApi.Mapping
@@ -7,7 +8,7 @@ namespace DailyApi.Mapping
     {
         public SaveUserRegisterResourceToLoginUserResource()
         {
-            CreateMap<SaveUserRegisterResource, LoginUserResource>();
+            CreateMap<CreateUserRegisterCommand, LoginUserCommand>();
         }
     }
 }

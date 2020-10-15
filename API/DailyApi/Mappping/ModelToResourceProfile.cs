@@ -1,6 +1,6 @@
 using AutoMapper;
-using DailyApi.Resources;
 using DailyApi.Domain.Models;
+using DailyApi.Resources;
 
 namespace Supermarket.Mapping
 {

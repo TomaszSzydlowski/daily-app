@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using DailyApi.Resources;
+using DailyApi.Commands.NoteCommands;
 using DailyApi.Domain.Models;
 using DailyApi.Domain.Services;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using DailyApi.Controllers.Config;
+using MediatR;
+using DailyApp.Queries;
+using DailyApi.Resources;
 
 namespace DailyApi.Controllers
 {
@@ -19,20 +22,25 @@ namespace DailyApi.Controllers
 
         private readonly IMapper _mapper;
 
-        public NotesController(INoteService noteService, IMapper mapper)
+        private readonly IMediator _mediator;
+
+        public NotesController(INoteService noteService, IMapper mapper, IMediator mediator)
         {
             _noteService = noteService;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         //GET:api/notes
         [HttpGet(ApiRoutes.Notes.GetAll)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> ListAsync()
+        public async Task<IActionResult> GetAllNotesAsync()
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var result = await _noteService.ListAsync(userId);
+
+            var query = new GetAllNotesQuery(userId);
+            var result = await _mediator.Send(query);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -46,10 +54,12 @@ namespace DailyApi.Controllers
         [HttpGet(ApiRoutes.Notes.Get)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> FindAsync(Guid noteId)
+        public async Task<IActionResult> GetNoteAsync(Guid noteId)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var result = await _noteService.FindAsync(noteId, userId);
+
+            var query = new GetNoteByIdQuery(noteId, userId);
+            var result = await _mediator.Send(query);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -62,12 +72,10 @@ namespace DailyApi.Controllers
         [HttpPost(ApiRoutes.Notes.Post)]
         [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveNoteResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] CreateNoteCommand command)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var note = _mapper.Map<SaveNoteResource, Note>(resource);
-            var result = await _noteService.SaveAsync(note, userId);
+            command.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _mediator.Send(command);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -80,12 +88,10 @@ namespace DailyApi.Controllers
         [HttpPut(ApiRoutes.Notes.Update)]
         [ProducesResponseType(typeof(NoteResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> UpdateAsync([FromBody] SaveNoteResource resource)
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateNoteCommand command)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var note = _mapper.Map<SaveNoteResource, Note>(resource);
-            var result = await _noteService.UpdateAsync(note, userId);
+            command.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _mediator.Send(command);
 
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
@@ -98,11 +104,10 @@ namespace DailyApi.Controllers
         [HttpDelete(ApiRoutes.Notes.Delete)]
         [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> DeleteAsync(Guid noteId)
+        public async Task<IActionResult> DeleteAsync(DeleteNoteCommand command)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var result = await _noteService.DeleteAsync(noteId, userId);
+            command.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _mediator.Send(command);
 
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));
@@ -115,11 +120,10 @@ namespace DailyApi.Controllers
         [HttpDelete(ApiRoutes.Notes.DeleteAll)]
         [ProducesResponseType(typeof(NoteResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> DeleteAllAsync()
+        public async Task<IActionResult> DeleteAllAsync(DeleteAllNotesCommand command)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var result = await _noteService.DeleteAllAsync(userId);
+            command.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result = await _mediator.Send(command);
 
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResource(result.Message));

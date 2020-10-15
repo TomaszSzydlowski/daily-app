@@ -1,7 +1,7 @@
 using System;
 using AutoMapper;
 using DailyApi.Domain.Models;
-using DailyApi.Resources;
+using DailyApi.Commands.NoteCommands;
 
 namespace DailyApi.Mapping
 {
@@ -9,11 +9,16 @@ namespace DailyApi.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<SaveNoteResource, Note>()
+            CreateMap<CreateNoteCommand, Note>()
               .ForMember(
                  dest => dest.Date,
                  opt => opt.MapFrom(src => DateTime.Parse(src.Date))
               );
+            CreateMap<UpdateNoteCommand, Note>()
+            .ForMember(
+                dest => dest.Date,
+                opt => opt.MapFrom(src => DateTime.Parse(src.Date))
+                );
         }
     }
 }

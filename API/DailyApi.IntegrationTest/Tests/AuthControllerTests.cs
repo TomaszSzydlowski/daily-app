@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DailyApi.Controllers.Config;
 using DailyApi.IntegrationTest.Base;
-using DailyApi.Resources;
 using Xunit;
 using DailyApi.IntegrationTest.Mocks;
+using DailyApi.Commands.AuthCommands;
 
 namespace DailyApi.IntegrationTest.Tests
 {
@@ -25,7 +25,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             //Act
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Register,
-                new SaveUserRegisterResource
+                new CreateUserRegisterCommand
                 {
                     Email = "testuser@test.com",
                     Password = "test123"
@@ -42,7 +42,7 @@ namespace DailyApi.IntegrationTest.Tests
         {
             // Arrange
             var responseRegister = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Register,
-                new SaveUserRegisterResource
+                new CreateUserRegisterCommand
                 {
                     Email = "testuser@test.com",
                     Password = "test123"
@@ -50,7 +50,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             //Act
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Login,
-                new LoginUserResource
+                new LoginUserCommand
                 {
                     Email = "testuser@test.com",
                     Password = "test123"
@@ -68,7 +68,7 @@ namespace DailyApi.IntegrationTest.Tests
         {
             // Arrange
             var addedFirstUserResponse = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Register,
-                new SaveUserRegisterResource
+                new CreateUserRegisterCommand
                 {
                     Email = "testuser@test.com",
                     Password = "test123"
@@ -76,7 +76,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             //Act
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Auth.Register,
-                new SaveUserRegisterResource
+                new CreateUserRegisterCommand
                 {
                     Email = "testuser@test.com",
                     Password = "test123"

@@ -6,7 +6,6 @@ namespace DailyApi.Domain.Services.Communication
 {
     public class NotesResponse : BaseResponse
     {
-
         public IEnumerable<Note> Notes { get; private set; } = new List<Note>();
 
         private NotesResponse(bool success, string message, IEnumerable<Note> notes) : base(success, message)

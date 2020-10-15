@@ -1,6 +1,6 @@
 using DailyApi.Extensions;
-using DailyApi.Resources;
 using Microsoft.AspNetCore.Mvc;
+using DailyApi.Resources;
 
 namespace DailyApi.Controllers.Config
 {

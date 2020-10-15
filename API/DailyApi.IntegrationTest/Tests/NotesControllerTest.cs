@@ -5,8 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DailyApi.Controllers.Config;
 using DailyApi.IntegrationTest.Base;
-using DailyApi.Resources;
 using Xunit;
+using DailyApi.Commands.NoteCommands;
+using DailyApi.Resources;
 
 namespace DailyApi.IntegrationTest.Tests
 {
@@ -28,7 +29,7 @@ namespace DailyApi.IntegrationTest.Tests
             // Arrange
             await AuthenticateAsync();
             var createdNote = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
@@ -56,14 +57,14 @@ namespace DailyApi.IntegrationTest.Tests
             // Arrange
             await AuthenticateAsync();
             var createdNote = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
             var createdNote2 = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
@@ -97,7 +98,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             //Act
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Notes.Post,
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
@@ -121,7 +122,7 @@ namespace DailyApi.IntegrationTest.Tests
             // Arrange
             await AuthenticateAsync();
             var createdNote = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
@@ -130,7 +131,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             //Act
             var response = await TestClient.PutAsJsonAsync(ApiRoutes.Notes.Update,
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Id = createdNote.Id.ToString(),
                     Date = _dateTimeSecondRequestFake,
@@ -156,7 +157,7 @@ namespace DailyApi.IntegrationTest.Tests
             // Arrange
             await AuthenticateAsync();
             var createdNote = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
@@ -184,14 +185,14 @@ namespace DailyApi.IntegrationTest.Tests
             // Arrange
             await AuthenticateAsync();
             var createdNote = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
                     ProjectId = 1
                 });
             var createdNote2 = await CreateNoteAsync(
-                new SaveNoteResource
+                new CreateNoteCommand
                 {
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,

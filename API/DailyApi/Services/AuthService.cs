@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using DailyApi.Domain.Models;
 using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
-using DailyApi.Resources;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +9,8 @@ using System.Security.Claims;
 using System;
 using Microsoft.Extensions.Configuration;
 using DailyApi.Domain.Repositories;
+using DailyApi.Resources;
+using DailyApi.Commands.AuthCommands;
 
 namespace DailyApi.Services
 {
@@ -26,7 +27,7 @@ namespace DailyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<LoginUserResponse> Login(LoginUserResource loginUserResource)
+        public async Task<LoginUserResponse> Login(LoginUserCommand loginUserResource)
         {
             try
             {
@@ -62,22 +63,22 @@ namespace DailyApi.Services
 
         }
 
-        public async Task<RegisterUserResponse> Register(SaveUserRegisterResource saveRegisterUserResource)
+        public async Task<RegisterUserResponse> Register(CreateUserRegisterCommand createUserRegisterCommand)
         {
             try
             {
-                saveRegisterUserResource.Email = saveRegisterUserResource.Email.ToLower();
+                createUserRegisterCommand.Email = createUserRegisterCommand.Email.ToLower();
 
-                if (await _authRepository.UserExists(saveRegisterUserResource.Email))
+                if (await _authRepository.UserExists(createUserRegisterCommand.Email))
                     return new RegisterUserResponse("Email is already taken");
 
                 var userToCreate = new User
                 {
                     Id = Guid.NewGuid(),
-                    Email = saveRegisterUserResource.Email
+                    Email = createUserRegisterCommand.Email
                 };
 
-                _authRepository.Register(userToCreate, saveRegisterUserResource.Password);
+                _authRepository.Register(userToCreate, createUserRegisterCommand.Password);
                 await _unitOfWork.Commit();
 
                 return new RegisterUserResponse();

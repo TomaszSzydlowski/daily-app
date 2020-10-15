@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
-using DailyApi.Resources;
+using DailyApi.Commands;
 using Microsoft.AspNetCore.Mvc;
 using DailyApi.Domain.Services;
 using AutoMapper;
 using DailyApi.Controllers.Config;
+using DailyApi.Resources;
+using DailyApi.Commands.AuthCommands;
+using MediatR;
 
 namespace DailyApi.Controllers
 {
@@ -12,26 +15,29 @@ namespace DailyApi.Controllers
         private const string Authorization = "Authorization";
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
-        public AuthController(IAuthService authService, IMapper mapper)
+        private readonly IMediator _mediator;
+
+        public AuthController(IAuthService authService, IMapper mapper, IMediator mediator)
         {
             _authService = authService;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         // POST: api/auth/register
         [HttpPost(ApiRoutes.Auth.Register)]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> Register([FromBody] SaveUserRegisterResource saveRegisterUserResource)
+        public async Task<IActionResult> Register([FromBody] CreateUserRegisterCommand createUserRegisterCommand)
         {
-            var registerResult = await _authService.Register(saveRegisterUserResource);
+            var registerResult = await _mediator.Send(createUserRegisterCommand);
 
             if (!registerResult.Success)
                 return BadRequest(new ErrorResource(registerResult.Message));
 
-            var loginUserResource = _mapper.Map<SaveUserRegisterResource, LoginUserResource>(saveRegisterUserResource);
+            var loginUserResource = _mapper.Map<CreateUserRegisterCommand, LoginUserCommand>(createUserRegisterCommand);
 
-            var loginResult = await _authService.Login(loginUserResource);
+            var loginResult = await _mediator.Send(loginUserResource);
 
             if (!loginResult.Success)
                 return BadRequest(new ErrorResource(loginResult.Message));
@@ -45,9 +51,9 @@ namespace DailyApi.Controllers
         [HttpPost(ApiRoutes.Auth.Login)]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(ErrorResource), 401)]
-        public async Task<IActionResult> Login([FromBody] LoginUserResource loginUserResource)
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand loginUserResource)
         {
-            var result = await _authService.Login(loginUserResource);
+            var result = await _mediator.Send(loginUserResource);
 
             if (result.User == null)
                 return Unauthorized(new ErrorResource(result.Message));

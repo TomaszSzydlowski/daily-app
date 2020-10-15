@@ -17,6 +17,7 @@ using DailyApi.Persistence.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DailyApi.Controllers.Config;
+using MediatR;
 
 namespace DailyApi
 {
@@ -85,6 +86,7 @@ namespace DailyApi
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddMediatR(typeof(Startup));
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

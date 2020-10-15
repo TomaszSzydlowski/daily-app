@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using DailyApi.Domain.Services.Communication;
+using MediatR;
 
-namespace DailyApi.Resources
+namespace DailyApi.Commands.AuthCommands
 {
-    public class SaveUserRegisterResource
+    public class CreateUserRegisterCommand : IRequest<RegisterUserResponse>
     {
         [Required]
         [DataType(DataType.EmailAddress)]
