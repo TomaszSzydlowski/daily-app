@@ -12,10 +12,13 @@ export async function getNotes() {
 
 export async function saveNote(note) {
   try {
+    const noteToSave = { ...note };
+    noteToSave.date += 'Z';
+    
     const response = await fetch(baseUrl + (note.id || ''), {
       method: note.id ? 'PUT' : 'POST', // POST for create, PUT to update when id already exists.
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(note)
+      body: JSON.stringify(noteToSave)
     });
     return handleResponse(response);
   } catch (error) {
