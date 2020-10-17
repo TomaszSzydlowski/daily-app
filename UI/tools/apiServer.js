@@ -44,12 +44,12 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post('/courses/', function(req, res, next) {
-  const error = validateCourse(req.body);
+server.post('/notes/', function(req, res, next) {
+  const error = validateNote(req.body);
   if (error) {
     res.status(400).send(error);
   } else {
-    req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
+    // req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
     next();
   }
 });
@@ -65,14 +65,9 @@ server.listen(port, () => {
 
 // Centralized logic
 
-// Returns a URL friendly slug
-function createSlug(value) {
-  return value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
-}
-
-function validateCourse(course) {
-  if (!course.title) return 'Title is required.';
-  if (!course.authorId) return 'Author is required.';
-  if (!course.category) return 'Category is required.';
+function validateNote(note) {
+  if (!note.content) return 'Content is required.';
+  if (!note.projectId) return 'Project is required.';
+  if (!note.date) return 'Date is required.';
   return '';
 }

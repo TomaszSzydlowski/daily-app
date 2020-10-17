@@ -13,8 +13,7 @@ export async function getNotes() {
 export async function saveNote(note) {
   try {
     const noteToSave = { ...note };
-    noteToSave.date += 'Z';
-    
+    noteToSave.date = new Date(noteToSave.date).toJSON();
     const response = await fetch(baseUrl + (note.id || ''), {
       method: note.id ? 'PUT' : 'POST', // POST for create, PUT to update when id already exists.
       headers: { 'content-type': 'application/json' },
