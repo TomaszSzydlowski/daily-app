@@ -5,6 +5,7 @@ import AboutPage from './about/AboutPage';
 import Header from './common/Header';
 import PageNotFound from './PageNotFound';
 import NotesPage from './notes/NotesPage';
+import { LoginForm } from './authComponents/LoginForm';
 // eslint-disable-next-line import/no-named-as-default
 import ManageNotePage from './notes/ManageNotePage';
 import { ToastContainer } from 'react-toastify';
@@ -15,6 +16,7 @@ function App() {
   const [ user, setUser ] = useState({});
 
   useEffect(() => {
+    // maybe use redux to get currentUser
     const newUser = authService.getCurrentUser();
     setUser(newUser);
   }, []);
@@ -24,6 +26,7 @@ function App() {
       <main className="container">
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/about" component={AboutPage} />
           <Route path="/notes" component={NotesPage} />
           <Route path="/note/:id" component={ManageNotePage} />
