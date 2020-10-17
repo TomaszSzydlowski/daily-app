@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import AboutPage from './about/AboutPage';
@@ -11,19 +11,27 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const [ user, setUser ] = useState({});
+
+  useEffect(() => {
+    // const newUser = authService.getCurrentUser();
+    // setUser(newUser);
+  });
   return (
-    <div className="container-fluid">
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/notes" component={NotesPage} />
-        <Route path="/note/:id" component={ManageNotePage} />
-        <Route path="/note" component={ManageNotePage} />
-        <Route component={PageNotFound} />
-      </Switch>
+    <React.Fragment>
+      <Header user={user} />
+      <main className="container">
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/notes" component={NotesPage} />
+          <Route path="/note/:id" component={ManageNotePage} />
+          <Route path="/note" component={ManageNotePage} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </main>
       <ToastContainer autoClose={3000} hideProgressBar />
-    </div>
+    </React.Fragment>
   );
 }
 

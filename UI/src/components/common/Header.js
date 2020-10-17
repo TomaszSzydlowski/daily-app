@@ -1,23 +1,95 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Header = () => {
-  const activeStyle = { color: '#F15B2A' };
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
+
+const Header = (user) => {
+  const [ isOpen, setIsOpen ] = useState(false);
+
+  function isUserLogin(user) {
+    for (let i in user) return false;
+    return true;
+  }
+
   return (
-    <nav>
-      <NavLink to="/" activeStyle={activeStyle} exact>
-        Home
-      </NavLink>
-      {' | '}
-      <NavLink to="/notes" activeStyle={activeStyle}>
-        Notes
-      </NavLink>
-      {' | '}
-      <NavLink to="/about" activeStyle={activeStyle}>
-        About
-      </NavLink>
-    </nav>
+    <React.Fragment>
+      <Navbar color="light" light expand="md">
+        <Link className="navbar-brand" to="/">
+          DailyApp
+        </Link>
+        <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink className="nav-item nav-link" to="/notes">
+                Notes
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="nav-item nav-link" to="/about">
+                About
+              </NavLink>
+            </NavItem>
+          </Nav>
+          {!isUserLogin(user) && (
+            <Nav navbar>
+              <NavItem>
+                <NavLink className="nav-item nav-link" to="/login">
+                  Login
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="nav-item nav-link" to="/register">
+                  Register
+                </NavLink>
+              </NavItem>
+            </Nav>
+          )}
+          {isUserLogin(user) && (
+            <Nav navbar>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  {user.unique_name}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    <NavItem>
+                      <NavLink className="nav-item nav-link" to="/profile">
+                        Settings
+                      </NavLink>
+                    </NavItem>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    <NavItem>
+                      <NavLink className="nav-item nav-link" to="/logout">
+                        Logout
+                      </NavLink>
+                    </NavItem>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          )}
+        </Collapse>
+      </Navbar>
+    </React.Fragment>
   );
+};
+
+Header.propTypes = {
+  user: PropTypes.object.isRequired
 };
 
 export default Header;

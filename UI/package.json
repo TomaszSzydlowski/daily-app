@@ -15,7 +15,9 @@
     "serve:build": "http-server ./build"
   },
   "jest": {
-    "setupFiles": [ "./tools/testSetup.js" ],
+    "setupFiles": [
+      "./tools/testSetup.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/fileMock.js",
       "\\.(css|less)$": "<rootDir>/tools/styleMock.js"
@@ -31,6 +33,7 @@
     "react-redux": "6.0.1",
     "react-router-dom": "5.0.0",
     "react-toastify": "4.5.2",
+    "reactstrap": "^8.6.0",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0"
@@ -72,10 +75,17 @@
     "node": ">=8"
   },
   "babel": {
-    "presets": [ "babel-preset-react-app" ]
+    "presets": [
+      "babel-preset-react-app"
+    ]
   },
   "eslintConfig": {
-    "extends": [ "eslint:recommended", "plugin:react/recommended", "plugin:import/errors", "plugin:import/warnings" ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 2018,
