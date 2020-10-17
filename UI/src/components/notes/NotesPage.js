@@ -84,7 +84,7 @@ function mapStateToProps(state) {
             return {
               ...note,
               projectName: state.projects.find((a) => a.id === note.projectId).name,
-              date: new Date(note.date).toISOString().slice(0, 10)
+              date: new Date(note.date).toLocaleDateString('en-GB')
             };
           }),
     projects: state.projects,
