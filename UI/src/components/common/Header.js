@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import {
   Collapse,
@@ -86,10 +85,6 @@ const Header = (user) => {
       </Navbar>
     </React.Fragment>
   );
-};
-
-Header.propTypes = {
-  user: PropTypes.object.isRequired
 };
 
 export default Header;
