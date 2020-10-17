@@ -15,8 +15,9 @@ function App() {
   const [ user, setUser ] = useState({});
 
   useEffect(() => {
-    const newUser = authService.getCurrentUser();
-    setUser(newUser);
+    // BUG
+    // const newUser = authService.getCurrentUser();
+    // setUser(newUser);
   });
   return (
     <React.Fragment>
