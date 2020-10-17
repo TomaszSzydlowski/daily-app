@@ -8,14 +8,15 @@ import NotesPage from './notes/NotesPage';
 // eslint-disable-next-line import/no-named-as-default
 import ManageNotePage from './notes/ManageNotePage';
 import { ToastContainer } from 'react-toastify';
+import authService from '../services/authService';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [ user, setUser ] = useState({});
 
   useEffect(() => {
-    // const newUser = authService.getCurrentUser();
-    // setUser(newUser);
+    const newUser = authService.getCurrentUser();
+    setUser(newUser);
   });
   return (
     <React.Fragment>

@@ -1,9 +1,11 @@
-import { handleResponse, handleError } from './apiUtils';
+import http, { handleResponse } from './httpService';
+import handleError from './logService';
+
 const baseUrl = process.env.API_URL + '/notes/';
 
 export async function getNotes() {
   try {
-    const response = await fetch(baseUrl);
+    const response = await http.get(baseUrl);
     return handleResponse(response);
   } catch (error) {
     handleError(error);
@@ -14,11 +16,7 @@ export async function saveNote(note) {
   try {
     const noteToSave = { ...note };
     noteToSave.date = new Date(noteToSave.date).toJSON();
-    const response = await fetch(baseUrl + (note.id || ''), {
-      method: note.id ? 'PUT' : 'POST', // POST for create, PUT to update when id already exists.
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(noteToSave)
-    });
+    const response = note.id ? await http.put(baseUrl + note.id, noteToSave) : await http.post(baseUrl, noteToSave);
     return handleResponse(response);
   } catch (error) {
     handleError(error);

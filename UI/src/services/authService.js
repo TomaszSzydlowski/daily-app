@@ -1,34 +1,34 @@
-import http from "./httpService";
-import jwtDecode from "jwt-decode";
+import http from './httpService';
+import jwtDecode from 'jwt-decode';
 
-const apiLoginEndpoint = "api/auth/login";
-const apiRegisterEndpoint = "api/auth/register";
+const apiLoginEndpoint = 'api/auth/login';
+const apiRegisterEndpoint = 'api/auth/register';
 
-const tokenKey = "token";
+const tokenKey = 'token';
 
 http.setJwt(getJwt());
 
-export function register(user) {
+function register(user) {
   return http.post(apiRegisterEndpoint, {
     email: user.email,
-    password: user.password,
+    password: user.password
   });
 }
 
-export async function login(email, password) {
+async function login(email, password) {
   const { data: jwt } = await http.post(apiLoginEndpoint, { email, password });
   localStorage.setItem(tokenKey, jwt);
 }
 
-export function loginWithJwt(jwt) {
+function loginWithJwt(jwt) {
   localStorage.setItem(tokenKey, jwt);
 }
 
-export function logout() {
+function logout() {
   localStorage.removeItem(tokenKey);
 }
 
-export function getCurrentUser() {
+function getCurrentUser() {
   try {
     const jwt = localStorage.getItem(tokenKey);
     return jwtDecode(jwt);
@@ -37,7 +37,7 @@ export function getCurrentUser() {
   }
 }
 
-export function getJwt() {
+function getJwt() {
   return localStorage.getItem(tokenKey);
 }
 
