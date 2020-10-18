@@ -3,9 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import Spinner from '../common/Spinner';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import authService from '../../services/authService';
 import PropTypes from 'prop-types';
 import './LoginForm.css';
+import { connect } from 'react-redux';
+import { login } from '../../redux/actions/authActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function LoginForm({ history }) {
+export function LoginForm({ login, history }) {
   const [ errors, setErrors ] = useState({});
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
@@ -36,7 +37,7 @@ export function LoginForm({ history }) {
     setSaving(true);
 
     try {
-      await authService.login(user);
+      await login(user);
       toast.success('Successfully logged in.');
       setSaving(false);
       history.push('/notes');
@@ -105,5 +106,19 @@ export function LoginForm({ history }) {
 }
 
 LoginForm.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  loginUser: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
 };
+
+function mapStateToProps(state) {
+  return {
+    loginUser: state.loginUser
+  };
+}
+
+const mapDispatchToProps = {
+  login
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

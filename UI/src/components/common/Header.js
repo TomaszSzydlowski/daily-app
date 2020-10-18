@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getLoginUserFromToken } from '../../redux/actions/authActions';
 
 import {
   Collapse,
@@ -14,11 +16,17 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-const Header = ({ user }) => {
+const Header = ({ loginUser, getLoginUserFromToken }) => {
   const [ isOpen, setIsOpen ] = useState(false);
 
-  function isUserLogin(user) {
-    for (let i in user) return true;
+  useEffect(() => {
+    if (!isUserLogin()) {
+      getLoginUserFromToken();
+    }
+  }, []);
+
+  function isUserLogin() {
+    for (let i in loginUser) return true;
     return false;
   }
 
@@ -42,7 +50,7 @@ const Header = ({ user }) => {
               </NavLink>
             </NavItem>
           </Nav>
-          {!isUserLogin(user) && (
+          {!isUserLogin() && (
             <Nav navbar>
               <NavItem>
                 <NavLink className="nav-item nav-link" to="/login">
@@ -56,11 +64,11 @@ const Header = ({ user }) => {
               </NavItem>
             </Nav>
           )}
-          {isUserLogin(user) && (
+          {isUserLogin() && (
             <Nav navbar>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  {user.unique_name}
+                  {loginUser.unique_name}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
@@ -89,7 +97,18 @@ const Header = ({ user }) => {
 };
 
 Header.propTypes = {
-  user: PropTypes.object
+  loginUser: PropTypes.object.isRequired,
+  getLoginUserFromToken: PropTypes.func.isRequired
 };
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    loginUser: state.loginUser
+  };
+}
+
+const mapDispatchToProps = {
+  getLoginUserFromToken
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

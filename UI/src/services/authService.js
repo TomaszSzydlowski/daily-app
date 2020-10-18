@@ -19,8 +19,8 @@ function register(user) {
 async function login(user) {
   try {
     const response = await http.post(apiLoginEndpoint, user);
-    const jwt = await handleResponse(response);
-    localStorage.setItem(tokenKey, jwt);
+    return handleResponse(response);
+    // localStorage.setItem(tokenKey, jwt);
   } catch (error) {
     handleError(error);
   }
