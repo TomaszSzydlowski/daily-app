@@ -59,7 +59,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     if (!content) errors.content = 'Content is required.';
 
     setErrors(errors);
-    // Form is valid if the rrors object still has no properties
+    // Form is valid if the errors object still has no properties
     return Object.keys(errors).length === 0;
   }
 

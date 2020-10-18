@@ -1,8 +1,9 @@
-import http from './httpService';
+import http, { handleResponse } from './httpService';
+import handleError from './logService';
 import jwtDecode from 'jwt-decode';
 
-const apiLoginEndpoint = 'api/auth/login';
-const apiRegisterEndpoint = 'api/auth/register';
+const apiLoginEndpoint = process.env.API_URL + '/api/auth/login/';
+const apiRegisterEndpoint = process.env.API_URL + '/api/auth/register/';
 
 const tokenKey = 'token';
 
@@ -15,9 +16,14 @@ function register(user) {
   });
 }
 
-async function login(email, password) {
-  const { data: jwt } = await http.post(apiLoginEndpoint, { email, password });
-  localStorage.setItem(tokenKey, jwt);
+async function login(user) {
+  try {
+    const response = await http.post(apiLoginEndpoint, user);
+    const jwt = await handleResponse(response);
+    localStorage.setItem(tokenKey, jwt);
+  } catch (error) {
+    handleError(error);
+  }
 }
 
 function loginWithJwt(jwt) {

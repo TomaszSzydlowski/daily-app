@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   Collapse,
@@ -13,12 +14,12 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-const Header = (user) => {
+const Header = ({ user }) => {
   const [ isOpen, setIsOpen ] = useState(false);
 
   function isUserLogin(user) {
-    for (let i in user) return false;
-    return true;
+    for (let i in user) return true;
+    return false;
   }
 
   return (
@@ -85,6 +86,10 @@ const Header = (user) => {
       </Navbar>
     </React.Fragment>
   );
+};
+
+Header.propTypes = {
+  user: PropTypes.object
 };
 
 export default Header;
