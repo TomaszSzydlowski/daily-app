@@ -1,0 +1,14 @@
+.LoginForm-container {
+  background-color: #f8f9fa;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40ch;
+  padding: 20px;
+}
+
+#SignIn {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}

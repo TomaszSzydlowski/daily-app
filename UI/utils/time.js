@@ -1,24 +1,23 @@
-export const getCurrentTime=()=>{
-  const now = new Date();
-  const getMonth = (now) => {
-    const month = now.getMonth() + 1;
-    return month.toString().length > 1 ? now.getMonth() + 1 : '0' + (now.getMonth() + 1);
+export const parseDateToTimeField = (date) => {
+  const getMonth = (time) => {
+    const month = time.getMonth() + 1;
+    return month.toString().length > 1 ? time.getMonth() + 1 : '0' + (time.getMonth() + 1);
   };
 
-  const getDate = (now) => {
-    const date = now.getDate() + 1;
-    return date.toString().length > 1 ? now.getDate() : '0' + now.getDate();
+  const getDate = (time) => {
+    const date = time.getDate();
+    return date.toString().length > 1 ? time.getDate() : '0' + time.getDate();
   };
 
-  const getHours = (now) => {
-    const hours = now.getHours() + 1;
-    return hours.toString().length > 1 ? now.getHours() : '0' + now.getHours();
+  const getHours = (time) => {
+    const hours = time.getHours();
+    return hours.toString().length > 1 ? time.getHours() : '0' + time.getHours();
   };
 
-  const getMinutes = (now) => {
-    const hours = now.getMinutes() + 1;
-    return hours.toString().length > 1 ? now.getMinutes() : '0' + now.getMinutes();
+  const getMinutes = (time) => {
+    const hours = time.getMinutes();
+    return hours.toString().length > 1 ? time.getMinutes() : '0' + time.getMinutes();
   };
 
-  return `${now.getFullYear()}-${getMonth(now)}-${getDate(now)}T${getHours(now)}:${getMinutes(now)}`;
-}
+  return `${date.getFullYear()}-${getMonth(date)}-${getDate(date)}T${getHours(date)}:${getMinutes(date)}`;
+};

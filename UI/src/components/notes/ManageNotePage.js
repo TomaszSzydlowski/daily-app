@@ -7,7 +7,7 @@ import NoteForm from './NoteForm';
 import { newNote } from '../../../tools/mockData';
 import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
-import { getCurrentTime } from '../../../utils/time';
+import { parseDateToTimeField } from '../../../utils/time';
 
 export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveNote, history, ...props }) {
   const [ note, setNote ] = useState({ ...props.note });
@@ -16,18 +16,13 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
 
   useEffect(
     () => {
+      initNote();
       if (notes.length === 0) {
         try {
           loadNotes();
         } catch (error) {
           alert('Loading notes failed' + error);
         }
-      } else {
-        const newNote = { ...props.note };
-        if (!newNote.id) {
-          newNote.date = getCurrentTime();
-        }
-        setNote(newNote);
       }
 
       if (projects.length === 0) {
@@ -40,6 +35,12 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     },
     [ props.note ]
   );
+
+  function initNote() {
+    const newNote = { ...props.note };
+    newNote.date = !newNote.id ? parseDateToTimeField(new Date()) : parseDateToTimeField(new Date(props.note.date));
+    setNote(newNote);
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -58,7 +59,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     if (!content) errors.content = 'Content is required.';
 
     setErrors(errors);
-    // Form is valid if the rrors object still has no properties
+    // Form is valid if the errors object still has no properties
     return Object.keys(errors).length === 0;
   }
 

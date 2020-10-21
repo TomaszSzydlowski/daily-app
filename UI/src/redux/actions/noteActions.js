@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import * as noteApi from '../../api/noteApi';
+import * as noteApi from '../../services/noteSevice';
 import { beginApiCall, apiCallError } from './apiStatusActions';
 
 export function loadNoteSuccess(notes) {
