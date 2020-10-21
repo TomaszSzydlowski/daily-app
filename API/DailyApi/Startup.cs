@@ -119,6 +119,8 @@ namespace DailyApi
             });
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
+            // app.UseMvc();
 
             app.UseAuthentication();
             app.UseAuthorization();
