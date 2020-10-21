@@ -1,12 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Spinner from '../common/Spinner';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import './LoginForm.css';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Spinner from '../common/Spinner';
+import { register } from '../../redux/actions/authActions';
 import { connect } from 'react-redux';
-import { login } from '../../redux/actions/authActions';
+import './RegisterForm.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,71 +17,63 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function LoginForm({ login, history }) {
+function Registerform({ history, register }) {
   const [ errors, setErrors ] = useState({});
-  const [ user, setUser ] = useState({ email: '', password: '' });
+  const [ registerUser, setRegisterUser ] = useState({ email: '', password: '', passwordConfirm: '' });
   const [ saving, setSaving ] = useState(false);
   const classes = useStyles();
 
+  async function doSubmit(event) {
+    event.preventDefault();
+    if (!formIsValid()) return;
+
+    setSaving(true);
+    try {
+      await register(registerUser.email, registerUser.password);
+      toast.success('Successfully logged in.');
+      setSaving(false);
+      history.push('/notes');
+    } catch (error) {
+      setSaving(false);
+      toast.error(error.message);
+    }
+  }
+
+  function formIsValid() {
+    const { email, password, passwordConfirm } = registerUser;
+    const errors = {};
+
+    if (!email) errors.email = 'Email is required';
+    if (!password) errors.password = 'Password is required';
+    if (password !== passwordConfirm) errors.passwordConfirm = 'Passwords do not match';
+    if (!passwordConfirm) errors.passwordConfirm = 'Confirm password is required';
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  }
+
   function handleChange(event) {
     const { name, value } = event.target;
-    setUser((prevUser) => ({
+    setRegisterUser((prevUser) => ({
       ...prevUser,
       [name]: value
     }));
   }
 
-  async function doSubmit(event) {
-    event.preventDefault();
-    if (!formIsValid()) return;
-    setSaving(true);
-
-    try {
-      await login(user);
-      toast.success('Successfully logged in.');
-      setSaving(false);
-      history.push('/notes');
-    } catch (error) {
-      setUser({ email: '', password: '' });
-      setSaving(false);
-      if (isHandleError(error)) return;
-      toast.error(error.message);
-    }
-  }
-
-  function isHandleError(error) {
-    const errors = {};
-    if (error.response.status === 401) errors.unauthorize = 'Login, e-mail or password are incorrect';
-    setErrors(errors);
-    return Object.keys(errors).length > 0;
-  }
-
-  function formIsValid() {
-    const { email, password } = user;
-    const errors = {};
-
-    if (!email) errors.email = 'Email is required.';
-    if (!password) errors.password = 'Password is required.';
-
-    setErrors(errors);
-    // Form is valid if the errors object still has no properties
-    return Object.keys(errors).length === 0;
-  }
-
   return (
-    <div className="LoginForm-container">
+    <div className="RegisterForm-container">
       <div className="row">
-        <h2 id="SignIn">Sign In</h2>
+        <h2 id="SignIn">Register</h2>
       </div>
       <form onSubmit={doSubmit} className={classes.root} noValidate autoComplete="off">
         <div className="row">
           <TextField
             id="email-standard-basic"
-            label="E-mail"
+            label="Email"
             name="email"
-            value={user.email}
             onChange={handleChange}
-            error={errors.email !== undefined || errors.unauthorize !== undefined}
+            error={errors.email !== undefined}
             helperText={errors.email}
           />
         </div>
@@ -91,10 +83,20 @@ export function LoginForm({ login, history }) {
             label="Password"
             type="password"
             name="password"
-            value={user.password}
             onChange={handleChange}
-            error={errors.password !== undefined || errors.unauthorize !== undefined}
-            helperText={errors.password || errors.unauthorize}
+            error={errors.password !== undefined}
+            helperText={errors.password}
+          />
+        </div>
+        <div className="row">
+          <TextField
+            id="password-confim-standard-basic"
+            label="Confirm password"
+            type="password"
+            name="passwordConfirm"
+            onChange={handleChange}
+            error={errors.passwordConfirm !== undefined}
+            helperText={errors.passwordConfirm}
           />
         </div>
         <div className="row">
@@ -107,7 +109,7 @@ export function LoginForm({ login, history }) {
               className="btn btn-primary"
               style={{ width: '100%', marginTop: '30px' }}
             >
-              LOG IN
+              REGISTER
             </button>
           )}
         </div>
@@ -115,10 +117,9 @@ export function LoginForm({ login, history }) {
     </div>
   );
 }
-
-LoginForm.propTypes = {
+Registerform.propTypes = {
   history: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired
 };
 
 function mapStateToProps() {
@@ -126,7 +127,7 @@ function mapStateToProps() {
 }
 
 const mapDispatchToProps = {
-  login
+  register
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Registerform);

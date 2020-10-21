@@ -74,7 +74,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
       history.push('/notes');
     } catch (error) {
       setSaving(false);
-      setErrors({ onSave: error.message });
+      toast.error(error.message)
     }
   }
 

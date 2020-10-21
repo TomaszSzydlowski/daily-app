@@ -27,11 +27,6 @@ const NoteForm = ({ note, projects, onSave, onChange, saving = false, errors = {
       <div className="container">
         <div className="row">
           <h2>{note.id ? 'Edit' : 'Add'} Note</h2>
-          {errors.onSave && (
-            <div className="alert alert-danger" role="alert">
-              {errors.onSave}
-            </div>
-          )}
         </div>
         <div className="row marginTop15px">
           <TextField

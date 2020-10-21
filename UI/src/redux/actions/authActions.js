@@ -7,6 +7,10 @@ export function loginSuccess(user) {
   return { type: types.LOGIN_SUCCESS, user };
 }
 
+export function registerSuccess(user) {
+  return { type: types.REGISTER_SUCCESS, user };
+}
+
 export function getLoginUserFromTokenSuccess(user) {
   return { type: types.GET_LOGIN_USER_FROM_TOKEN_SUCCESS, user };
 }
@@ -23,6 +27,21 @@ export function login(user) {
       authApi.loginWithJwt(loginResponse);
       const decodedJWT = jwtDecode(loginResponse);
       dispatch(loginSuccess(decodedJWT));
+    } catch (error) {
+      dispatch(apiCallError(error));
+      throw error;
+    }
+  };
+}
+
+export function register(email, password) {
+  return async function(dispatch) {
+    dispatch(beginApiCall());
+    try {
+      const {headers} = await authApi.register(email, password);
+      authApi.loginWithJwt(headers['authorization']);
+      const decodedJWT = jwtDecode(headers['authorization']);
+      dispatch(registerSuccess(decodedJWT));
     } catch (error) {
       dispatch(apiCallError(error));
       throw error;
