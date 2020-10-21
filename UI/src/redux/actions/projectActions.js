@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import * as projectApi from '../../api/projectApi';
+import * as projectApi from '../../services/projectService';
 import { beginApiCall, apiCallError } from './apiStatusActions';
 
 export function loadProjectsSuccess(projects) {

@@ -6,25 +6,31 @@ import Header from './common/Header';
 import PageNotFound from './PageNotFound';
 import NotesPage from './notes/NotesPage';
 // eslint-disable-next-line import/no-named-as-default
+import LoginForm from './authComponents/LoginForm';
+import Logout from './authComponents/Logout';
+// eslint-disable-next-line import/no-named-as-default
 import ManageNotePage from './notes/ManageNotePage';
 import { ToastContainer } from 'react-toastify';
+import ProtectedRoute from './common/ProctectedRoute';
 import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+export function App() {
   return (
-    <div className="container-fluid">
+    <React.Fragment>
       <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/notes" component={NotesPage} />
-        <Route path="/note/:id" component={ManageNotePage} />
-        <Route path="/note" component={ManageNotePage} />
-        <Route component={PageNotFound} />
-      </Switch>
+      <main className="container">
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutPage} />
+          <ProtectedRoute path="/notes" component={NotesPage} />
+          <ProtectedRoute path="/note/:id" component={ManageNotePage} />
+          <ProtectedRoute path="/note" component={ManageNotePage} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </main>
       <ToastContainer autoClose={3000} hideProgressBar />
-    </div>
+    </React.Fragment>
   );
 }
-
-export default App;

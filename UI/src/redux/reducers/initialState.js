@@ -1,5 +1,6 @@
 export default {
   notes: [],
   projects: [],
-  apiCallsInProgress: 0
+  apiCallsInProgress: 0,
+  loginUser: {}
 };

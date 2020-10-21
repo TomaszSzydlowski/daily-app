@@ -15,6 +15,7 @@ const jsonServer = require('json-server');
 const server = jsonServer.create();
 const path = require('path');
 const router = jsonServer.router(path.join(__dirname, 'db.json'));
+const mockJWT = require('./mockJWT');
 
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults({
@@ -24,6 +25,13 @@ const middlewares = jsonServer.defaults({
 
 // Set default middlewares (logger, static, cors and no-cache)
 server.use(middlewares);
+
+server.use(
+  jsonServer.rewriter({
+    '/api/notes/': '/notes/',
+    '/api/projects/': '/projects/'
+  })
+);
 
 // To handle POST, PUT and PATCH you need to use a body-parser. Using JSON Server's bodyParser
 server.use(jsonServer.bodyParser);
@@ -52,6 +60,11 @@ server.post('/notes/', function(req, res, next) {
     // req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
     next();
   }
+});
+
+server.post('/api/auth/login/', (req, res) => {
+  const { jwt } = mockJWT;
+  res.status(200).jsonp(jwt);
 });
 
 // Use default router

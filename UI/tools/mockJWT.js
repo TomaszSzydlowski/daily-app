@@ -1,0 +1,6 @@
+const jwt =
+  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNzFlNmZkZi00MzU0LTQ4YTktYjZkNC0wMGM0YTI3OTI2YjIiLCJ1bmlxdWVfbmFtZSI6Ikpzb25TZXJ2ZXJNb2NrVXNlckBleGFtcGxlLmNvbSIsIm5iZiI6MTYwMzAxMjE2OSwiZXhwIjoxNjAzMDE1NzY5LCJpYXQiOjE2MDMwMTIxNjl9.4Hk5Pav5nhvb6pPCMqOvsnfm81h_NfijYLJ9J1baIqykbouoL7TPtzqYQEud0FGefBfSBoKh2ct5zxLclCwQwg';
+
+module.exports = {
+  jwt
+};
