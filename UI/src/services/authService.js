@@ -9,10 +9,10 @@ const tokenKey = 'token';
 
 http.setJwt(getJwt());
 
-function register(user) {
+function register(email, password) {
   return http.post(apiRegisterEndpoint, {
-    email: user.email,
-    password: user.password
+    email,
+    password
   });
 }
 

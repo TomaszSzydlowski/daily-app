@@ -63,8 +63,27 @@ server.post('/notes/', function(req, res, next) {
 });
 
 server.post('/api/auth/login/', (req, res) => {
-  const { jwt } = mockJWT;
-  res.status(200).jsonp(jwt);
+  if (req.body.email === 'bad') {
+    res.status(401);
+    res.end();
+  } else {
+    const { jwt } = mockJWT;
+    res.status(200).jsonp(jwt);
+    res.end();
+  }
+});
+
+server.post('/api/auth/register/', (req, res) => {
+  if (req.body.email === 'bad') {
+    res.status(400);
+    res.end();
+  } else {
+    const { jwt } = mockJWT;
+    res.setHeader('Access-Control-Expose-Headers', 'Authorization, Content-Type');
+    res.setHeader('Authorization', jwt);
+    res.status(200);
+    res.end();
+  }
 });
 
 // Use default router

@@ -7,6 +7,7 @@ import PageNotFound from './PageNotFound';
 import NotesPage from './notes/NotesPage';
 // eslint-disable-next-line import/no-named-as-default
 import LoginForm from './authComponents/LoginForm';
+import RegisterForm from './authComponents/RegisterForm';
 import Logout from './authComponents/Logout';
 // eslint-disable-next-line import/no-named-as-default
 import ManageNotePage from './notes/ManageNotePage';
@@ -22,6 +23,7 @@ export function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutPage} />
           <ProtectedRoute path="/notes" component={NotesPage} />
