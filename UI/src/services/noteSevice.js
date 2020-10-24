@@ -1,7 +1,7 @@
 import http, { handleResponse } from './httpService';
 import handleError from './logService';
 
-const baseUrl = process.env.API_URL + '/notes/';
+const baseUrl = process.env.API_URL + '/api/notes/';
 
 export async function getNotes() {
   try {

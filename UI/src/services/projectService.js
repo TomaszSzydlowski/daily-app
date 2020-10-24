@@ -1,6 +1,7 @@
-const baseUrl = process.env.API_URL + '/projects/';
 import http, { handleResponse } from './httpService';
 import handleError from './logService';
+
+const baseUrl = process.env.API_URL + '/api/projects/';
 
 export async function getProjects() {
   try {
