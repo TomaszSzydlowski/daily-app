@@ -2,8 +2,8 @@
   "name": "daily-app",
   "description": "The application stores stories of tasks from everyday life. Thanks to it, you can easily check what was done in the past that day.",
   "scripts": {
-    "start": "run-p start:dev start:api",
-    "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "start": "run-p start:jsonServer start:api",
+    "start:jsonServer": "webpack-dev-server --config webpack.config.jsonServer.js --port 3000",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
     "test": "jest --watch",
@@ -12,7 +12,10 @@
     "prebuild": "run-p clean:build test:ci",
     "build": "webpack --config webpack.config.prod.js",
     "postbuild": "run-p start:api serve:build",
-    "serve:build": "http-server ./build"
+    "serve:build": "http-server ./build",
+    "startWithDotNet":"run-p startWithDotNet:react startWithDotNet:dotNet",
+    "startWithDotNet:react": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "startWithDotNet:dotNet": "dotnet run -p ..\\API\\DailyApi"
   },
   "jest": {
     "setupFiles": [
