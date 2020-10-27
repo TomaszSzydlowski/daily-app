@@ -1,8 +1,11 @@
 import * as program from "commander";
 import * as chalk from "chalk";
-
+import * as authService from './services/authService';
+import * as noteService from "./services/noteService";
+import * as http from "./services/httpService";
 import { isFileExists, decryptCredentials, encryptCredentials, writeFile } from './utils/config';
 import inquirer = require("inquirer");
+import { INote } from "./interfaces/INote";
 
 const configPath = "./config.json";
 const packageJson = require('../package.json');
@@ -40,6 +43,7 @@ program
                     '\nSuccessfully reset to default values! Please run "DailyCli note" to start over.\n'));
             } else {
                 let credentials: any;
+                let jwt: string;
                 if (savedConfig.firstLogin === true) {
                     console.log('\n');
                     credentials = await inquirer.prompt([
@@ -56,17 +60,39 @@ program
                         },
                     ]);
                     encryptCredentials(config, credentials);
-                    config.firstLogin = false;
-                    //TODO
+                    // config.firstLogin = false; // temporary
+                    jwt = await authService.login(credentials);
                 }
                 else {
                     const savedCredentials: any = {};
                     decryptCredentials(savedConfig, savedCredentials);
                     console.log(chalk.yellowBright(loginText));
                     //TODO
-                    // config = await Wisher.login(savedCredentials, config, savedConfig); // get jwt
+                    jwt = await authService.login(savedCredentials);
                 }
-
+                console.log(chalk.green('\nSuccessfully login.\n'))
+                let note: INote;
+                note = await inquirer.prompt([
+                    {
+                        message: 'Please type your note:',
+                        name: 'content',
+                        type: 'input',
+                    },
+                    {
+                        message: 'Please select project:',
+                        name: 'projectId',
+                        type: 'input',
+                        default: 2
+                    },
+                    {
+                        message: 'Please select date:',
+                        name: 'date',
+                        type: 'input',
+                        default: new Date().toJSON()
+                    },
+                ]);
+                const response = await noteService.saveNote(note);
+                console.log(chalk.green(`\nSuccessfully added a note at ${new Date(response.createdAt).toLocaleDateString('en-GB')}`))
             }
             await writeFile(config, configPath);
             process.exit(0);
