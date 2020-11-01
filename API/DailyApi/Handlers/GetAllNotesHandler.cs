@@ -18,7 +18,7 @@ namespace DailyApi.Handlers
 
         public async Task<NotesResponse> Handle(GetAllNotesQuery request, CancellationToken cancellationToken)
         {
-            return await _noteService.GetNotesAsync(request.UserId, request.Date);
+            return await _noteService.GetNotesAsync(request.UserId, request.Filter);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace DailyApi.IntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetAll_TwoNotes_ReturnsOneNotesByQuery()
+        public async Task GetAll_TwoNotes_ReturnsOneNotesByFilers()
         {
             // Arrange
             await AuthenticateAsync();
@@ -119,7 +119,7 @@ namespace DailyApi.IntegrationTest.Tests
             var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
 
             Assert.NotEmpty(createdNote.Id.ToString());
-            Assert.Equal(1, responseNote.Count());
+            Assert.Single(responseNote);
             Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
             Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
             Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);

@@ -12,6 +12,7 @@ using DailyApi.Controllers.Config;
 using MediatR;
 using DailyApp.Queries;
 using DailyApi.Resources;
+using DailyApp.Requests.Filters;
 
 namespace DailyApi.Controllers
 {
@@ -35,11 +36,10 @@ namespace DailyApi.Controllers
         [HttpGet(ApiRoutes.Notes.GetAll)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> GetAllNotesAsync([FromQuery] string date)
+        public async Task<IActionResult> GetAllNotesAsync([FromQuery] GetAllNotesFilters filters)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var query = new GetAllNotesQuery(userId, date);
+            var query = new GetAllNotesQuery(userId, filters);
             var result = await _mediator.Send(query);
 
             if (!result.Success)
