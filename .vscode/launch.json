@@ -20,6 +20,45 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Register new daily user",
+            "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
+            "outFiles": [
+                "${workspaceFolder}/CLI/**/*.js"
+            ],
+            "args": [
+               "note", "--register"
+            ],
+            "console" : "integratedTerminal",
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Reset Daily CLI",
+            "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
+            "outFiles": [
+                "${workspaceFolder}/CLI/**/*.js"
+            ],
+            "args": [
+                "note", "--reset"
+            ],
+            "console" : "integratedTerminal",
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Add Note CLI",
+            "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
+            "outFiles": [
+                "${workspaceFolder}/CLI/**/*.js"
+            ],
+            "args": [
+               "note", "--add"
+            ],
+            "console" : "integratedTerminal",
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Reset Daily CLI",
             "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
             "outFiles": [

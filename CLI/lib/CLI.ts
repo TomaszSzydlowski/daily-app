@@ -4,6 +4,9 @@ import { isFileExists, writeFile } from './utils/config';
 import { configPath, packageJson } from "./utils/const";
 import { login } from "./modules/login";
 import { addNote } from "./modules/addNote";
+import { register } from "./modules/register";
+
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0' // temporary solution
 
 let config: any = {
     firstLogin: true,
@@ -22,6 +25,7 @@ program
 program
     .command('note')
     .option('-a, --add', 'add note')
+    .option('-reg --register', 'register new user')
     .option('-r, --reset', 'resets all config values to default')
     .action(async (options: any) => {
         try {
@@ -33,6 +37,9 @@ program
                 await writeFile(config, configPath);
                 console.log(chalk.green(
                     '\nSuccessfully reset to default values! Please run "DailyCli note" to start over.\n'));
+            }
+            if (options.register) {
+                await register();
             }
             if (options.add) {
                 await login(savedConfig, config);
