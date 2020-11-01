@@ -91,6 +91,41 @@ namespace DailyApi.IntegrationTest.Tests
         }
 
         [Fact]
+        public async Task GetAll_TwoNotes_ReturnsOneNotesByQuery()
+        {
+            // Arrange
+            await AuthenticateAsync();
+            var createdNote = await CreateNoteAsync(
+                new CreateNoteCommand
+                {
+                    Date = _dateTimeRequestFake,
+                    Content = _contentFake,
+                    ProjectId = 1
+                });
+            var createdNote2 = await CreateNoteAsync(
+                new CreateNoteCommand
+                {
+                    Date = _dateTimeSecondRequestFake,
+                    Content = _contentSecondFake,
+                    ProjectId = 2
+                });
+
+            //Act
+            var response = await TestClient.GetAsync(ApiRoutes.Notes.GetAll + "?date=2020-10-11"); // by userId
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+            var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
+
+            Assert.NotEmpty(createdNote.Id.ToString());
+            Assert.Equal(1, responseNote.Count());
+            Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
+            Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
+            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
+        }
+
+        [Fact]
         public async Task Post_OneNote_ReturnPostedNote()
         {
             // Arrange

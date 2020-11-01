@@ -17,11 +17,25 @@ namespace DailyApi.Persistence.Repository
 
         }
 
-        public async Task<IEnumerable<Note>> ListAsync(Guid userId)
+        public async Task<IEnumerable<Note>> ListAsync(Guid userId, string date = null)
         {
             ConfigDbSet();
-            var all = await DbSet.FindAsync(Builders<Note>.Filter.Eq(x => x.UserId, userId));
-            return all.ToList();
+            IAsyncCursor<Note> filteredNotes;
+            var filterBuilder = Builders<Note>.Filter;
+            if (!string.IsNullOrEmpty(date))
+            {
+                var startDateFilter = DateTime.Parse(date);
+                var endDateFilter = startDateFilter.AddDays(1);
+                filteredNotes = await DbSet.FindAsync(
+                    filterBuilder.Eq(x => x.UserId, userId) &
+                    filterBuilder.Gte(x => x.Date, startDateFilter) &
+                    filterBuilder.Lte(x => x.Date, endDateFilter));
+            }
+            else
+            {
+                filteredNotes = await DbSet.FindAsync(filterBuilder.Eq(x => x.UserId, userId));
+            }
+            return filteredNotes.ToList();
         }
     }
 }

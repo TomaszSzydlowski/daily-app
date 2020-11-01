@@ -21,7 +21,7 @@ namespace DailyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<NotesResponse> GetNotesAsync(Guid userId)
+        public async Task<NotesResponse> GetNotesAsync(Guid userId, string date = null)
         {
             var isUserExist = await _authRepository.UserExists(userId);
             if (!isUserExist)
@@ -31,7 +31,7 @@ namespace DailyApi.Services
 
             try
             {
-                var result = await _noteRepository.ListAsync(userId);
+                var result = await _noteRepository.ListAsync(userId, date);
                 return new NotesResponse(result);
             }
             catch (Exception ex)

@@ -35,11 +35,11 @@ namespace DailyApi.Controllers
         [HttpGet(ApiRoutes.Notes.GetAll)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> GetAllNotesAsync()
+        public async Task<IActionResult> GetAllNotesAsync([FromQuery] string date)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var query = new GetAllNotesQuery(userId);
+            var query = new GetAllNotesQuery(userId, date);
             var result = await _mediator.Send(query);
 
             if (!result.Success)
