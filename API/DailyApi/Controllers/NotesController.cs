@@ -19,15 +19,12 @@ namespace DailyApi.Controllers
     [Authorize]
     public class NotesController : Controller
     {
-        private readonly INoteService _noteService;
-
         private readonly IMapper _mapper;
 
         private readonly IMediator _mediator;
 
-        public NotesController(INoteService noteService, IMapper mapper, IMediator mediator)
+        public NotesController(IMapper mapper, IMediator mediator)
         {
-            _noteService = noteService;
             _mapper = mapper;
             _mediator = mediator;
         }

@@ -9,20 +9,20 @@ using DailyApi.Domain.Services.Communication;
 using DailyApp.Queries;
 using MediatR;
 
-namespace DailyApi.Handlers
+namespace DailyApi.Handlers.NoteHandlers
 {
-    public class DeleteNoteHandler : IRequestHandler<DeleteNoteCommand, NoteResponse>
+    public class DeleteAllNotesHandler : IRequestHandler<DeleteAllNotesCommand, NotesResponse>
     {
         private readonly INoteService _noteService;
 
-        public DeleteNoteHandler(INoteService noteService)
+        public DeleteAllNotesHandler(INoteService noteService)
         {
             _noteService = noteService;
         }
 
-        public async Task<NoteResponse> Handle(DeleteNoteCommand request, CancellationToken cancellationToken)
+        public async Task<NotesResponse> Handle(DeleteAllNotesCommand request, CancellationToken cancellationToken)
         {
-            return await _noteService.DeleteAsync(Guid.Parse(request.NoteId), request.UserId);
+            return await _noteService.DeleteAllAsync(request.UserId);
         }
     }
 }

@@ -5,7 +5,7 @@ using DailyApi.Domain.Services.Communication;
 using DailyApp.Queries;
 using MediatR;
 
-namespace DailyApi.Handlers
+namespace DailyApi.Handlers.NoteHandlers
 {
     public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, NotesResponse>
     {

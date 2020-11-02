@@ -14,6 +14,12 @@ namespace DailyApi.Controllers.Config
             public const string DeleteAll = Root + "/notes";
         }
 
+        public static class Projects
+        {
+            public const string GetAll = Root + "/projects";
+            public const string Post = Root + "/projects";
+        }
+
         public static class Auth
         {
             public const string Register = Root + "/auth/register";
