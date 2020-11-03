@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using DailyApi.Resources;
 using DailyApi.Commands.NoteCommands;
 using DailyApi.Commands.AuthCommands;
+using DailyApi.Commands.ProjectCommands;
 
 namespace DailyApi.IntegrationTest.Base
 {
@@ -27,6 +28,12 @@ namespace DailyApi.IntegrationTest.Base
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Notes.Post, request);
             return await response.Content.ReadAsAsync<NoteResource>();
+        }
+
+        protected async Task<ProjectResource> CreateProjectAsync(CreateProjectCommand request)
+        {
+            var response = await TestClient.PostAsJsonAsync(ApiRoutes.Projects.Post, request);
+            return await response.Content.ReadAsAsync<ProjectResource>();
         }
         private async Task<string> GetJwtAsync()
         {

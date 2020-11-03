@@ -5,10 +5,10 @@ using DailyApi.Commands.NoteCommands;
 using DailyApi.Domain.Models;
 using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
-using DailyApp.Queries;
+using DailyApi.Queries;
 using MediatR;
 
-namespace DailyApi.Handlers
+namespace DailyApi.Handlers.NoteHandlers
 {
     public class UpdateNoteHandler : IRequestHandler<UpdateNoteCommand, NoteResponse>
     {

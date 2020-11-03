@@ -13,7 +13,7 @@ namespace DailyApi.Commands.NoteCommands
         [Required]
         public string Content { get; set; }
         [Required]
-        public int ProjectId { get; set; }
+        public string ProjectId { get; set; }
         public Guid UserId { get; set; }
     }
 }

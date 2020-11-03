@@ -10,23 +10,21 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using DailyApi.Controllers.Config;
 using MediatR;
-using DailyApp.Queries;
+using DailyApi.Queries;
 using DailyApi.Resources;
+using DailyApi.Requests.Filters;
 
 namespace DailyApi.Controllers
 {
     [Authorize]
     public class NotesController : Controller
     {
-        private readonly INoteService _noteService;
-
         private readonly IMapper _mapper;
 
         private readonly IMediator _mediator;
 
-        public NotesController(INoteService noteService, IMapper mapper, IMediator mediator)
+        public NotesController(IMapper mapper, IMediator mediator)
         {
-            _noteService = noteService;
             _mapper = mapper;
             _mediator = mediator;
         }
@@ -35,11 +33,10 @@ namespace DailyApi.Controllers
         [HttpGet(ApiRoutes.Notes.GetAll)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> GetAllNotesAsync()
+        public async Task<IActionResult> GetAllNotesAsync([FromQuery] GetNotesFilters filters)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var query = new GetAllNotesQuery(userId);
+            var query = new GetNotesQuery(userId, filters);
             var result = await _mediator.Send(query);
 
             if (!result.Success)

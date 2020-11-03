@@ -4,6 +4,7 @@ using DailyApi.Domain.Repositories;
 using DailyApi.Domain.Models;
 using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
+using DailyApi.Requests.Filters;
 
 namespace DailyApi.Services
 {
@@ -21,7 +22,7 @@ namespace DailyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<NotesResponse> GetNotesAsync(Guid userId)
+        public async Task<NotesResponse> GetNotesAsync(Guid userId, GetNotesFilters filters = null)
         {
             var isUserExist = await _authRepository.UserExists(userId);
             if (!isUserExist)
@@ -31,7 +32,7 @@ namespace DailyApi.Services
 
             try
             {
-                var result = await _noteRepository.ListAsync(userId);
+                var result = await _noteRepository.ListAsync(userId, filters);
                 return new NotesResponse(result);
             }
             catch (Exception ex)

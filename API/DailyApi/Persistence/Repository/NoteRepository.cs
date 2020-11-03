@@ -5,8 +5,9 @@ using DailyApi.Persistence.Repositories;
 using System.Threading.Tasks;
 using System;
 using MongoDB.Driver;
+using DailyApi.Requests.Filters;
 
-namespace DailyApi.Persistence.Repository
+namespace DailyApi.Persistence.Repositories
 {
     public class NoteRepository : BaseRepository<Note>, INoteRepository
     {
@@ -17,11 +18,25 @@ namespace DailyApi.Persistence.Repository
 
         }
 
-        public async Task<IEnumerable<Note>> ListAsync(Guid userId)
+        public async Task<IEnumerable<Note>> ListAsync(Guid userId, GetNotesFilters filters = null)
         {
             ConfigDbSet();
-            var all = await DbSet.FindAsync(Builders<Note>.Filter.Eq(x => x.UserId, userId));
-            return all.ToList();
+            IAsyncCursor<Note> filteredNotes;
+            var filterBuilder = Builders<Note>.Filter;
+            if (!string.IsNullOrEmpty(filters?.Date))
+            {
+                var startDateFilter = DateTime.Parse(filters.Date);
+                var endDateFilter = startDateFilter.AddDays(1);
+                filteredNotes = await DbSet.FindAsync(
+                    filterBuilder.Eq(x => x.UserId, userId) &
+                    filterBuilder.Gte(x => x.Date, startDateFilter) &
+                    filterBuilder.Lte(x => x.Date, endDateFilter));
+            }
+            else
+            {
+                filteredNotes = await DbSet.FindAsync(filterBuilder.Eq(x => x.UserId, userId));
+            }
+            return filteredNotes.ToList();
         }
     }
 }

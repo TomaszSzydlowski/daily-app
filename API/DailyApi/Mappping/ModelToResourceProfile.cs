@@ -13,6 +13,7 @@ namespace Supermarket.Mapping
                 desc => desc.Date,
                 opt => opt.MapFrom(src => src.Date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
             );
+            CreateMap<Project, ProjectResource>();
         }
     }
 }

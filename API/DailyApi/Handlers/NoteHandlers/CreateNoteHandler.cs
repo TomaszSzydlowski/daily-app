@@ -7,7 +7,7 @@ using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
 using MediatR;
 
-namespace DailyApi.Handlers
+namespace DailyApi.Handlers.NoteHandlers
 {
     public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteResponse>
     {

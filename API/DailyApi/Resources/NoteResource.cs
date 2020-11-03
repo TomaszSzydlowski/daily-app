@@ -7,6 +7,6 @@ namespace DailyApi.Resources
         public Guid Id { get; set; }
         public string Date { get; set; }
         public string Content { get; set; }
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

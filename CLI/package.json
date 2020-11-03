@@ -1,0 +1,23 @@
+{
+  "name": "daily-cli",
+  "version": "1.0.0",
+  "description": "Console layout to quick access to notes in daily-app",
+  "main": "bin\\cli.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf bin\\",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tomasz Szydlowski",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0",
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "typescript": "^4.0.3"
+  }
+}
