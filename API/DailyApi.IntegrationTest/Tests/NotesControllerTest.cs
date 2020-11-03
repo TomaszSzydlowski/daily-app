@@ -8,6 +8,7 @@ using DailyApi.IntegrationTest.Base;
 using Xunit;
 using DailyApi.Commands.NoteCommands;
 using DailyApi.Resources;
+using System;
 
 namespace DailyApi.IntegrationTest.Tests
 {
@@ -19,6 +20,8 @@ namespace DailyApi.IntegrationTest.Tests
         private readonly string _dateTimeSecondRequestFake = "2020-10-12T21:19Z";
         private readonly string _contentFake = "Integration test content";
         private readonly string _contentSecondFake = "Integration test second content";
+        private readonly Guid _fakeFirstProjectId = new Guid();
+        private readonly Guid _fakeSecoundProjectId = new Guid();
         public NotesControllerTest() : base()
         {
         }
@@ -33,7 +36,7 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
 
             //Act
@@ -48,7 +51,7 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.NotEmpty(createdNote.Id.ToString());
             Assert.Equal(_dateTimeRequestFake, responseNote.Date);
             Assert.Equal(_contentFake, responseNote.Content);
-            Assert.Equal(1, responseNote.ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.ProjectId);
         }
 
         [Fact]
@@ -61,14 +64,14 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
             var createdNote2 = await CreateNoteAsync(
                 new CreateNoteCommand
                 {
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
-                    ProjectId = 2
+                    ProjectId = _fakeSecoundProjectId.ToString()
                 });
 
             //Act
@@ -82,12 +85,12 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.NotEmpty(createdNote.Id.ToString());
             Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
             Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
-            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.FirstOrDefault().ProjectId);
 
             Assert.NotEmpty(createdNote2.Id.ToString());
             Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
             Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
-            Assert.Equal(2, responseNote.LastOrDefault().ProjectId);
+            Assert.Equal(_fakeSecoundProjectId, responseNote.LastOrDefault().ProjectId);
         }
 
         [Fact]
@@ -100,14 +103,14 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
             var createdNote2 = await CreateNoteAsync(
                 new CreateNoteCommand
                 {
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
-                    ProjectId = 2
+                    ProjectId = _fakeSecoundProjectId.ToString()
                 });
 
             //Act
@@ -122,7 +125,7 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Single(responseNote);
             Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
             Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
-            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.FirstOrDefault().ProjectId);
         }
 
         [Fact]
@@ -137,7 +140,7 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
 
             //Assert
@@ -148,7 +151,7 @@ namespace DailyApi.IntegrationTest.Tests
 
             Assert.Equal(_dateTimeRequestFake, responseNote.Date);
             Assert.Equal(_contentFake, responseNote.Content);
-            Assert.Equal(1, responseNote.ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.ProjectId);
         }
 
         [Fact]
@@ -161,7 +164,7 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
 
             //Act
@@ -171,7 +174,7 @@ namespace DailyApi.IntegrationTest.Tests
                     Id = createdNote.Id.ToString(),
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
-                    ProjectId = 2
+                    ProjectId = _fakeSecoundProjectId.ToString()
                 });
 
             //Assert
@@ -183,7 +186,7 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Equal(createdNote.Id, responseNote.Id);
             Assert.Equal(_dateTimeSecondRequestFake, responseNote.Date);
             Assert.Equal(_contentSecondFake, responseNote.Content);
-            Assert.Equal(2, responseNote.ProjectId);
+            Assert.Equal(_fakeSecoundProjectId, responseNote.ProjectId);
         }
 
         [Fact]
@@ -196,7 +199,7 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
 
             //Act
@@ -211,7 +214,7 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Equal(createdNote.Id, responseNote.Id);
             Assert.Equal(_dateTimeRequestFake, responseNote.Date);
             Assert.Equal(_contentFake, responseNote.Content);
-            Assert.Equal(1, responseNote.ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.ProjectId);
         }
 
         [Fact]
@@ -224,14 +227,14 @@ namespace DailyApi.IntegrationTest.Tests
                 {
                     Date = _dateTimeRequestFake,
                     Content = _contentFake,
-                    ProjectId = 1
+                    ProjectId = _fakeFirstProjectId.ToString()
                 });
             var createdNote2 = await CreateNoteAsync(
                 new CreateNoteCommand
                 {
                     Date = _dateTimeSecondRequestFake,
                     Content = _contentSecondFake,
-                    ProjectId = 2
+                    ProjectId = _fakeSecoundProjectId.ToString()
                 });
 
             //Act
@@ -245,12 +248,12 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.NotEmpty(createdNote.Id.ToString());
             Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
             Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
-            Assert.Equal(1, responseNote.FirstOrDefault().ProjectId);
+            Assert.Equal(_fakeFirstProjectId, responseNote.FirstOrDefault().ProjectId);
 
             Assert.NotEmpty(createdNote2.Id.ToString());
             Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
             Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
-            Assert.Equal(2, responseNote.LastOrDefault().ProjectId);
+            Assert.Equal(_fakeSecoundProjectId, responseNote.LastOrDefault().ProjectId);
         }
     }
 }

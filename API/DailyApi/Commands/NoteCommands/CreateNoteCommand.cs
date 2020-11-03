@@ -7,13 +7,13 @@ namespace DailyApi.Commands.NoteCommands
 {
     public class CreateNoteCommand : IRequest<NoteResponse>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Date { get; set; }
         [Required]
         public string Content { get; set; }
         [Required]
-        public Guid ProjectId { get; set; }
+        public string ProjectId { get; set; }
         public Guid UserId { get; set; }
     }
 }

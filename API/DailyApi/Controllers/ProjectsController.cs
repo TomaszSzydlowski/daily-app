@@ -11,6 +11,7 @@ using DailyApi.Requests.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DailyApi.Commands.ProjectCommands;
 
 namespace DailyApi.Controllers
 {
@@ -56,7 +57,7 @@ namespace DailyApi.Controllers
             if (!result.Success)
                 return BadRequest(new ErrorResource(result.Message));
 
-            var noteResource = _mapper.Map<Project, ProjectResource>(result.Note);
+            var noteResource = _mapper.Map<Project, ProjectResource>(result.Project);
             return Ok(noteResource);
         }
 
