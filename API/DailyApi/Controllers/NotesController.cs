@@ -10,9 +10,9 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using DailyApi.Controllers.Config;
 using MediatR;
-using DailyApp.Queries;
+using DailyApi.Queries;
 using DailyApi.Resources;
-using DailyApp.Requests.Filters;
+using DailyApi.Requests.Filters;
 
 namespace DailyApi.Controllers
 {
@@ -33,10 +33,10 @@ namespace DailyApi.Controllers
         [HttpGet(ApiRoutes.Notes.GetAll)]
         [ProducesResponseType(typeof(IEnumerable<Note>), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> GetAllNotesAsync([FromQuery] GetAllNotesFilters filters)
+        public async Task<IActionResult> GetAllNotesAsync([FromQuery] GetNotesFilters filters)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var query = new GetAllNotesQuery(userId, filters);
+            var query = new GetNotesQuery(userId, filters);
             var result = await _mediator.Send(query);
 
             if (!result.Success)

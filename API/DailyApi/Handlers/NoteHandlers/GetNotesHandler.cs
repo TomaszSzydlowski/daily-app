@@ -2,21 +2,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
-using DailyApp.Queries;
+using DailyApi.Queries;
 using MediatR;
 
 namespace DailyApi.Handlers.NoteHandlers
 {
-    public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, NotesResponse>
+    public class GetNotesHandler : IRequestHandler<GetNotesQuery, NotesResponse>
     {
         private readonly INoteService _noteService;
 
-        public GetAllNotesHandler(INoteService noteService)
+        public GetNotesHandler(INoteService noteService)
         {
             _noteService = noteService;
         }
 
-        public async Task<NotesResponse> Handle(GetAllNotesQuery request, CancellationToken cancellationToken)
+        public async Task<NotesResponse> Handle(GetNotesQuery request, CancellationToken cancellationToken)
         {
             return await _noteService.GetNotesAsync(request.UserId, request.Filter);
         }

@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DailyApi.Domain.Services;
 using DailyApi.Domain.Services.Communication;
-using DailyApp.Queries;
+using DailyApi.Queries;
 using MediatR;
 
 namespace DailyApi.Handlers.NoteHandlers

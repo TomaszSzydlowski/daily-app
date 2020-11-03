@@ -6,8 +6,8 @@ using DailyApi.Requests.Filters;
 
 namespace DailyApi.Domain.Repositories
 {
-    public interface INoteRepository : IRepository<Note>
+    public interface IProjectRepository : IRepository<Project>
     {
-        Task<IEnumerable<Note>> ListAsync(Guid userId, GetNotesFilters filters = null);
+        Task<IEnumerable<Project>> ListAsync(Guid userId, GetProjectsFilters filters = null);
     }
 }

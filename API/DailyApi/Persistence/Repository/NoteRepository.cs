@@ -5,9 +5,9 @@ using DailyApi.Persistence.Repositories;
 using System.Threading.Tasks;
 using System;
 using MongoDB.Driver;
-using DailyApp.Requests.Filters;
+using DailyApi.Requests.Filters;
 
-namespace DailyApi.Persistence.Repository
+namespace DailyApi.Persistence.Repositories
 {
     public class NoteRepository : BaseRepository<Note>, INoteRepository
     {
@@ -18,7 +18,7 @@ namespace DailyApi.Persistence.Repository
 
         }
 
-        public async Task<IEnumerable<Note>> ListAsync(Guid userId, GetAllNotesFilters filters = null)
+        public async Task<IEnumerable<Note>> ListAsync(Guid userId, GetNotesFilters filters = null)
         {
             ConfigDbSet();
             IAsyncCursor<Note> filteredNotes;

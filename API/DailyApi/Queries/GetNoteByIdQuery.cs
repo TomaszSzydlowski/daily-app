@@ -2,7 +2,7 @@ using System;
 using DailyApi.Domain.Services.Communication;
 using MediatR;
 
-namespace DailyApp.Queries
+namespace DailyApi.Queries
 {
     public class GetNoteByIdQuery : IRequest<NoteResponse>
     {

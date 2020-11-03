@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using DailyApi.Domain.Repositories;
 
-namespace DailyApi.Persistence.Repository
+namespace DailyApi.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
