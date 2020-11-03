@@ -39,6 +39,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
   function initNote() {
     const newNote = { ...props.note };
     newNote.date = !newNote.id ? parseDateToTimeField(new Date()) : parseDateToTimeField(new Date(props.note.date));
+    if (projects.length > 0 && !newNote.id) newNote.projectId = projects[0].id;
     setNote(newNote);
   }
 
@@ -46,7 +47,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     const { name, value } = event.target;
     setNote((prevNote) => ({
       ...prevNote,
-      [name]: name === 'projectId' ? parseInt(value, 10) : value
+      [name]: value
     }));
   }
 
@@ -74,7 +75,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
       history.push('/notes');
     } catch (error) {
       setSaving(false);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   }
 

@@ -67,7 +67,7 @@ const newNote = {
   id: null,
   content: '',
   date: '',
-  projectId: "7f645525-d855-4c27-9428-ac2f8fabef91"
+  projectId: ''
 };
 
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
