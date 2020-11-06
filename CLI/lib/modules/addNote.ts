@@ -2,9 +2,11 @@ import chalk = require("chalk");
 import inquirer = require("inquirer");
 import { INote } from "../interfaces/INote";
 import * as noteService from "../services/noteService";
+import * as projectService from "../services/projectService";
 
 export async function addNote() {
-  let note: INote = await inquirer.prompt([
+  const projects = await projectService.getProjects();
+  let noteAnswear = await inquirer.prompt([
     {
       message: 'Please type your note:',
       name: 'content',
@@ -12,9 +14,9 @@ export async function addNote() {
     },
     {
       message: 'Please select project:',
-      name: 'projectId',
-      type: 'input',
-      default: 2
+      name: 'projectName',
+      type: "list",
+      choices: projects.map(p => { return p.name })
     },
     {
       message: 'Please select date:',
@@ -23,6 +25,12 @@ export async function addNote() {
       default: new Date().toJSON()
     },
   ]);
+  const note: INote = {
+    content: noteAnswear.content,
+    date: noteAnswear.date,
+    projectId: projects.find(p => p.name == noteAnswear.projectName).id
+  }
+
   const response = await noteService.saveNote(note);
   console.log(chalk.green(`\nSuccessfully added a note at ${new Date(response.createdAt).toLocaleDateString('en-GB')}`));
 }
