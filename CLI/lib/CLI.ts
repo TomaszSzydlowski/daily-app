@@ -6,7 +6,7 @@ import { login } from "./modules/login";
 import { addNote } from "./modules/addNote";
 import { register } from "./modules/register";
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0' // temporary solution
+// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0' // temporary solution
 
 let config: any = {
     firstLogin: true,
