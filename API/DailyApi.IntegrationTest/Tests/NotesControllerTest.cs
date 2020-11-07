@@ -255,5 +255,47 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
             Assert.Equal(_fakeSecoundProjectId, responseNote.LastOrDefault().ProjectId);
         }
+
+        [Fact]
+        public async Task GetNotesDates_TwoDatesz_ReturnsOneNote()
+        {
+            // Arrange
+            await AuthenticateAsync();
+            await CreateNoteAsync(
+                new CreateNoteCommand
+                {
+                    Date = _dateTimeRequestFake,
+                    Content = _contentFake,
+                    ProjectId = _fakeFirstProjectId.ToString()
+                });
+
+            await CreateNoteAsync(
+                new CreateNoteCommand
+                {
+                    Date = _dateTimeSecondRequestFake,
+                    Content = _contentSecondFake,
+                    ProjectId = _fakeSecoundProjectId.ToString()
+                });
+            await CreateNoteAsync(
+                new CreateNoteCommand
+                {
+                    Date = _dateTimeSecondRequestFake,
+                    Content = _contentSecondFake,
+                    ProjectId = _fakeSecoundProjectId.ToString()
+                });
+
+            //Act
+            var response = await TestClient.GetAsync(ApiRoutes.Notes.GetNotesDates);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+
+            var responseNotesDates = await response.Content.ReadAsAsync<string[]>();
+
+            Assert.Equal(2, responseNotesDates.Length);
+            Assert.Equal("2020-10-12", responseNotesDates[0]);
+            Assert.Equal("2020-10-11", responseNotesDates[1]);
+        }
     }
 }

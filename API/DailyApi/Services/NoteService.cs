@@ -174,5 +174,31 @@ namespace DailyApi.Services
                 return new NotesResponse($"An error occurred when deleting the note: {ex.Message}");
             }
         }
+
+        public async Task<NotesDatesResponse> GetNotesDatesAsync(Guid userId)
+        {
+            var isUserExist = await _authRepository.UserExists(userId);
+            if (!isUserExist)
+            {
+                return new NotesDatesResponse("Invalid user.");
+            }
+
+            var notesDates = _noteRepository.GetNotesDates(userId);
+
+            if (notesDates == null)
+            {
+                return new NotesDatesResponse("Notes dates not found.");
+            }
+
+            try
+            {
+                return new NotesDatesResponse(notesDates);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new NotesDatesResponse($"An error occurred when getting the notes dates: {ex.Message}");
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace DailyApi.Controllers.Config
         {
             public const string GetAll = Root + "/notes";
             public const string Get = Root + "/notes/{noteId}";
+            public const string GetNotesDates = Root + "/notes/dates";
             public const string Post = Root + "/notes";
             public const string Update = Root + "/notes";
             public const string Delete = Root + "/notes/{noteId}";
