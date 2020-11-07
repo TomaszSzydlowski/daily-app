@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using DailyApi.Commands.NoteCommands;
 using DailyApi.Domain.Models;
-using DailyApi.Domain.Services;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using DailyApi.Controllers.Config;
@@ -63,6 +62,23 @@ namespace DailyApi.Controllers
 
             var noteResource = _mapper.Map<Note, NoteResource>(result.Note);
             return Ok(noteResource);
+        }
+
+        //GET:api/notes/dates
+        [HttpGet(ApiRoutes.Notes.GetNotesDates)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> GetNotesDateAsync()
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var query = new GetNotesDatesQuery(userId);
+            var result = await _mediator.Send(query);
+
+            if (!result.Success)
+                return BadRequest(new ErrorResource(result.Message));
+
+            return Ok(result.NotesDates);
         }
 
         //POST:api/notes

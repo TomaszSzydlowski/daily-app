@@ -10,6 +10,7 @@ namespace DailyApi.Domain.Services
     {
         Task<NotesResponse> GetNotesAsync(Guid userId, GetNotesFilters filers = null);
         Task<NoteResponse> GetNoteAsync(Guid noteId, Guid userId);
+        Task<NotesDatesResponse> GetNotesDatesAsync(Guid userId);
         Task<NoteResponse> SaveAsync(Note note, Guid userId);
         Task<NoteResponse> UpdateAsync(Note note, Guid userId);
         Task<NoteResponse> DeleteAsync(Guid noteId, Guid userId);

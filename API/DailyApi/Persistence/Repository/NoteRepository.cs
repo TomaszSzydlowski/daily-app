@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System;
 using MongoDB.Driver;
 using DailyApi.Requests.Filters;
+using System.Linq;
 
 namespace DailyApi.Persistence.Repositories
 {
@@ -37,6 +38,19 @@ namespace DailyApi.Persistence.Repositories
                 filteredNotes = await DbSet.FindAsync(filterBuilder.Eq(x => x.UserId, userId));
             }
             return filteredNotes.ToList();
+        }
+
+        public string[] GetNotesDates(Guid userId)
+        {
+            ConfigDbSet();
+            return DbSet.AsQueryable()
+                        .Where(n => n.UserId == userId)
+                        .OrderByDescending(n => n.Date)
+                        .Select(n => n.Date)
+                        .ToArray()
+                        .Select(d => d.ToString("yyyy-MM-dd"))
+                        .Distinct()
+                        .ToArray();
         }
     }
 }

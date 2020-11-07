@@ -9,5 +9,6 @@ namespace DailyApi.Domain.Repositories
     public interface INoteRepository : IRepository<Note>
     {
         Task<IEnumerable<Note>> ListAsync(Guid userId, GetNotesFilters filters = null);
+        string[] GetNotesDates(Guid userId);
     }
 }
