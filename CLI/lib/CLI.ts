@@ -4,9 +4,10 @@ import { isFileExists, writeFile } from './utils/config';
 import { configPath, packageJson } from "./utils/const";
 import { login } from "./modules/login";
 import { addNote } from "./modules/addNote";
+import { readNotes } from "./modules/readNotes";
 import { register } from "./modules/register";
 
-// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0' // temporary solution
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0' // temporary solution
 
 let config: any = {
     firstLogin: true,
@@ -25,8 +26,9 @@ program
 program
     .command('note')
     .option('-a, --add', 'add note')
+    .option('-r, --read', 'read notes')
     .option('-reg --register', 'register new user')
-    .option('-r, --reset', 'resets all config values to default')
+    .option('-res, --reset', 'resets all config values to default')
     .action(async (options: any) => {
         try {
             if (!isFileExists(configPath)) {
@@ -44,6 +46,10 @@ program
             if (options.add) {
                 await login(savedConfig, config);
                 await addNote();
+            }
+            if (options.read) {
+                await login(savedConfig, config);
+                await readNotes();
             }
             process.exit(0);
         } catch (error) {

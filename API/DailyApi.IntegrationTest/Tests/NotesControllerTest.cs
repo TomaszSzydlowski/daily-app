@@ -257,7 +257,7 @@ namespace DailyApi.IntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetNotesDates_TwoDatesz_ReturnsOneNote()
+        public async Task GetNotesDates_TwoDates_ReturnsOneNote()
         {
             // Arrange
             await AuthenticateAsync();

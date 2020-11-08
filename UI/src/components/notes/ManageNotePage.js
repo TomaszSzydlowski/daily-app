@@ -79,7 +79,7 @@ export function ManageNotePage({ notes, projects, loadProjects, loadNotes, saveN
     }
   }
 
-  return projects.length === 0 || notes.length === 0 ? (
+  return props.loading ? (
     <Spinner />
   ) : (
     <NoteForm
@@ -100,7 +100,8 @@ ManageNotePage.propTypes = {
   loadNotes: PropTypes.func.isRequired,
   loadProjects: PropTypes.func.isRequired,
   saveNote: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 function getNoteById(notes, id) {
@@ -113,7 +114,8 @@ function mapStateToProps(state, ownProps) {
   return {
     note,
     notes: state.notes,
-    projects: state.projects
+    projects: state.projects,
+    loading: state.apiCallsInProgress > 0
   };
 }
 

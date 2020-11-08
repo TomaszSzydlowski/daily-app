@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DailyApi.Domain.Models;
 using DailyApi.Domain.Repositories;
@@ -20,17 +21,19 @@ namespace DailyApi.Persistence.Repositories
         public async Task<IEnumerable<Project>> ListAsync(Guid userId, GetProjectsFilters filters = null)
         {
             ConfigDbSet();
-            IAsyncCursor<Project> filteredProjects;
-            var filterBuilder = Builders<Project>.Filter;
-            if (filters != null)
+            var filter = new List<FilterDefinition<Project>>();
+            if (filters.Ids != null && filters.Ids.Length > 0)
             {
-                throw new NotImplementedException();
+                var ids = filters.Ids.Select(id => Guid.Parse(id));
+                filter.Add(Builders<Project>.Filter.In(p => p.Id, ids));
             }
-            else
-            {
-                filteredProjects = await DbSet.FindAsync(filterBuilder.Eq(x => x.UserId, userId));
-            }
-            return filteredProjects.ToList();
+
+            filter.Add(Builders<Project>.Filter.Eq(p => p.UserId, userId));
+
+            var rootFilter = Builders<Project>.Filter.And(filter);
+            var list = DbSet.Find(rootFilter).SortBy(p => p.CreatedAt);
+
+            return await list.ToListAsync();
         }
     }
 }

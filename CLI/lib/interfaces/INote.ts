@@ -1,5 +1,6 @@
 export interface INote {
+  id?: string;
   content: string;
-  projectId: number;
+  projectId: string;
   date: string;
 }

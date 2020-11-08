@@ -7,12 +7,12 @@ import { configPath } from "../utils/const";
 
 const loginText: string = '\nPlease wait! Logging...\n';
 
-export async function login(savedConfig: any, config: any) {
+export const login = async (savedConfig: any, config: any) => {
   let credentials: any;
   let jwt: string = "";
   let attempt = 0;
   const limit = 3;
-  
+
   while (jwt === "" && attempt < limit) {
     try {
       if (savedConfig.firstLogin === true) {

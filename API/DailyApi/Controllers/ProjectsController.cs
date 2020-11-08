@@ -60,7 +60,5 @@ namespace DailyApi.Controllers
             var noteResource = _mapper.Map<Project, ProjectResource>(result.Project);
             return Ok(noteResource);
         }
-
-
     }
 }

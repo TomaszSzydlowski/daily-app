@@ -1,5 +1,6 @@
 {
   "alg": "aes-256-cbc",
-  "key": "CoTKvdLslTuB4y3EZlKate7XIottHszi",
-  "iv": "41aaz2610892aa3e"
+  "key": "DoCKvdLslTuB4y3EZlKate7XMottHski",
+  "iv": "41aad2618892aa3d",
+  "API_PORT": "yours-api-port"
 }

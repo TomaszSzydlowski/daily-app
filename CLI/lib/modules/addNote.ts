@@ -4,7 +4,7 @@ import { INote } from "../interfaces/INote";
 import * as noteService from "../services/noteService";
 import * as projectService from "../services/projectService";
 
-export async function addNote() {
+export const addNote = async ()=> {
   const projects = await projectService.getProjects();
   let noteAnswear = await inquirer.prompt([
     {
