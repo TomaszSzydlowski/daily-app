@@ -20,6 +20,19 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Read Notes CLI",
+            "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
+            "outFiles": [
+                "${workspaceFolder}/CLI/**/*.js"
+            ],
+            "args": [
+               "note", "--read"
+            ],
+            "console" : "integratedTerminal",
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Register new daily user",
             "program": "${workspaceFolder}\\CLI\\lib\\CLI.ts",
             "outFiles": [

@@ -18,7 +18,15 @@ namespace DailyApi.Mapping
               .ForMember(
                   desc => desc.ProjectId,
                   opt => opt.MapFrom(src => Guid.Parse(src.ProjectId))
-              );
+              )
+            .ForMember(
+                desc => desc.CreatedAt,
+                opt => opt.MapFrom(src => DateTime.Now)
+            )
+            .ForMember(
+                desc => desc.UpdatedAt,
+                opt => opt.MapFrom(src => DateTime.Now)
+            );
             CreateMap<UpdateNoteCommand, Note>()
             .ForMember(
                 dest => dest.Date,
@@ -27,8 +35,16 @@ namespace DailyApi.Mapping
             .ForMember(
                   desc => desc.ProjectId,
                   opt => opt.MapFrom(src => Guid.Parse(src.ProjectId))
-                );
-            CreateMap<CreateProjectCommand, Project>();
+                )
+            .ForMember(
+                desc => desc.UpdatedAt,
+                opt => opt.MapFrom(src => DateTime.Now)
+            );
+            CreateMap<CreateProjectCommand, Project>()
+            .ForMember(
+                desc => desc.CreatedAt,
+                opt => opt.MapFrom(src => DateTime.Now)
+            );
         }
     }
 }

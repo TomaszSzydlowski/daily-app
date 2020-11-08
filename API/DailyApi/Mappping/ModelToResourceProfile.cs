@@ -12,8 +12,20 @@ namespace Supermarket.Mapping
             .ForMember(
                 desc => desc.Date,
                 opt => opt.MapFrom(src => src.Date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
+            )
+            .ForMember(
+                desc => desc.CreatedAt,
+                opt => opt.MapFrom(src => src.CreatedAt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
+            )
+            .ForMember(
+                desc => desc.UpdatedAt,
+                opt => opt.MapFrom(src => src.UpdatedAt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
             );
-            CreateMap<Project, ProjectResource>();
+            CreateMap<Project, ProjectResource>()
+            .ForMember(
+                desc => desc.CreatedAt,
+                opt => opt.MapFrom(src => src.CreatedAt.ToUniversalTime().ToString("yyyy-MM-ddTHH:mmZ"))
+            );
         }
     }
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "6a867c98-c6ae-4d65-bd9c-9d098d586a74",
+    "date": "2020-10-04T20:00Z",
+    "content": "FirstProd content",
+    "projectId": "41e7394b-b562-4369-892a-4ae445b3b538"
+  },
+  {
+    "id": "6648fb44-e252-4df0-97d9-0769ae60071e",
+    "date": "2020-11-03T20:44Z",
+    "content": "First Message from UI",
+    "projectId": "41e7394b-b562-4369-892a-4ae445b3b538"
+  },
+  {
+    "id": "4372b91a-305d-4234-b1f8-f1653b123d0f",
+    "date": "2020-11-06T21:04Z",
+    "content": "some message from cli",
+    "projectId": "70238136-0904-4e0c-9b99-6c32d072a305"
+  },
+  {
+    "id": "1690428f-0705-4f62-99ff-b5d2d311b898",
+    "date": "2020-11-06T21:43Z",
+    "content": "test",
+    "projectId": "41e7394b-b562-4369-892a-4ae445b3b538"
+  },
+  {
+    "id": "cfa6ad15-7cbf-4ced-ad95-584bc1df5deb",
+    "date": "2020-11-06T22:14Z",
+    "content": "test3",
+    "projectId": "41e7394b-b562-4369-892a-4ae445b3b538"
+  }
+]

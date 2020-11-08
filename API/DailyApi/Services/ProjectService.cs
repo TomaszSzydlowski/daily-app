@@ -31,7 +31,7 @@ namespace DailyApi.Services
 
             try
             {
-                var result = await _projectRepository.ListAsync(userId);
+                var result = await _projectRepository.ListAsync(userId, filters);
                 return new ProjectsResponse(result);
             }
             catch (Exception ex)

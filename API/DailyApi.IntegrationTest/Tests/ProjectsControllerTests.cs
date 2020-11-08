@@ -17,6 +17,7 @@ namespace DailyApi.IntegrationTest.Tests
     {
         private readonly string _nameFake = "Project name";
         private readonly string _secoundNameFake = "Secound Project name";
+        private readonly string _thirdNameFake = "Third  Project name";
         public ProjectsControllerTest() : base()
         {
         }
@@ -52,6 +53,42 @@ namespace DailyApi.IntegrationTest.Tests
         }
 
         [Fact]
+        public async Task GetAll_FilterByIds_ReturnsTwoFromThreeProject()
+        {
+            // Arrange
+            await AuthenticateAsync();
+            var createdProject = await CreateProjectAsync(
+                new CreateProjectCommand
+                {
+                    Name = _nameFake,
+                });
+            var createdProject2 = await CreateProjectAsync(
+                new CreateProjectCommand
+                {
+                    Name = _secoundNameFake,
+                });
+
+            var createdProject3 = await CreateProjectAsync(
+                new CreateProjectCommand
+                {
+                    Name = _thirdNameFake,
+                });
+
+            //Act
+            var response = await TestClient.GetAsync(ApiRoutes.Projects.GetAll + $"?Ids={createdProject.Id.ToString()}&Ids={createdProject3.Id.ToString()}");
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+            var responseProject = await response.Content.ReadAsAsync<IEnumerable<ProjectResource>>();
+
+            Assert.Equal(createdProject.Id, responseProject.FirstOrDefault().Id);
+            Assert.Equal(_nameFake, responseProject.FirstOrDefault().Name);
+            Assert.Equal(createdProject3.Id, responseProject.LastOrDefault().Id);
+            Assert.Equal(_thirdNameFake, responseProject.LastOrDefault().Name);
+        }
+
+        [Fact]
         public async Task Post_OneProject_ReturnPostedProject()
         {
             // Arrange
@@ -72,7 +109,7 @@ namespace DailyApi.IntegrationTest.Tests
             var responseProject = await response.Content.ReadAsAsync<ProjectResource>();
 
             Assert.Equal(_nameFake, responseProject.Name);
-            Assert.NotNull(responseProject.Id);
+            Assert.False(responseProject.Id==null);
         }
     }
 }
