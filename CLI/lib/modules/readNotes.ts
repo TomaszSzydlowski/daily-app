@@ -1,3 +1,4 @@
+import chalk = require("chalk");
 import inquirer = require("inquirer")
 import * as noteService from '../services/noteService'
 import * as projectService from '../services/projectService'
@@ -24,5 +25,16 @@ export const readNotes = async () => {
     }
   });
 
-  console.log(notesWithProject);
+  showBeautifyNotes(notesWithProject);
+}
+
+const showBeautifyNotes = (notes) => {
+  console.log("\n");
+  for (const note of notes) {
+    console.log(chalk.blue("#" + note.projectName))
+    console.log(chalk.yellow(note.date));
+    console.log(chalk.gray(note.id));
+    console.log(chalk.green(note.content));
+    console.log("\n");
+  }
 }
