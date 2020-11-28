@@ -37,21 +37,16 @@ namespace DailyApi.Persistence.Repositories
             }
 
             var rootFilter = Builders<Note>.Filter.And(filter);
-            var result=DbSet.Find(rootFilter).SortByDescending(n=>n.Date);
+            var result = DbSet.Find(rootFilter).SortByDescending(n => n.Date);
             return await result.ToListAsync();
         }
 
-        public string[] GetNotesDates(Guid userId)
+        public async Task<string[]> GetNotesDates(Guid userId)
         {
             ConfigDbSet();
-            return DbSet.AsQueryable()
-                        .Where(n => n.UserId == userId)
-                        .OrderByDescending(n => n.Date)
-                        .Select(n => n.Date)
-                        .ToArray()
-                        .Select(d => d.ToString("yyyy-MM-dd"))
-                        .Distinct()
-                        .ToArray();
+
+           var notes= await ListAsync(userId);
+           return notes.Select(n=> n.Date.ToString("yyyy-MM-dd")).Distinct().ToArray();
         }
     }
 }
