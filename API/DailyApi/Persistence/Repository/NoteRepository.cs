@@ -22,22 +22,23 @@ namespace DailyApi.Persistence.Repositories
         public async Task<IEnumerable<Note>> ListAsync(Guid userId, GetNotesFilters filters = null)
         {
             ConfigDbSet();
-            IAsyncCursor<Note> filteredNotes;
-            var filterBuilder = Builders<Note>.Filter;
+            var filter = new List<FilterDefinition<Note>>
+            {
+                Builders<Note>.Filter.Eq(n=>n.UserId,userId)
+            };
+
             if (!string.IsNullOrEmpty(filters?.Date))
             {
                 var startDateFilter = DateTime.Parse(filters.Date);
                 var endDateFilter = startDateFilter.AddDays(1);
-                filteredNotes = await DbSet.FindAsync(
-                    filterBuilder.Eq(x => x.UserId, userId) &
-                    filterBuilder.Gte(x => x.Date, startDateFilter) &
-                    filterBuilder.Lte(x => x.Date, endDateFilter));
+
+                filter.Add(Builders<Note>.Filter.Gte(n => n.Date, startDateFilter));
+                filter.Add(Builders<Note>.Filter.Lte(n => n.Date, endDateFilter));
             }
-            else
-            {
-                filteredNotes = await DbSet.FindAsync(filterBuilder.Eq(x => x.UserId, userId));
-            }
-            return filteredNotes.ToList();
+
+            var rootFilter = Builders<Note>.Filter.And(filter);
+            var result=DbSet.Find(rootFilter).SortByDescending(n=>n.Date);
+            return await result.ToListAsync();
         }
 
         public string[] GetNotesDates(Guid userId)
