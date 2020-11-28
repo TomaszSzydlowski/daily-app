@@ -97,7 +97,7 @@ namespace DailyApi.Controllers
             return Ok(noteResource);
         }
 
-        // Put: api/notes/id
+        // Put: api/notes
         [HttpPut(ApiRoutes.Notes.Update)]
         [ProducesResponseType(typeof(NoteResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
