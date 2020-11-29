@@ -16,7 +16,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-const Header = ({ loginUser, getLoginUserFromToken }) => {
+const Header = ({ loginUser, getLoginUserFromToken, shouldRefreshToken }) => {
   const [ isOpen, setIsOpen ] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Header = ({ loginUser, getLoginUserFromToken }) => {
               </NavLink>
             </NavItem>
           </Nav>
-          {!isUserLogin() && (
+          {!isUserLogin() || shouldRefreshToken ? (
             <Nav navbar>
               <NavItem>
                 <NavLink className="nav-item nav-link" to="/login">
@@ -63,8 +63,7 @@ const Header = ({ loginUser, getLoginUserFromToken }) => {
                 </NavLink>
               </NavItem>
             </Nav>
-          )}
-          {isUserLogin() && (
+          ) : (
             <Nav navbar>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -98,12 +97,14 @@ const Header = ({ loginUser, getLoginUserFromToken }) => {
 
 Header.propTypes = {
   loginUser: PropTypes.object.isRequired,
-  getLoginUserFromToken: PropTypes.func.isRequired
+  getLoginUserFromToken: PropTypes.func.isRequired,
+  shouldRefreshToken: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
-    loginUser: state.loginUser
+    loginUser: state.loginUser,
+    shouldRefreshToken: state.shouldRefreshToken
   };
 }
 

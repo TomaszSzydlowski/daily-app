@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import auth from '../../services/authService';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { checkFreshnessToken } from '../../redux/actions/refreshTokenActions';
 
-const ProtectedRoute = ({ component: Component, render, ...rest }) => {
+const ProtectedRoute = ({ component: Component, render, shouldRefreshToken, checkFreshnessToken, ...rest }) => {
+  useEffect(() => {
+    if (shouldRefreshToken) checkFreshnessToken();
+  }, []);
+
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!auth.getCurrentUser())
+        if (shouldRefreshToken)
           return (
             <Redirect
               to={{
@@ -26,7 +31,19 @@ const ProtectedRoute = ({ component: Component, render, ...rest }) => {
 ProtectedRoute.propTypes = {
   component: PropTypes.func.isRequired,
   render: PropTypes.array,
+  shouldRefreshToken: PropTypes.bool,
+  checkFreshnessToken: PropTypes.func,
   location: PropTypes.object
 };
 
-export default ProtectedRoute;
+function mapStateToProps(state) {
+  return {
+    shouldRefreshToken: state.shouldRefreshToken
+  };
+}
+
+const MapDispatchToProps = {
+  checkFreshnessToken
+};
+
+export default connect(mapStateToProps, MapDispatchToProps)(ProtectedRoute);
