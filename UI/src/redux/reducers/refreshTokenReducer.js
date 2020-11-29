@@ -5,8 +5,6 @@ export default function refreshTokenReducer(state = initialState.shouldRefreshTo
   switch (action.type) {
     case types.SHOULD_REFRESH_TOKEN_SUCCESS:
       return action.shouldRefreshToken;
-    case types.SHOULD_NOT_REFRESH_TOKEN_SUCCESS:
-      return action.shouldRefreshToken;
     default:
       return state;
   }

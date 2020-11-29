@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { shouldRefreshToken } from '../../redux/actions/refreshTokenActions';
+import { shouldRefreshTokenAction } from '../../redux/actions/refreshTokenActions';
+import { clearNotesAction } from '../../redux/actions/noteActions';
+import { clearProjectsAction } from '../../redux/actions/projectActions';
 
-const Logout = ({ logout, shouldRefreshToken }) => {
+const Logout = ({ logout, shouldRefreshTokenAction, clearNotesAction, clearProjectsAction }) => {
   useEffect(() => {
     try {
       logout();
-      shouldRefreshToken();
+      shouldRefreshTokenAction(true);
+      clearNotesAction();
+      clearProjectsAction();
       toast.success('Successfully log out.');
     } catch (error) {
       toast.error('Error when try log out.');
@@ -22,12 +26,16 @@ const Logout = ({ logout, shouldRefreshToken }) => {
 
 const mapDispatchToProps = {
   logout,
-  shouldRefreshToken
+  shouldRefreshTokenAction,
+  clearNotesAction,
+  clearProjectsAction
 };
 
 Logout.propTypes = {
   logout: PropTypes.func.isRequired,
-  shouldRefreshToken: PropTypes.func.isRequired
+  shouldRefreshTokenAction: PropTypes.func.isRequired,
+  clearNotesAction: PropTypes.func.isRequired,
+  clearProjectsAction: PropTypes.func.isRequired
 };
 
 function mapStateToProps() {

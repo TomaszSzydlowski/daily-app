@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { checkFreshnessToken } from '../../redux/actions/refreshTokenActions';
+import { checkFreshnessTokenAction } from '../../redux/actions/refreshTokenActions';
 
-const ProtectedRoute = ({ component: Component, render, shouldRefreshToken, checkFreshnessToken, ...rest }) => {
+const ProtectedRoute = ({ component: Component, render, shouldRefreshToken, checkFreshnessTokenAction, ...rest }) => {
   useEffect(() => {
-    if (shouldRefreshToken) checkFreshnessToken();
+    if (shouldRefreshToken) checkFreshnessTokenAction();
   }, []);
 
   return (
@@ -32,7 +32,7 @@ ProtectedRoute.propTypes = {
   component: PropTypes.func.isRequired,
   render: PropTypes.array,
   shouldRefreshToken: PropTypes.bool,
-  checkFreshnessToken: PropTypes.func,
+  checkFreshnessTokenAction: PropTypes.func,
   location: PropTypes.object
 };
 
@@ -43,7 +43,7 @@ function mapStateToProps(state) {
 }
 
 const MapDispatchToProps = {
-  checkFreshnessToken
+  checkFreshnessTokenAction
 };
 
 export default connect(mapStateToProps, MapDispatchToProps)(ProtectedRoute);

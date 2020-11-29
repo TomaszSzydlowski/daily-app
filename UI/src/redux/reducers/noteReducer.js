@@ -11,6 +11,8 @@ export default function noteReducer(state = initialState.notes, action) {
       return action.notes;
     case types.DELETE_NOTE_OPTIMISTIC:
       return state.filter((note) => note.id !== action.note.id);
+    case types.CLEAR_NOTES:
+      return action.notes;
     default:
       return state;
   }
