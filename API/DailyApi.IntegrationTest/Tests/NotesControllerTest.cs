@@ -83,14 +83,14 @@ namespace DailyApi.IntegrationTest.Tests
             var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
 
             Assert.NotEmpty(createdNote.Id.ToString());
-            Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
-            Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
-            Assert.Equal(_fakeFirstProjectId, responseNote.FirstOrDefault().ProjectId);
+            Assert.Equal(_dateTimeRequestFake, responseNote.LastOrDefault().Date);
+            Assert.Equal(_contentFake, responseNote.LastOrDefault().Content);
+            Assert.Equal(_fakeFirstProjectId, responseNote.LastOrDefault().ProjectId);
 
             Assert.NotEmpty(createdNote2.Id.ToString());
-            Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
-            Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
-            Assert.Equal(_fakeSecoundProjectId, responseNote.LastOrDefault().ProjectId);
+            Assert.Equal(_dateTimeSecondRequestFake, responseNote.FirstOrDefault().Date);
+            Assert.Equal(_contentSecondFake, responseNote.FirstOrDefault().Content);
+            Assert.Equal(_fakeSecoundProjectId, responseNote.FirstOrDefault().ProjectId);
         }
 
         [Fact]
@@ -245,15 +245,15 @@ namespace DailyApi.IntegrationTest.Tests
             Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
             var responseNote = await response.Content.ReadAsAsync<IEnumerable<NoteResource>>();
 
-            Assert.NotEmpty(createdNote.Id.ToString());
-            Assert.Equal(_dateTimeRequestFake, responseNote.FirstOrDefault().Date);
-            Assert.Equal(_contentFake, responseNote.FirstOrDefault().Content);
-            Assert.Equal(_fakeFirstProjectId, responseNote.FirstOrDefault().ProjectId);
-
             Assert.NotEmpty(createdNote2.Id.ToString());
-            Assert.Equal(_dateTimeSecondRequestFake, responseNote.LastOrDefault().Date);
-            Assert.Equal(_contentSecondFake, responseNote.LastOrDefault().Content);
-            Assert.Equal(_fakeSecoundProjectId, responseNote.LastOrDefault().ProjectId);
+            Assert.Equal(_dateTimeSecondRequestFake, responseNote.FirstOrDefault().Date);
+            Assert.Equal(_contentSecondFake, responseNote.FirstOrDefault().Content);
+            Assert.Equal(_fakeSecoundProjectId, responseNote.FirstOrDefault().ProjectId);
+
+            Assert.NotEmpty(createdNote.Id.ToString());
+            Assert.Equal(_dateTimeRequestFake, responseNote.LastOrDefault().Date);
+            Assert.Equal(_contentFake, responseNote.LastOrDefault().Content);
+            Assert.Equal(_fakeFirstProjectId, responseNote.LastOrDefault().ProjectId);
         }
 
         [Fact]

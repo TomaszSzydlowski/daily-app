@@ -7,6 +7,9 @@ using DailyApi.Controllers.Config;
 using DailyApi.Resources;
 using DailyApi.Commands.AuthCommands;
 using MediatR;
+using System;
+using System.Security.Claims;
+using DailyApi.Queries;
 
 namespace DailyApi.Controllers
 {
@@ -62,6 +65,24 @@ namespace DailyApi.Controllers
                 return BadRequest(new ErrorResource(result.Message));
 
             return Ok(result.Token);
+        }
+
+        // GET: api/auth/isUserAuthorized
+        [HttpGet(ApiRoutes.Auth.isUserAuthorized)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ErrorResource), 401)]
+        public IActionResult isUserAuthorized()
+        {
+            try
+            {
+                var userToCheck = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            }
+            catch
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
         }
     }
 }

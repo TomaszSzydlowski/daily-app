@@ -183,7 +183,7 @@ namespace DailyApi.Services
                 return new NotesDatesResponse("Invalid user.");
             }
 
-            var notesDates = _noteRepository.GetNotesDates(userId);
+            var notesDates =await _noteRepository.GetNotesDates(userId);
 
             if (notesDates == null)
             {

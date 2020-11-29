@@ -25,6 +25,7 @@ namespace DailyApi.Controllers.Config
         {
             public const string Register = Root + "/auth/register";
             public const string Login = Root + "/auth/login";
+            public const string isUserAuthorized = Root + "/auth/isUserAuthorized";
         }
     }
 }
