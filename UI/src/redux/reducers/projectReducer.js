@@ -5,6 +5,8 @@ export default function projectReducer(state = initialState.projects, action) {
   switch (action.type) {
     case types.LOAD_PROJECTS_SUCCESS:
       return action.projects;
+    case types.CLEAR_PROJECTS:
+      return action.projects;
     default:
       return state;
   }

@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import './LoginForm.css';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/authActions';
+import { shouldRefreshTokenAction } from '../../redux/actions/refreshTokenActions';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function LoginForm({ login, history }) {
+export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken, history }) {
   const [ errors, setErrors ] = useState({});
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
@@ -38,6 +40,7 @@ export function LoginForm({ login, history }) {
 
     try {
       await login(user);
+      await shouldRefreshTokenAction(false);
       toast.success('Successfully logged in.');
       setSaving(false);
       history.push('/notes');
@@ -70,6 +73,7 @@ export function LoginForm({ login, history }) {
 
   return (
     <div className="LoginForm-container">
+      {!shouldRefreshToken && <Redirect to="/notes" />}
       <div className="row">
         <h2 id="SignIn">Sign In</h2>
       </div>
@@ -118,15 +122,20 @@ export function LoginForm({ login, history }) {
 
 LoginForm.propTypes = {
   history: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  shouldRefreshToken: PropTypes.bool.isRequired,
+  shouldRefreshTokenAction: PropTypes.func.isRequired
 };
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  return {
+    shouldRefreshToken: state.shouldRefreshToken
+  };
 }
 
 const mapDispatchToProps = {
-  login
+  login,
+  shouldRefreshTokenAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

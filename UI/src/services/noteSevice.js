@@ -16,7 +16,7 @@ export async function saveNote(note) {
   try {
     const noteToSave = { ...note };
     noteToSave.date = new Date(noteToSave.date).toJSON();
-    const response = note.id ? await http.put(baseUrl + note.id, noteToSave) : await http.post(baseUrl, noteToSave);
+    const response = note.id ? await http.put(baseUrl, noteToSave) : await http.post(baseUrl, noteToSave);
     return handleResponse(response);
   } catch (error) {
     handleError(error);

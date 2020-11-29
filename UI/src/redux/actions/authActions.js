@@ -12,11 +12,11 @@ export function registerSuccess(user) {
 }
 
 export function getLoginUserFromTokenSuccess(user) {
-  return { type: types.GET_LOGIN_USER_FROM_TOKEN_SUCCESS, user };
+  return { type: types.GET_LOGIN_USER_FROM_TOKEN, user };
 }
 
 export function logoutSuccess() {
-  return { type: types.LOGOUT_SUCCESS };
+  return { type: types.LOGOUT_SUCCESS, user:{} };
 }
 
 export function login(user) {
@@ -38,7 +38,7 @@ export function register(email, password) {
   return async function(dispatch) {
     dispatch(beginApiCall());
     try {
-      const {headers} = await authApi.register(email, password);
+      const { headers } = await authApi.register(email, password);
       authApi.loginWithJwt(headers['authorization']);
       const decodedJWT = jwtDecode(headers['authorization']);
       dispatch(registerSuccess(decodedJWT));
@@ -62,6 +62,7 @@ export function getLoginUserFromToken() {
 
 export function logout() {
   return async function(dispatch) {
+    dispatch(beginApiCall());
     try {
       authApi.logout();
       dispatch(logoutSuccess());

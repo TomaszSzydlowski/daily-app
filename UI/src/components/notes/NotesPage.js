@@ -43,6 +43,13 @@ class NotesPage extends React.Component {
     }
   };
 
+  formatContext = (note) => {
+    if (note.length > 100) {
+      return note.substring(0, 100) + '...';
+    }
+    return note;
+  };
+
   render() {
     return (
       <div>
@@ -83,6 +90,7 @@ function mapStateToProps(state) {
         : state.notes.map((note) => {
             return {
               ...note,
+              content: note.content.length > 63 ? note.content.substring(0, 63).trim() + '...' : note.content,
               projectName: state.projects.find((a) => a.id === note.projectId).name,
               date: new Date(note.date).toLocaleDateString('en-GB')
             };
