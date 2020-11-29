@@ -6,6 +6,20 @@ export function loadProjectsSuccess(projects) {
   return { type: types.LOAD_PROJECTS_SUCCESS, projects };
 }
 
+export function clearProjects() {
+  return { type: types.CLEAR_PROJECTS, projects: [] };
+}
+
+export function clearProjectsAction() {
+  return async function(dispatch) {
+    try {
+      dispatch(clearProjects());
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
 export function loadProjects() {
   return async function(dispatch) {
     dispatch(beginApiCall());

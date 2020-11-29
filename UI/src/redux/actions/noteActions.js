@@ -18,6 +18,20 @@ export function deleteNoteOptimistic(note) {
   return { type: types.DELETE_NOTE_OPTIMISTIC, note };
 }
 
+export function clearNotes(){
+  return { type: types.CLEAR_NOTES, notes:[] };
+}
+
+export function clearNotesAction(){
+  return async function(dispatch) {
+    try {
+      dispatch(clearNotes());
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
 export function loadNotes() {
   return async function(dispatch) {
     dispatch(beginApiCall());
