@@ -10,7 +10,7 @@ export default function authReducer(state = initialState.loginUser, action) {
     case types.GET_LOGIN_USER_FROM_TOKEN:
       return action.user;
     case types.LOGOUT_SUCCESS:
-      return {};
+      return action.user;
     default:
       return state;
   }

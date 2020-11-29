@@ -16,7 +16,7 @@ export function getLoginUserFromTokenSuccess(user) {
 }
 
 export function logoutSuccess() {
-  return { type: types.LOGOUT_SUCCESS };
+  return { type: types.LOGOUT_SUCCESS, user:{} };
 }
 
 export function login(user) {
@@ -62,6 +62,7 @@ export function getLoginUserFromToken() {
 
 export function logout() {
   return async function(dispatch) {
+    dispatch(beginApiCall());
     try {
       authApi.logout();
       dispatch(logoutSuccess());

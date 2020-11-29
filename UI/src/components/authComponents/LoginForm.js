@@ -1,12 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Spinner from '../common/Spinner';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import './LoginForm.css';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/authActions';
+import { shouldNotRefreshToken } from '../../redux/actions/refreshTokenActions';
+import { Redirect } from 'react-router-dom';
+import authApi from '../../services/authService';
+import http from '../../services/httpService';
+
+const apiLoginEndpoint = process.env.API_URL + '/api/auth/login/';
+const tokenKey = 'token';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,11 +24,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function LoginForm({ login, history }) {
+export function LoginForm({ login, shouldNotRefreshToken, history, shouldRefreshToken }) {
   const [ errors, setErrors ] = useState({});
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
   const classes = useStyles();
+
+  useEffect(
+    () => {
+      if (shouldRefreshToken) {
+        // authApi.logout();
+      }
+    },
+    [ shouldRefreshToken ]
+  );
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -38,6 +54,9 @@ export function LoginForm({ login, history }) {
 
     try {
       await login(user);
+      await shouldNotRefreshToken();
+      // const response = await http.post(apiLoginEndpoint, user);
+      // localStorage.setItem(tokenKey, response.data);
       toast.success('Successfully logged in.');
       setSaving(false);
       history.push('/notes');
@@ -70,6 +89,7 @@ export function LoginForm({ login, history }) {
 
   return (
     <div className="LoginForm-container">
+      {!shouldRefreshToken && <Redirect to="/notes" />}
       <div className="row">
         <h2 id="SignIn">Sign In</h2>
       </div>
@@ -118,15 +138,20 @@ export function LoginForm({ login, history }) {
 
 LoginForm.propTypes = {
   history: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  shouldNotRefreshToken: PropTypes.func.isRequired,
+  shouldRefreshToken: PropTypes.bool
 };
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  return {
+    shouldRefreshToken: state.shouldRefreshToken
+  };
 }
 
 const mapDispatchToProps = {
-  login
+  login,
+  shouldNotRefreshToken
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

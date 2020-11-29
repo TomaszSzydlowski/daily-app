@@ -9,6 +9,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const GET_LOGIN_USER_FROM_TOKEN = 'GET_LOGIN_USER_FROM_TOKEN';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const SHOULD_NOT_REFRESH_TOKEN_SUCCESS = 'SHOULD_NOT_REFRESH_TOKEN_SUCCESS';
+export const SHOULD_REFRESH_TOKEN_SUCCESS = 'SHOULD_REFRESH_TOKEN_SUCCESS';
 
 // By convention, actions that end in "_SUCCESS" are assumed to have been the result of a completed
 // API call. But since we're doing an optimistic delete, we're hiding loading state.

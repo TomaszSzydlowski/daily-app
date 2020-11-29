@@ -9,7 +9,6 @@ namespace DailyApi.Domain.Services.Communication
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="saveRegisterUserResource">Saved saveRegisterUserResource.</param>
         /// <returns>Response.</returns>
         public RegisterUserResponse() : this(true, string.Empty)
         { }
