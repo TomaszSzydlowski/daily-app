@@ -9,11 +9,6 @@ import { connect } from 'react-redux';
 import { login } from '../../redux/actions/authActions';
 import { shouldNotRefreshToken } from '../../redux/actions/refreshTokenActions';
 import { Redirect } from 'react-router-dom';
-import authApi from '../../services/authService';
-import http from '../../services/httpService';
-
-const apiLoginEndpoint = process.env.API_URL + '/api/auth/login/';
-const tokenKey = 'token';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +24,6 @@ export function LoginForm({ login, shouldNotRefreshToken, history, shouldRefresh
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
   const classes = useStyles();
-
-  useEffect(
-    () => {
-      if (shouldRefreshToken) {
-        // authApi.logout();
-      }
-    },
-    [ shouldRefreshToken ]
-  );
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -55,8 +41,6 @@ export function LoginForm({ login, shouldNotRefreshToken, history, shouldRefresh
     try {
       await login(user);
       await shouldNotRefreshToken();
-      // const response = await http.post(apiLoginEndpoint, user);
-      // localStorage.setItem(tokenKey, response.data);
       toast.success('Successfully logged in.');
       setSaving(false);
       history.push('/notes');

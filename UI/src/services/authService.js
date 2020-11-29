@@ -10,7 +10,6 @@ const tokenKey = 'token';
 
 http.setJwt(getJwt());
 
-
 function register(email, password) {
   return http.post(apiRegisterEndpoint, {
     email,
@@ -21,6 +20,7 @@ function register(email, password) {
 async function login(user) {
   try {
     const response = await http.post(apiLoginEndpoint, user);
+    http.setJwt(response.data);
     localStorage.setItem(tokenKey, response.data);
     return handleResponse(response);
   } catch (error) {
@@ -49,13 +49,26 @@ function getCurrentUser() {
 async function shouldRefreshToken() {
   try {
     const response = await http.get(apiIsUserAuthorizedEndpoint);
-    if (response.status !== 200) {
+    if (response.status === 200) {
       return false;
     }
+    return true;
   } catch (error) {
     return true;
   }
 }
+
+// async function shouldRefreshTokenNow(){
+//   try {
+//     const response = await http.get(apiIsUserAuthorizedEndpoint);
+//     if (response.status !== 200) {
+//       http.setJwt(null);
+//       localStorage.removeItem(tokenKey);
+//     }
+//   } catch (error) {
+//     return true;
+//   }
+// }
 
 function getJwt() {
   return localStorage.getItem(tokenKey);
