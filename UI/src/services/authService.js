@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 const apiLoginEndpoint = process.env.API_URL + '/api/auth/login/';
 const apiRegisterEndpoint = process.env.API_URL + '/api/auth/register/';
+const apiIsUserAuthorizedEndpoint = process.env.API_URL + '/api/auth/isUserAuthorized/';
 
 const tokenKey = 'token';
 
@@ -19,8 +20,9 @@ function register(email, password) {
 async function login(user) {
   try {
     const response = await http.post(apiLoginEndpoint, user);
+    http.setJwt(response.data);
+    localStorage.setItem(tokenKey, response.data);
     return handleResponse(response);
-    // localStorage.setItem(tokenKey, jwt);
   } catch (error) {
     handleError(error);
   }
@@ -31,6 +33,7 @@ function loginWithJwt(jwt) {
 }
 
 function logout() {
+  http.setJwt(null);
   localStorage.removeItem(tokenKey);
 }
 
@@ -40,6 +43,18 @@ function getCurrentUser() {
     return jwtDecode(jwt);
   } catch (error) {
     return null;
+  }
+}
+
+async function shouldRefreshToken() {
+  try {
+    const response = await http.get(apiIsUserAuthorizedEndpoint);
+    if (response.status === 200) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return true;
   }
 }
 
@@ -53,5 +68,6 @@ export default {
   logout,
   getCurrentUser,
   loginWithJwt,
-  getJwt
+  getJwt,
+  checkFreshnessToken: shouldRefreshToken
 };
