@@ -4,7 +4,7 @@ import initialState from './initialState';
 export default function noteReducer(state = initialState.notes, action) {
   switch (action.type) {
     case types.CREATE_NOTE_SUCCESS:
-      return [ ...state, { ...action.note } ];
+      return [ { ...action.note }, ...state ];
     case types.UPDATE_NOTE_SUCCESS:
       return state.map((note) => (note.id === action.note.id ? action.note : note));
     case types.LOAD_NOTES_SUCCESS:
