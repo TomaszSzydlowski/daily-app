@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken, history }) {
+export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken, history, ...props }) {
   const [ errors, setErrors ] = useState({});
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
@@ -74,48 +74,54 @@ export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken,
   return (
     <div className="LoginForm-container">
       {!shouldRefreshToken && <Redirect to="/plan" />}
-      <div className="row">
-        <h2 id="SignIn">Sign In</h2>
-      </div>
-      <form onSubmit={doSubmit} className={classes.root} noValidate autoComplete="off">
-        <div className="row">
-          <TextField
-            id="email-standard-basic"
-            label="E-mail"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            error={errors.email !== undefined || errors.unauthorize !== undefined}
-            helperText={errors.email}
-          />
+      {props.loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <div className="row">
+            <h2 id="SignIn">Sign In</h2>
+          </div>
+          <form onSubmit={doSubmit} className={classes.root} noValidate autoComplete="off">
+            <div className="row">
+              <TextField
+                id="email-standard-basic"
+                label="E-mail"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                error={errors.email !== undefined || errors.unauthorize !== undefined}
+                helperText={errors.email}
+              />
+            </div>
+            <div className="row">
+              <TextField
+                id="password-standard-basic"
+                label="Password"
+                type="password"
+                name="password"
+                value={user.password}
+                onChange={handleChange}
+                error={errors.password !== undefined || errors.unauthorize !== undefined}
+                helperText={errors.password || errors.unauthorize}
+              />
+            </div>
+            <div className="row">
+              {saving ? (
+                <Spinner />
+              ) : (
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="btn btn-primary"
+                  style={{ width: '100%', marginTop: '30px' }}
+                >
+                  LOG IN
+                </button>
+              )}
+            </div>
+          </form>
         </div>
-        <div className="row">
-          <TextField
-            id="password-standard-basic"
-            label="Password"
-            type="password"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            error={errors.password !== undefined || errors.unauthorize !== undefined}
-            helperText={errors.password || errors.unauthorize}
-          />
-        </div>
-        <div className="row">
-          {saving ? (
-            <Spinner />
-          ) : (
-            <button
-              type="submit"
-              disabled={saving}
-              className="btn btn-primary"
-              style={{ width: '100%', marginTop: '30px' }}
-            >
-              LOG IN
-            </button>
-          )}
-        </div>
-      </form>
+      )}
     </div>
   );
 }
@@ -124,12 +130,14 @@ LoginForm.propTypes = {
   history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   shouldRefreshToken: PropTypes.bool.isRequired,
-  shouldRefreshTokenAction: PropTypes.func.isRequired
+  shouldRefreshTokenAction: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    shouldRefreshToken: state.shouldRefreshToken
+    shouldRefreshToken: state.shouldRefreshToken,
+    loading: state.apiCallsInProgress > 0
   };
 }
 
