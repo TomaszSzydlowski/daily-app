@@ -5,6 +5,7 @@ import AboutPage from './about/AboutPage';
 import Header from './common/Header';
 import PageNotFound from './PageNotFound';
 import NotesPage from './notes/NotesPage';
+import ManagePlanPage from './plan/ManagePlanPage';
 // eslint-disable-next-line import/no-named-as-default
 import LoginForm from './authComponents/LoginForm';
 import RegisterForm from './authComponents/RegisterForm';
@@ -26,6 +27,7 @@ export function App() {
           <Route path="/register" component={RegisterForm} />
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutPage} />
+          <ProtectedRoute path="/plan" component={ManagePlanPage} />
           <ProtectedRoute path="/notes" component={NotesPage} />
           <ProtectedRoute path="/note/:id" component={ManageNotePage} />
           <ProtectedRoute path="/note" component={ManageNotePage} />

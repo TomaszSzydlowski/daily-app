@@ -40,6 +40,11 @@ const Header = ({ loginUser, getLoginUserFromToken, shouldRefreshToken }) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
+              <NavLink className="nav-item nav-link" to="/plan">
+                Plan
+              </NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink className="nav-item nav-link" to="/notes">
                 Notes
               </NavLink>

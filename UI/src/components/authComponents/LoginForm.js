@@ -73,7 +73,7 @@ export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken,
 
   return (
     <div className="LoginForm-container">
-      {!shouldRefreshToken && <Redirect to="/notes" />}
+      {!shouldRefreshToken && <Redirect to="/plan" />}
       <div className="row">
         <h2 id="SignIn">Sign In</h2>
       </div>
