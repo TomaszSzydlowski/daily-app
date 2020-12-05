@@ -1,4 +1,4 @@
-export const parseDateToTimeField = (date) => {
+const parseDateToTimeField = (date) => {
   const getMonth = (time) => {
     const month = time.getMonth() + 1;
     return month.toString().length > 1 ? time.getMonth() + 1 : '0' + (time.getMonth() + 1);
@@ -21,3 +21,16 @@ export const parseDateToTimeField = (date) => {
 
   return `${date.getFullYear()}-${getMonth(date)}-${getDate(date)}T${getHours(date)}:${getMinutes(date)}`;
 };
+
+const getDateNow = (addDays = null) => {
+  let date = new Date();
+  if (addDays !== null) {
+    date = new Date(date.getTime() + 1000 * 60 * 60 * 24 * addDays);
+  }
+  return JSON.stringify(date).slice(1, -1);
+};
+
+module.exports={
+  parseDateToTimeField,
+  getDateNow
+}

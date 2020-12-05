@@ -8,7 +8,6 @@ import './LoginForm.css';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/authActions';
 import { shouldRefreshTokenAction } from '../../redux/actions/refreshTokenActions';
-import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {

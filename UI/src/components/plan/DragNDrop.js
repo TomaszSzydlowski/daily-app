@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 
-const DragNDrop = ({ data }) => {
+function DragNDrop({ data }) {
   const [ list, setList ] = useState(data);
   const [ dragging, setDragging ] = useState(false);
   const dragItem = useRef();
@@ -83,6 +84,10 @@ const DragNDrop = ({ data }) => {
       ))}
     </div>
   );
+}
+
+DragNDrop.propTypes = {
+  data: PropTypes.array.isRequired
 };
 
 export default DragNDrop;

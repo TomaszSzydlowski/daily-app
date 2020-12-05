@@ -29,7 +29,9 @@ server.use(middlewares);
 server.use(
   jsonServer.rewriter({
     '/api/notes/': '/notes/',
-    '/api/projects/': '/projects/'
+    '/api/projects/': '/projects/',
+    '/api/tasks*': '/tasks/',
+    '/api/tasks/backlog/': '/backlog/'
   })
 );
 
@@ -71,6 +73,11 @@ server.post('/api/auth/login/', (req, res) => {
     res.status(200).jsonp(jwt);
     res.end();
   }
+});
+
+server.get('/api/auth/isUserAuthorized/', (req, res) => {
+  res.status(200);
+  res.end();
 });
 
 server.post('/api/auth/register/', (req, res) => {

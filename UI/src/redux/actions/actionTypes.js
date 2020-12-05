@@ -12,6 +12,8 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const SHOULD_REFRESH_TOKEN_SUCCESS = 'SHOULD_REFRESH_TOKEN_SUCCESS';
 export const CLEAR_NOTES='CLEAR_NOTES';
 export const CLEAR_PROJECTS='CLEAR_PROJECTS';
+export const LOAD_TASKS_SUCCESS = 'LOAD_TASKS_SUCCESS';
+export const LOAD_BACKLOG_SUCCESS = 'LOAD_BACKLOG_SUCCESS';
 
 // By convention, actions that end in "_SUCCESS" are assumed to have been the result of a completed
 // API call. But since we're doing an optimistic delete, we're hiding loading state.

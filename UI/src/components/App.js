@@ -5,6 +5,7 @@ import AboutPage from './about/AboutPage';
 import Header from './common/Header';
 import PageNotFound from './PageNotFound';
 import NotesPage from './notes/NotesPage';
+// eslint-disable-next-line import/no-named-as-default
 import ManagePlanPage from './plan/ManagePlanPage';
 // eslint-disable-next-line import/no-named-as-default
 import LoginForm from './authComponents/LoginForm';
