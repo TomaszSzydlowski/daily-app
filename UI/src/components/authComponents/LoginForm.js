@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Spinner from '../common/Spinner';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import './LoginForm.css';
@@ -24,6 +24,15 @@ export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken,
   const [ user, setUser ] = useState({ email: '', password: '' });
   const [ saving, setSaving ] = useState(false);
   const classes = useStyles();
+
+  useEffect(
+    () => {
+      if (!shouldRefreshToken) {
+        history.push('/plan');
+      }
+    },
+    [ shouldRefreshToken ]
+  );
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -73,7 +82,6 @@ export function LoginForm({ login, shouldRefreshTokenAction, shouldRefreshToken,
 
   return (
     <div className="LoginForm-container">
-      {!shouldRefreshToken && <Redirect to="/plan" />}
       {props.loading ? (
         <Spinner />
       ) : (
