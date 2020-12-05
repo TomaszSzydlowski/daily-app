@@ -1,5 +1,5 @@
 .App-header {
-  background-color: black;
+  background-color: rgb(40, 40, 46);
   min-height: 100vh;
   display: flex;
   font-size: calc(10px+2vmin);
@@ -26,7 +26,7 @@
   min-height: 150px;
   border-radius: 5px;
   background-color: white;
-  color: black;
+  color:  rgb(40, 40, 46);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,4 +46,8 @@
   text-align: left;
   margin-bottom: .5rem;
   font-size: 1.5rem;
+}
+
+.current {
+  background-color:  rgb(40, 40, 46);
 }
