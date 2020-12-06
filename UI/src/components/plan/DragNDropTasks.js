@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function DragNDropTasks({ data }) {
+function DragNDropTasks({ data, isShowingBackLog, backLog, tasks }) {
   const [ list, setList ] = useState(data);
+  const [ tasksList, setTasksList ] = useState(tasks);
+  const [ backLogList, setBackLogList ] = useState(backLog);
   const [ dragging, setDragging ] = useState(false);
   const dragItem = useRef();
   const dragNode = useRef();
@@ -10,6 +12,7 @@ function DragNDropTasks({ data }) {
   useEffect(
     () => {
       console.log(data);
+      console.log(isShowingBackLog);
     },
     [ data ]
   );
@@ -27,19 +30,28 @@ function DragNDropTasks({ data }) {
 
   const handleDragEnter = (e, params) => {
     console.log('Entering drag..', params);
+    // console.log('Start at posion:', dragItem.current);
+    // console.log('End posion', params);
     const currentItem = dragItem.current;
     if (e.target !== dragNode.current) {
       console.log('target is not the same');
-      setList((oldList) => {
-        let newList = JSON.parse(JSON.stringify(oldList));
-        newList[params.grpI].items.splice(
-          params.itemI,
-          0,
-          newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0]
-        );
-        dragItem.current = params;
-        return newList;
-      });
+      if (params.grpI === 1) {
+        //tasks list refactor
+        setTasksList((oldTaskList) => {
+          let newTaskList = JSON.parse(JSON.stringify(oldTaskList));
+          newTaskList.splice(params.itemI, 0, newTaskList.splice(currentItem.itemI, 1)[0]);
+          dragItem.current = params;
+          return newTaskList;
+        });
+      } else {
+        //backlog list refactor
+        setBackLogList((oldBackLogList) => {
+          let newBackLogList = JSON.parse(JSON.stringify(oldBackLogList));
+          newBackLogList.splice(params.itemI, 0, newBackLogList.splice(currentItem.itemI, 1)[0]);
+          dragItem.current = params;
+          return newBackLogList;
+        });
+      }
     }
   };
 
@@ -61,40 +73,69 @@ function DragNDropTasks({ data }) {
 
   return (
     <div className="drag-n-drop">
-      {list.map((grp, grpI) => (
+      {isShowingBackLog ? (
         <div
-          key={grp.title}
+          key="backLog"
           className="dnd-group"
-          onDragEnter={dragging && !grp.items.length ? (e) => handleDragEnter(e, { grpI, itemI: 0 }) : null}
+          onDragEnter={dragging && !backLog.length ? (e) => handleDragEnter(e, { grpI: 0, itemI: 0 }) : null}
         >
-          <div className="group-title">{grp.title}</div>
-          {grp.items.map((item, itemI) => (
+          <div className="group-title">BackLog</div>
+          {backLogList.map((item, itemI) => (
             <div
               draggable
               onDragStart={(e) => {
-                handleDragStart(e, { grpI, itemI });
+                handleDragStart(e, { grpI: 0, itemI });
               }}
               onDragEnter={
                 dragging ? (
                   (e) => {
-                    handleDragEnter(e, { grpI, itemI });
+                    handleDragEnter(e, { grpI: 0, itemI });
                   }
                 ) : null
               }
               key={item.id}
-              className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
+              className={dragging ? getStyles({ grpI: 0, itemI }) : 'dnd-item'}
             >
               {item.content}
             </div>
           ))}
         </div>
-      ))}
+      ) : null}
+      <div
+        key="tasks"
+        className="dnd-group"
+        onDragEnter={dragging && !tasksList.length ? (e) => handleDragEnter(e, { grpI: 1, itemI: 0 }) : null}
+      >
+        <div className="group-title">Dzis</div>
+        {tasksList.map((item, itemI) => (
+          <div
+            draggable
+            onDragStart={(e) => {
+              handleDragStart(e, { grpI: 1, itemI });
+            }}
+            onDragEnter={
+              dragging ? (
+                (e) => {
+                  handleDragEnter(e, { grpI: 1, itemI });
+                }
+              ) : null
+            }
+            key={item.id}
+            className={dragging ? getStyles({ grpI: 1, itemI }) : 'dnd-item'}
+          >
+            {item.content}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 DragNDropTasks.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  backLog: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
+  isShowingBackLog: PropTypes.bool.isRequired
 };
 
 export default DragNDropTasks;

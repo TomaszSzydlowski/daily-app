@@ -14,7 +14,7 @@ const currentDate = new Date().toISOString().slice(0, 10);
 //   { title: 'group 2', items: [ { id: '2', content: 'c2' }, { id: '3', content: 'c3' } ] }
 // ];
 
-export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...props }) {
+export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, backLog, tasks, ...props }) {
   const [ datePlan, setDatePlan ] = useState(currentDate);
 
   useEffect(
@@ -23,7 +23,7 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
       console.log('o cos sie zmienilo');
       try {
         loadTasks(datePlan);
-        if (currentDate === datePlan) {
+        if (isShowingBackLog()) {
           loadBackLog();
         }
       } catch (error) {
@@ -32,6 +32,10 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
     },
     [ datePlan ]
   );
+
+  function isShowingBackLog() {
+    return currentDate === datePlan;
+  }
 
   function handleChange(event) {
     setDatePlan(event.target.value);
@@ -44,7 +48,12 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
         <Spinner />
       ) : (
         <div className="App-header">
-          <DragNDropTasks data={dragNDropTasksData} />
+          <DragNDropTasks
+            data={dragNDropTasksData}
+            isShowingBackLog={isShowingBackLog()}
+            backLog={backLog}
+            tasks={tasks}
+          />
         </div>
       )}
     </div>
@@ -53,6 +62,8 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
 
 ManagePlanPage.propTypes = {
   dragNDropTasksData: PropTypes.array.isRequired,
+  backLog: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
   loadTasks: PropTypes.func.isRequired,
   loadBackLog: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
@@ -60,6 +71,8 @@ ManagePlanPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    backLog: state.backLog,
+    tasks: state.tasks,
     dragNDropTasksData: [ { title: 'BackLog', items: state.backLog }, { title: 'Dzis', items: state.tasks } ],
     loading: state.apiCallsInProgress > 0
   };
