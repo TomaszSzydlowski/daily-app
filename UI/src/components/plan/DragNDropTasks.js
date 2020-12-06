@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function DragNDropTasks({ data }) {
+function DragNDropTasks({ data, isShowingBackLog }) {
   const [ list, setList ] = useState(data);
   const [ dragging, setDragging ] = useState(false);
   const dragItem = useRef();
@@ -59,42 +59,52 @@ function DragNDropTasks({ data }) {
     return 'dnd-item';
   };
 
+  function renderDnDGroup(grp, grpI) {
+    return (
+      <div
+        key={grp.title}
+        className="dnd-group"
+        onDragEnter={dragging && !grp.items.length ? (e) => handleDragEnter(e, { grpI, itemI: 0 }) : null}
+      >
+        <div className="group-title">{grp.title}</div>
+        {grp.items.map((item, itemI) => (
+          <div
+            draggable
+            onDragStart={(e) => {
+              handleDragStart(e, { grpI, itemI });
+            }}
+            onDragEnter={
+              dragging ? (
+                (e) => {
+                  handleDragEnter(e, { grpI, itemI });
+                }
+              ) : null
+            }
+            key={item.id}
+            className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
+          >
+            {item.content}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="drag-n-drop">
-      {list.map((grp, grpI) => (
-        <div
-          key={grp.title}
-          className="dnd-group"
-          onDragEnter={dragging && !grp.items.length ? (e) => handleDragEnter(e, { grpI, itemI: 0 }) : null}
-        >
-          <div className="group-title">{grp.title}</div>
-          {grp.items.map((item, itemI) => (
-            <div
-              draggable
-              onDragStart={(e) => {
-                handleDragStart(e, { grpI, itemI });
-              }}
-              onDragEnter={
-                dragging ? (
-                  (e) => {
-                    handleDragEnter(e, { grpI, itemI });
-                  }
-                ) : null
-              }
-              key={item.id}
-              className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
-            >
-              {item.content}
-            </div>
-          ))}
-        </div>
-      ))}
+      {list.map(
+        (grp, grpI) =>
+          grp.title !== 'BackLog'
+            ? renderDnDGroup(grp, grpI)
+            : isShowingBackLog && grp.items.length > 0 ? renderDnDGroup(grp, grpI) : null
+      )}
     </div>
   );
 }
 
 DragNDropTasks.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  isShowingBackLog: PropTypes.bool.isRequired
 };
 
 export default DragNDropTasks;

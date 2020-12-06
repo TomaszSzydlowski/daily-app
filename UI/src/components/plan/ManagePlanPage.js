@@ -23,7 +23,7 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
       console.log('o cos sie zmienilo');
       try {
         loadTasks(datePlan);
-        if (currentDate === datePlan) {
+        if (isShowingBackLog()) {
           loadBackLog();
         }
       } catch (error) {
@@ -37,6 +37,10 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
     setDatePlan(event.target.value);
   }
 
+  function isShowingBackLog() {
+    return currentDate === datePlan;
+  }
+
   return (
     <div>
       <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChange} />
@@ -44,7 +48,7 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
         <Spinner />
       ) : (
         <div className="App-header">
-          <DragNDropTasks data={dragNDropTasksData} />
+          <DragNDropTasks data={dragNDropTasksData} isShowingBackLog={isShowingBackLog()} />
         </div>
       )}
     </div>
