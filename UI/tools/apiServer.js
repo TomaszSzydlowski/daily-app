@@ -30,8 +30,8 @@ server.use(
   jsonServer.rewriter({
     '/api/notes/': '/notes/',
     '/api/projects/': '/projects/',
-    '/api/tasks*': '/tasks/',
-    '/api/tasks/backlog/': '/backlog/'
+    '/api/tasks/backlog/': '/backlog/',
+    '/api/tasks*': '/tasks/'
   })
 );
 

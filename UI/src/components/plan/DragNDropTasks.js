@@ -1,11 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function DragNDrop({ data }) {
+function DragNDropTasks({ data }) {
   const [ list, setList ] = useState(data);
   const [ dragging, setDragging ] = useState(false);
   const dragItem = useRef();
   const dragNode = useRef();
+
+  useEffect(
+    () => {
+      console.log(data);
+    },
+    [ data ]
+  );
 
   const handleDragStart = (e, params) => {
     console.log(e.target);
@@ -74,10 +81,10 @@ function DragNDrop({ data }) {
                   }
                 ) : null
               }
-              key={item}
+              key={item.id}
               className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
             >
-              {item}
+              {item.content}
             </div>
           ))}
         </div>
@@ -86,8 +93,8 @@ function DragNDrop({ data }) {
   );
 }
 
-DragNDrop.propTypes = {
+DragNDropTasks.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-export default DragNDrop;
+export default DragNDropTasks;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './ManagePlanPage.css';
-import DragNDrop from './DragNDrop';
+import './DragNDropTasks.css';
+import DragNDropTasks from './DragNDropTasks';
 import DataPicker from './PlanMainDataPicker';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,9 +9,12 @@ import { loadBackLog } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
 
 const currentDate = new Date().toISOString().slice(0, 10);
-const data = [ { title: 'group 1', items: [ '1', '2', '3' ] }, { title: 'group 2', items: [ '4', '5' ] } ];
+// const data = [
+//   { title: 'group 1', items: [ { id: '1', content: 'c1' } ] },
+//   { title: 'group 2', items: [ { id: '2', content: 'c2' }, { id: '3', content: 'c3' } ] }
+// ];
 
-export function ManagePlanPage({ tasks, backLog, loadTasks, loadBackLog, ...props }) {
+export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...props }) {
   const [ datePlan, setDatePlan ] = useState(currentDate);
 
   useEffect(
@@ -41,7 +44,7 @@ export function ManagePlanPage({ tasks, backLog, loadTasks, loadBackLog, ...prop
         <Spinner />
       ) : (
         <div className="App-header">
-          <DragNDrop data={data} />
+          <DragNDropTasks data={dragNDropTasksData} />
         </div>
       )}
     </div>
@@ -49,8 +52,7 @@ export function ManagePlanPage({ tasks, backLog, loadTasks, loadBackLog, ...prop
 }
 
 ManagePlanPage.propTypes = {
-  tasks: PropTypes.array.isRequired,
-  backLog: PropTypes.array.isRequired,
+  dragNDropTasksData: PropTypes.array.isRequired,
   loadTasks: PropTypes.func.isRequired,
   loadBackLog: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
@@ -58,8 +60,7 @@ ManagePlanPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks,
-    backLog: state.backLog,
+    dragNDropTasksData: [ { title: 'BackLog', items: state.backLog }, { title: 'Dzis', items: state.tasks } ],
     loading: state.apiCallsInProgress > 0
   };
 }
