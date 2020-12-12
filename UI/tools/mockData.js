@@ -72,7 +72,8 @@ const tasks = [
     projectId: '145e5b5f-2300-4430-a59b-d97d9a899ec8',
     isDone: true,
     completedAt: '2020-12-05T09:20:00.000Z',
-    updatedAt: ''
+    updatedAt: '',
+    priority: 1
   },
   {
     id: '619105fe-d006-44b7-a1a7-8823c78c8602',
@@ -82,7 +83,8 @@ const tasks = [
     projectId: '145e5b5f-2300-4430-a59b-d97d9a899ec8',
     isDone: false,
     completedAt: '',
-    updatedAt: ''
+    updatedAt: '',
+    priority: 2
   },
   {
     id: '619105fe-d006-44b7-a1a7-8823c78c8603',
@@ -92,7 +94,8 @@ const tasks = [
     projectId: '145e5b5f-2300-4430-a59b-d97d9a899ec8',
     isDone: false,
     completedAt: '',
-    updatedAt: ''
+    updatedAt: '',
+    priority: 3
   }
 ];
 
@@ -105,7 +108,8 @@ const backlog = [
     projectId: '145e5b5f-2300-4430-a59b-d97d9a899ec8',
     isDone: false,
     completedAt: '',
-    updatedAt: ''
+    updatedAt: '',
+    priority: 1
   },
   {
     id: '619105fe-d006-44b7-a1a7-8823c78c8605',
@@ -115,7 +119,8 @@ const backlog = [
     projectId: '145e5b5f-2300-4430-a59b-d97d9a899ec8',
     isDone: false,
     completedAt: '',
-    updatedAt: ''
+    updatedAt: '',
+    priority: 2
   }
 ];
 

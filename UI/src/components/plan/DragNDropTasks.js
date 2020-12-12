@@ -29,6 +29,8 @@ function DragNDropTasks({ data, isShowingBackLog }) {
     console.log('Entering drag..', params);
     const currentItem = dragItem.current;
     if (e.target !== dragNode.current) {
+      //no allow to send task to backlog
+      if (currentItem.grpI == 1 && params.grpI == 0) return;
       console.log('target is not the same');
       setList((oldList) => {
         let newList = JSON.parse(JSON.stringify(oldList));
