@@ -39,10 +39,18 @@ function DragNDropTasks({ data, isShowingBackLog }) {
           0,
           newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0]
         );
+        //updated priority
+        newList[params.grpI].items = newList[params.grpI].items.map((item, index) => {
+          return {
+            ...item,
+            priority: ++index
+          };
+        });
         dragItem.current = params;
         return newList;
       });
     }
+    console.log(list[params.grpI].items.map((i) => i.priority));
   };
 
   const handleDragEnd = () => {
