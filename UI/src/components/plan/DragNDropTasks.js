@@ -1,22 +1,77 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function DragNDropTasks({ data, isShowingBackLog }) {
+function DragNDropTasks({
+  data,
+  isShowingBackLog,
+  onUpdateTasksPriority,
+  onUpdateBackLogsPriority,
+  onRemoveTaskFromBackLogs,
+  onPushTaskToDailyTasks
+}) {
   const [ list, setList ] = useState(data);
   const [ dragging, setDragging ] = useState(false);
+  const [ priorityChanging, setPriorityChanging ] = useState(false);
+  const [ startDraggingAt, setStartDraggingAt ] = useState({});
+  const [ endDraggingAt, setEndDraggingAt ] = useState({});
+  const [ draggingTaskId, setDraggingTaskId ] = useState('');
   const dragItem = useRef();
   const dragNode = useRef();
 
+  const getTasksToUpdatePriority = (listIndex, startingUpdatingIndexAt) => {
+    return list[listIndex].items.slice(startingUpdatingIndexAt).map((task) => {
+      return {
+        id: task.id,
+        priority: task.priority
+      };
+    });
+  };
+
+  const shouldUpdatePriority = () => {
+    const isDraggingTargetDiffrent =
+      startDraggingAt.grpI !== endDraggingAt.grpI || startDraggingAt.itemI !== endDraggingAt.itemI;
+
+    return priorityChanging && !dragging && isDraggingTargetDiffrent;
+  };
+
   useEffect(
     () => {
-      console.log(data);
+      if (shouldUpdatePriority()) {
+        if (startDraggingAt.grpI === endDraggingAt.grpI) {
+          const startingUpdatingIndexAt = Math.min(startDraggingAt.itemI, endDraggingAt.itemI);
+          //Update_Backlog
+          if (startDraggingAt.grpI === 0 || endDraggingAt.grpI === 0) {
+            let listOfTaskToChangePriority = getTasksToUpdatePriority(startDraggingAt.grpI, startingUpdatingIndexAt);
+            onUpdateBackLogsPriority(listOfTaskToChangePriority);
+          }
+          //Update_Tasks
+          if (startDraggingAt.grpI === 1 || endDraggingAt.grpI === 1) {
+            let listOfTaskToChangePriority = getTasksToUpdatePriority(startDraggingAt.grpI, startingUpdatingIndexAt);
+            onUpdateTasksPriority(listOfTaskToChangePriority);
+          }
+        } else {
+          //Update_All
+          let listOfTaskToChangePriorityBacklog = getTasksToUpdatePriority(startDraggingAt.grpI, startDraggingAt.itemI);
+          let listOfTaskToChangePriorityTasks = getTasksToUpdatePriority(endDraggingAt.grpI, endDraggingAt.itemI);
+          onUpdateBackLogsPriority(listOfTaskToChangePriorityBacklog);
+          onUpdateTasksPriority(listOfTaskToChangePriorityTasks);
+          onMoveTaskFromBackLogToDailyTask(list[endDraggingAt.grpI].items.find((i) => i.id === draggingTaskId));
+        }
+        setPriorityChanging(false);
+      }
     },
-    [ data ]
+    [ priorityChanging, dragging ]
   );
 
+  const onMoveTaskFromBackLogToDailyTask = (task) => {
+    onRemoveTaskFromBackLogs(task);
+    onPushTaskToDailyTasks(task);
+  };
+
   const handleDragStart = (e, params) => {
-    console.log(e.target);
-    console.log('drag starting..', params);
+    // console.log('drag starting..', params);
+    setStartDraggingAt({ grpI: params.grpI, itemI: params.itemI });
+    setDraggingTaskId(list[params.grpI].items[params.itemI].id);
     dragItem.current = params;
     dragNode.current = e.target;
     dragNode.current.addEventListener('dragend', handleDragEnd);
@@ -26,12 +81,14 @@ function DragNDropTasks({ data, isShowingBackLog }) {
   };
 
   const handleDragEnter = (e, params) => {
-    console.log('Entering drag..', params);
+    // console.log('Entering drag..', params);
     const currentItem = dragItem.current;
     if (e.target !== dragNode.current) {
       //no allow to send task to backlog
       if (currentItem.grpI == 1 && params.grpI == 0) return;
-      console.log('target is not the same');
+      // console.log('target is not the same');
+      setEndDraggingAt({ grpI: params.grpI, itemI: params.itemI });
+      setPriorityChanging(true);
       setList((oldList) => {
         let newList = JSON.parse(JSON.stringify(oldList));
         newList[params.grpI].items.splice(
@@ -50,11 +107,10 @@ function DragNDropTasks({ data, isShowingBackLog }) {
         return newList;
       });
     }
-    console.log(list[params.grpI].items.map((i) => i.priority));
   };
 
   const handleDragEnd = () => {
-    console.log('Ending drag..');
+    // console.log('Ending drag..');
     setDragging(false);
     dragNode.current.removeEventListener('dragend', handleDragEnd);
     dragItem.current = null;
@@ -114,7 +170,11 @@ function DragNDropTasks({ data, isShowingBackLog }) {
 
 DragNDropTasks.propTypes = {
   data: PropTypes.array.isRequired,
-  isShowingBackLog: PropTypes.bool.isRequired
+  isShowingBackLog: PropTypes.bool.isRequired,
+  onUpdateTasksPriority: PropTypes.func.isRequired,
+  onUpdateBackLogsPriority: PropTypes.func.isRequired,
+  onRemoveTaskFromBackLogs: PropTypes.func.isRequired,
+  onPushTaskToDailyTasks: PropTypes.func.isRequired
 };
 
 export default DragNDropTasks;

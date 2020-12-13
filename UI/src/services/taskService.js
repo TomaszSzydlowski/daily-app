@@ -22,3 +22,21 @@ export async function getBackLog() {
     handleError(error);
   }
 }
+
+export async function updateTasksPriority(tasks) {
+  try {
+    const response = await http.put(baseUrl + 'priority/', tasks);
+    return handleResponse(response);
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function update(task) {
+  try {
+    const response = await http.put(baseUrl, task);
+    return handleResponse(response);
+  } catch (error) {
+    handleError(error);
+  }
+}

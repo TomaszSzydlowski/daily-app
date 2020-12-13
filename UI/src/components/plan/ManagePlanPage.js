@@ -4,23 +4,25 @@ import DragNDropTasks from './DragNDropTasks';
 import DataPicker from './PlanMainDataPicker';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadTasks } from '../../redux/actions/tasksActions';
-import { loadBackLog } from '../../redux/actions/backLogActions';
+import { loadTasks, updateTasksPriority, pushTaskToDailyTasks } from '../../redux/actions/tasksActions';
+import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
 
 const currentDate = new Date().toISOString().slice(0, 10);
-// const data = [
-//   { title: 'group 1', items: [ { id: '1', content: 'c1' } ] },
-//   { title: 'group 2', items: [ { id: '2', content: 'c2' }, { id: '3', content: 'c3' } ] }
-// ];
-
-export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...props }) {
+export function ManagePlanPage({
+  loadTasks,
+  loadBackLog,
+  dragNDropTasksData,
+  updateTasksPriority,
+  updateBackLogsPriority,
+  removeTaskFromBackLogs,
+  pushTaskToDailyTasks,
+  ...props
+}) {
   const [ datePlan, setDatePlan ] = useState(currentDate);
 
   useEffect(
     () => {
-      console.log(datePlan);
-      console.log('o cos sie zmienilo');
       try {
         loadTasks(datePlan);
         if (isShowingBackLog()) {
@@ -48,7 +50,14 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
         <Spinner />
       ) : (
         <div className="App-header">
-          <DragNDropTasks data={dragNDropTasksData} isShowingBackLog={isShowingBackLog()} />
+          <DragNDropTasks
+            data={dragNDropTasksData}
+            onUpdateTasksPriority={updateTasksPriority}
+            onUpdateBackLogsPriority={updateBackLogsPriority}
+            onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
+            onPushTaskToDailyTasks={pushTaskToDailyTasks}
+            isShowingBackLog={isShowingBackLog()}
+          />
         </div>
       )}
     </div>
@@ -58,6 +67,10 @@ export function ManagePlanPage({ loadTasks, loadBackLog, dragNDropTasksData, ...
 ManagePlanPage.propTypes = {
   dragNDropTasksData: PropTypes.array.isRequired,
   loadTasks: PropTypes.func.isRequired,
+  updateTasksPriority: PropTypes.func.isRequired,
+  updateBackLogsPriority: PropTypes.func.isRequired,
+  removeTaskFromBackLogs: PropTypes.func.isRequired,
+  pushTaskToDailyTasks: PropTypes.func.isRequired,
   loadBackLog: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
@@ -71,7 +84,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   loadTasks,
-  loadBackLog
+  loadBackLog,
+  updateTasksPriority,
+  updateBackLogsPriority,
+  removeTaskFromBackLogs,
+  pushTaskToDailyTasks
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManagePlanPage);
