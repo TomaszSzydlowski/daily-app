@@ -156,7 +156,7 @@ function DragNDropTasks({
               </div>
               <div className="item-content">{item.content}</div>
               <div className="item-date-container">
-                <div className="item-date">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</div>
+                <span className="item-date">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</span>
               </div>
             </div>
           </div>
