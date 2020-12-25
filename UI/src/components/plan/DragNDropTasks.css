@@ -27,9 +27,11 @@
   display: flex;
   align-items: center;
   border-bottom: solid 1px #e1e1e1;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   min-height: 50px;
+  padding-right: .8em;
+  padding-left: .8em;
 }
 
 .dnd-item:not(:last-of-type) {
