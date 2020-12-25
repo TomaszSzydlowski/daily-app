@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 function DragNDropTasks({
   data,
@@ -149,7 +150,15 @@ function DragNDropTasks({
             key={item.id}
             className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
           >
-            {item.content}
+            <div className="item-container">
+              <div className="item-checkbox">
+                <CheckCircleOutlineIcon />
+              </div>
+              <div className="item-content">{item.content}</div>
+              <div className="item-date-container">
+                <div className="item-date">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</div>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -157,7 +166,7 @@ function DragNDropTasks({
   }
 
   return (
-    <div className="drag-n-drop">
+    <div>
       {list.map(
         (grp, grpI) =>
           grp.title !== 'BackLog'

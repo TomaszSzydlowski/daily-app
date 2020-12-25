@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { loadTasks, updateTasksPriority, pushTaskToDailyTasks } from '../../redux/actions/tasksActions';
 import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
+import './ManagePlanPage.css';
 
 const currentDate = new Date().toISOString().slice(0, 10);
 export function ManagePlanPage({
@@ -50,14 +51,22 @@ export function ManagePlanPage({
         <Spinner />
       ) : (
         <div className="App-header">
-          <DragNDropTasks
-            data={dragNDropTasksData}
-            onUpdateTasksPriority={updateTasksPriority}
-            onUpdateBackLogsPriority={updateBackLogsPriority}
-            onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
-            onPushTaskToDailyTasks={pushTaskToDailyTasks}
-            isShowingBackLog={isShowingBackLog()}
-          />
+          <div className="drag-n-drop">
+            <DragNDropTasks
+              data={dragNDropTasksData}
+              onUpdateTasksPriority={updateTasksPriority}
+              onUpdateBackLogsPriority={updateBackLogsPriority}
+              onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
+              onPushTaskToDailyTasks={pushTaskToDailyTasks}
+              isShowingBackLog={isShowingBackLog()}
+            />
+            <div className="dnd-group">
+              <div className="dnd-item">
+                <div>PLUS</div>
+                <div>Add new task</div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

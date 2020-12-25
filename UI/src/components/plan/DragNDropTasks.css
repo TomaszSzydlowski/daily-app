@@ -1,5 +1,5 @@
 .App-header {
-  background-color: rgb(40, 40, 46);
+  background-color: white;
   min-height: 100vh;
   display: flex;
   font-size: calc(10px+2vmin);
@@ -17,20 +17,19 @@
 }
 
 .dnd-group {
-  border-radius: 5px;
-  background-color: rgb(89, 94, 102);
+  background-color: white;
   padding: .5rem;
 }
 
 .dnd-item {
-  min-height: 75px;
-  border-radius: 5px;
   background-color: white;
   color: rgb(40, 40, 46);
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-weight: bold;
+  border-bottom: solid 1px #e1e1e1;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  min-height: 50px;
 }
 
 .dnd-item:not(:last-of-type) {
@@ -43,6 +42,7 @@
 }
 
 .group-title {
+  color: black;
   text-align: left;
   margin-bottom: .5rem;
   font-size: 1.5rem;
@@ -50,4 +50,43 @@
 
 .current {
   background-color: rgb(40, 40, 46);
+}
+
+.item-container {
+  position: relative;
+  width: 100%;
+  min-height: inherit;
+}
+
+.item-checkbox {
+  margin-top: 10px;
+  display: inline-block;
+  min-height: inherit;
+  color: #b1a4a4;
+}
+
+.item-content {
+  margin-top: 10px;
+  margin-left: 1.5rem;
+  display: inline-block;
+  min-height: inherit;
+}
+
+.item-content-container {
+  display: flex;
+  min-height: inherit;
+}
+
+.item-date-container {
+  float: right;
+  color: #b1a4a4;
+  font-size: 0.8rem;
+  display: flex;
+  min-height: inherit;
+}
+
+.item-date {
+  display: inline-block;
+  align-self: flex-end;
+  padding-bottom: 5px;
 }
