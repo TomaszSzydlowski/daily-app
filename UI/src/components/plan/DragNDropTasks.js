@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
-import { BsCircle } from 'react-icons/bs';
+import { BsCircle, BsTrash } from 'react-icons/bs';
+import { FaRegCalendarCheck } from 'react-icons/fa';
+import { FiEdit2 } from 'react-icons/fi';
 
 function DragNDropTasks({
   data,
@@ -162,8 +164,19 @@ function DragNDropTasks({
                 </div>
               </div>
               <div className={item.isDone ? 'item-content item-is-done' : 'item-content'}>{item.content}</div>
-              <div className="item-date-container">
-                <span className="item-date">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</span>
+              <div className="item-menu-container">
+                <div className="item-menu item-height-half">
+                  <div className="menu-icon-box">
+                    <FiEdit2 />
+                  </div>
+                  <div className="menu-icon-box">
+                    <FaRegCalendarCheck />
+                  </div>
+                  <div className="menu-icon-box">
+                    <BsTrash />
+                  </div>
+                </div>
+                <div className="item-date item-height-half">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</div>
               </div>
             </div>
           </div>

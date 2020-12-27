@@ -23,12 +23,21 @@
   margin-left: 2.5rem;
   margin-right: 2.5rem;
   min-height: 50px;
+  height: 50px;
   padding-right: .8em;
   padding-left: .8em;
 }
 
 .dnd-item:hover {
   background-color: #f2f2f2;
+}
+
+.dnd-item:hover > .item-container > .item-menu-container > .item-menu > .menu-icon-box {
+  color: #605a5a;
+}
+
+.dnd-item:hover > .item-container > .item-menu-container > .item-menu > .menu-icon-box:hover {
+  color: black;
 }
 
 .dnd-item:not(:last-of-type) {
@@ -44,7 +53,6 @@
 
 .current {
   border: dashed 0.5px #b1a4a4;
-  background-color: #e1e1e1;
 }
 
 .item-container {
@@ -70,18 +78,21 @@
   font-size: 1.2rem;
 }
 
-.item-date-container {
+.item-menu-container {
   float: right;
   font-size: 0.9rem;
-  display: flex;
+  display: block;
   min-height: inherit;
+  height: inherit;
+  width: 78px;
 }
 
 .item-date {
   color: #b1a4a4;
   display: inline-block;
-  align-self: flex-end;
-  padding-bottom: 5px;
+  /* border: 0.5px dashed black; */
+  width: inherit;
+  text-align: center;
 }
 
 .item-checkbox-container {
@@ -93,4 +104,21 @@
 .item-is-done {
   color: #b1a4a4;
   text-decoration: line-through;
+}
+
+.item-menu {
+  /* border: 0.5px dashed black; */
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.item-height-half {
+  height: 50%;
+}
+
+.menu-icon-box {
+  color: white;
+  width: 26px;
+  text-align: center;
 }
