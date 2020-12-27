@@ -176,7 +176,7 @@ function DragNDropTasks({
     <div>
       {list.map(
         (grp, grpI) =>
-          grp.title !== 'BackLog'
+          grp.title !== 'Backlog'
             ? renderDnDGroup(grp, grpI)
             : isShowingBackLog && grp.items.length > 0 ? renderDnDGroup(grp, grpI) : null
       )}

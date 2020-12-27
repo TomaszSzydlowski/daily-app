@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 150
+    width: '11rem'
   }
 }));
 
@@ -35,7 +35,7 @@ const DataPicker = ({ id, value, onChange }) => {
 };
 
 DataPicker.propTypes = {
-  id:PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 };

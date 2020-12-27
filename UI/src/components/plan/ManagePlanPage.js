@@ -9,6 +9,7 @@ import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../
 import Spinner from '../common/Spinner';
 import './ManagePlanPage.css';
 import { VscAdd } from 'react-icons/vsc';
+import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa';
 
 const currentDate = new Date().toISOString().slice(0, 10);
 export function ManagePlanPage({
@@ -47,7 +48,15 @@ export function ManagePlanPage({
 
   return (
     <div>
-      <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChange} />
+      <div id="plan-menu-header">
+        <div className="arrow-container">
+          <FaChevronCircleLeft style={{ width: 'inherit', height: 'inherit', color: 'inherit' }} />
+        </div>
+        <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChange} />
+        <div className="arrow-container">
+          <FaChevronCircleRight style={{ width: 'inherit', height: 'inherit', color: 'inherit' }} />
+        </div>
+      </div>
       {props.loading ? (
         <Spinner />
       ) : (
