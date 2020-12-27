@@ -46,15 +46,29 @@ export function ManagePlanPage({
     return currentDate === datePlan;
   }
 
+  function addDays(days) {
+    setDatePlan((oldDatePlan) => {
+      let result = new Date(oldDatePlan);
+      result.setDate(result.getDate() + days);
+      return result.toISOString().slice(0, 10);
+    });
+  }
+
   return (
     <div>
       <div id="plan-menu-header">
         <div className="arrow-container">
-          <FiChevronLeft style={{ width: 'inherit', height: 'inherit', color: 'inherit' }} />
+          <FiChevronLeft
+            style={{ width: 'inherit', height: 'inherit', color: 'inherit' }}
+            onClick={() => addDays(-1)}
+          />
         </div>
         <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChange} />
         <div className="arrow-container">
-          <FiChevronRight style={{ width: 'inherit', height: 'inherit', color: 'inherit' }} />
+          <FiChevronRight
+            style={{ width: 'inherit', height: 'inherit', color: 'inherit' }}
+            onClick={() => addDays(1)}
+          />
         </div>
       </div>
       {props.loading ? (
