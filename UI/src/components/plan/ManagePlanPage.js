@@ -51,7 +51,7 @@ export function ManagePlanPage({
       {props.loading ? (
         <Spinner />
       ) : (
-        <div className="App-header">
+        <div>
           <div className="drag-n-drop">
             <DragNDropTasks
               data={dragNDropTasksData}
