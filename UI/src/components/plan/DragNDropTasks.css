@@ -39,7 +39,8 @@
 }
 
 .current {
-  background-color: rgb(40, 40, 46);
+  border: dashed 0.5px #b1a4a4;
+  background-color: #e1e1e1;
 }
 
 .item-container {

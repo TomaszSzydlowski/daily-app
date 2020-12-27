@@ -10,14 +10,17 @@
 }
 
 .arrow-container {
-  color: #b1a4a4;
-  width: 2.5rem;
-  height: 2.5rem;
+  color: black;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: #e1e1e1;
+  border-radius: 50%;
+  display: inline-block;
   margin: 0.8rem;
 }
 
 .arrow-container:hover {
-  color: #837e7e;
+  background-color: #b3b3ae;
 }
 
 .add-new-container {
