@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import AddIcon from '@material-ui/icons/Add';
 
 function DragNDropTasks({
   data,
@@ -151,10 +153,12 @@ function DragNDropTasks({
             className={dragging ? getStyles({ grpI, itemI }) : 'dnd-item'}
           >
             <div className="item-container">
-              <div className="item-checkbox">
-                <CheckCircleOutlineIcon />
+              <div className="item-checkbox-container">
+                <div className="item-checkbox">
+                  {item.isDone ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
+                </div>
               </div>
-              <div className="item-content">{item.content}</div>
+              <div className={item.isDone ? 'item-content item-is-done' : 'item-content'}>{item.content}</div>
               <div className="item-date-container">
                 <span className="item-date">{new Date(item.toDoDate).toLocaleDateString('en-GB')}</span>
               </div>

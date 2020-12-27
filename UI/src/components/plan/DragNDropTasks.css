@@ -64,11 +64,11 @@
   display: inline-block;
   min-height: inherit;
   color: #b1a4a4;
-  line-height: 50px;
+  line-height: 45px;
 }
 
 .item-content {
-  margin-left: 1.5rem;
+  margin-left: 1.3rem;
   display: inline-block;
   min-height: inherit;
   line-height: 50px;
@@ -92,4 +92,16 @@
   display: inline-block;
   align-self: flex-end;
   padding-bottom: 5px;
+}
+
+.item-checkbox-container {
+  float: left;
+  color: #b1a4a4;
+  display: flex;
+  min-height: inherit;
+}
+
+.item-is-done {
+  color: #b1a4a4;
+  text-decoration: line-through;
 }
