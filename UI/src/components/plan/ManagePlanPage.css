@@ -21,6 +21,7 @@
 
 .arrow-container:hover {
   background-color: #b3b3ae;
+  transition: 0.3s;
 }
 
 .add-new-container {
@@ -36,11 +37,26 @@
   float: left;
   display: flex;
   min-height: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-new-container:hover > .item-add-new-container > .item-add-new-icon {
+  height: 2.2rem;
+  width: 2.2rem;
+  border-radius: 50%;
+  margin-left: 0.2rem;
+  margin-left: -0.3rem;
+}
+
+.add-new-container:hover {
+  cursor: pointer;
 }
 
 .item-add-new-icon {
   color: #b1a4a4;
   display: inline-block;
-  min-height: inherit;
-  line-height: 45px;
+  width: 1.8rem;
+  height: 1.8rem;
+  transition: 0.3s;
 }

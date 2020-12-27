@@ -73,7 +73,7 @@ export function ManagePlanPage({
             <div className="add-new-container">
               <div className="item-add-new-container">
                 <div className="item-add-new-icon">
-                  <VscAdd style={{ width: '1.8rem', height: '1.8rem' }} />
+                  <VscAdd style={{ width: 'inherit', height: 'inherit' }} />
                 </div>
               </div>
               <div className="item-content">Add new</div>
