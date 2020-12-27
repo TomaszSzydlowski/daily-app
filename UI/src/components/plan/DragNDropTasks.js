@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import AddIcon from '@material-ui/icons/Add';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { BsCircle } from 'react-icons/bs';
 
 function DragNDropTasks({
   data,
@@ -155,7 +154,11 @@ function DragNDropTasks({
             <div className="item-container">
               <div className="item-checkbox-container">
                 <div className="item-checkbox">
-                  {item.isDone ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
+                  {item.isDone ? (
+                    <AiOutlineCheckCircle style={{ width: '1.8rem', height: '1.8rem', marginLeft: '-2px' }} />
+                  ) : (
+                    <BsCircle style={{ width: '1.5rem', height: '1.5rem' }} />
+                  )}
                 </div>
               </div>
               <div className={item.isDone ? 'item-content item-is-done' : 'item-content'}>{item.content}</div>

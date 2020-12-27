@@ -17,6 +17,7 @@
 }
 
 .dnd-group {
+  margin-top: 1.5rem;
   background-color: white;
   padding: .5rem;
 }
@@ -27,8 +28,8 @@
   display: flex;
   align-items: center;
   border-bottom: solid 1px #e1e1e1;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
   min-height: 50px;
   padding-right: .8em;
   padding-left: .8em;
@@ -46,8 +47,8 @@
 .group-title {
   color: black;
   text-align: left;
-  margin-bottom: .5rem;
-  font-size: 1.5rem;
+  margin-bottom: 1.0rem;
+  font-size: 1.4rem;
 }
 
 .current {
@@ -61,13 +62,15 @@
 }
 
 .item-checkbox {
+  color: #b1a4a4;
   display: inline-block;
   min-height: inherit;
-  color: #b1a4a4;
   line-height: 45px;
+  width: 1.8rem;
 }
 
 .item-content {
+  color: rgb(40, 40, 46);
   margin-left: 1.3rem;
   display: inline-block;
   min-height: inherit;
@@ -75,20 +78,15 @@
   font-size: 1.2rem;
 }
 
-.item-content-container {
-  display: flex;
-  min-height: inherit;
-}
-
 .item-date-container {
   float: right;
-  color: #b1a4a4;
   font-size: 0.9rem;
   display: flex;
   min-height: inherit;
 }
 
 .item-date {
+  color: #b1a4a4;
   display: inline-block;
   align-self: flex-end;
   padding-bottom: 5px;
@@ -96,7 +94,6 @@
 
 .item-checkbox-container {
   float: left;
-  color: #b1a4a4;
   display: flex;
   min-height: inherit;
 }

@@ -8,6 +8,7 @@ import { loadTasks, updateTasksPriority, pushTaskToDailyTasks } from '../../redu
 import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
 import './ManagePlanPage.css';
+import { VscAdd } from 'react-icons/vsc';
 
 const currentDate = new Date().toISOString().slice(0, 10);
 export function ManagePlanPage({
@@ -60,11 +61,13 @@ export function ManagePlanPage({
               onPushTaskToDailyTasks={pushTaskToDailyTasks}
               isShowingBackLog={isShowingBackLog()}
             />
-            <div className="dnd-group">
-              <div className="dnd-item">
-                <div>PLUS</div>
-                <div>Add new task</div>
+            <div className="add-new-container">
+              <div className="item-add-new-container">
+                <div className="item-add-new-icon">
+                  <VscAdd style={{ width: '1.8rem', height: '1.8rem' }} />
+                </div>
               </div>
+              <div className="item-content">Add new</div>
             </div>
           </div>
         </div>
@@ -86,7 +89,7 @@ ManagePlanPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    dragNDropTasksData: [ { title: 'BackLog', items: state.backLog }, { title: 'Dzis', items: state.tasks } ],
+    dragNDropTasksData: [ { title: 'Backlog', items: state.backLog }, { title: 'Today', items: state.tasks } ],
     loading: state.apiCallsInProgress > 0
   };
 }

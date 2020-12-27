@@ -1,0 +1,21 @@
+.add-new-container {
+  display: flex;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  min-height: 50px;
+  padding-right: 1.3em;
+  padding-left: 1.3em;
+}
+
+.item-add-new-container {
+  float: left;
+  display: flex;
+  min-height: inherit;
+}
+
+.item-add-new-icon {
+  color: #b1a4a4;
+  display: inline-block;
+  min-height: inherit;
+  line-height: 45px;
+}
