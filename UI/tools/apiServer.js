@@ -93,6 +93,11 @@ server.post('/api/auth/register/', (req, res) => {
   }
 });
 
+server.put('/tasks/', (req, res) => {
+  res.status(200).jsonp(req.body);
+  res.end();
+});
+
 // Use default router
 server.use(router);
 

@@ -6,6 +6,14 @@ export function loadTasksSuccess(tasks) {
   return { type: types.LOAD_TASKS_SUCCESS, tasks };
 }
 
+export function createTaskOptimistic(task) {
+  return { type: types.CREATE_TASK_OPTIMISTIC, task };
+}
+
+export function updateTaskOptimistic(task) {
+  return { type: types.UPDATE_TASK_OPTIMISTIC, task };
+}
+
 export function updateTasksPriorityOptimistic(tasksPriority) {
   return { type: types.UPDATE_TASKS_PRIORITY_OPTIMISTIC, tasksPriority };
 }
@@ -22,6 +30,17 @@ export function loadTasks(taskDate) {
       dispatch(loadTasksSuccess(tasksResponse));
     } catch (error) {
       dispatch(apiCallError(error));
+      throw error;
+    }
+  };
+}
+
+export function saveTask(task) {
+  return async function(dispatch) {
+    try {
+      const taskResponse = await taskApi.saveTask(task);
+      task.id ? dispatch(updateTaskOptimistic(taskResponse)) : dispatch(createTaskOptimistic(taskResponse));
+    } catch (error) {
       throw error;
     }
   };

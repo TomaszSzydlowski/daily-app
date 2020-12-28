@@ -23,6 +23,17 @@ export async function getBackLog() {
   }
 }
 
+export async function saveTask(task) {
+  try {
+    const taskToSave = { ...task };
+    taskToSave.updatedAt = new Date().toJSON();
+    const response = task.id ? await http.put(baseUrl, taskToSave) : await http.post(baseUrl, taskToSave);
+    return handleResponse(response);
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 export async function updateTasksPriority(tasks) {
   try {
     const response = await http.put(baseUrl + 'priority/', tasks);

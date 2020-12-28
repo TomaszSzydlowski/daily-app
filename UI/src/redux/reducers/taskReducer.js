@@ -6,6 +6,8 @@ export default function taskReducer(state = initialState.tasks, action) {
   switch (action.type) {
     case types.LOAD_TASKS_SUCCESS:
       return action.tasks;
+    case types.UPDATE_TASK_OPTIMISTIC:
+      return state.map((task) => (task.id === action.task.id ? action.task : task));
     case types.UPDATE_TASKS_PRIORITY_OPTIMISTIC:
       return getTaskToUpdateByPriority(state, action.tasksPriority);
     case types.PUSH_TASK_TO_DAILY_TASKS_OPTIMISTIC:

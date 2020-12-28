@@ -4,7 +4,7 @@ import DragNDropTasks from './DragNDropTasks';
 import DataPicker from './PlanMainDataPicker';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadTasks, updateTasksPriority, pushTaskToDailyTasks } from '../../redux/actions/tasksActions';
+import { loadTasks, updateTasksPriority, pushTaskToDailyTasks, saveTask } from '../../redux/actions/tasksActions';
 import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
 import './ManagePlanPage.css';
@@ -20,6 +20,7 @@ export function ManagePlanPage({
   updateBackLogsPriority,
   removeTaskFromBackLogs,
   pushTaskToDailyTasks,
+  saveTask,
   ...props
 }) {
   const [ datePlan, setDatePlan ] = useState(currentDate);
@@ -83,6 +84,7 @@ export function ManagePlanPage({
               onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
               onPushTaskToDailyTasks={pushTaskToDailyTasks}
               isShowingBackLog={isShowingBackLog()}
+              onSaveTask={saveTask}
             />
             <div className="add-new-container">
               <div className="item-add-new-container">
@@ -107,7 +109,8 @@ ManagePlanPage.propTypes = {
   removeTaskFromBackLogs: PropTypes.func.isRequired,
   pushTaskToDailyTasks: PropTypes.func.isRequired,
   loadBackLog: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  saveTask: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -123,7 +126,8 @@ const mapDispatchToProps = {
   updateTasksPriority,
   updateBackLogsPriority,
   removeTaskFromBackLogs,
-  pushTaskToDailyTasks
+  pushTaskToDailyTasks,
+  saveTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManagePlanPage);

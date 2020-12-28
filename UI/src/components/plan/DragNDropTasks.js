@@ -11,7 +11,8 @@ function DragNDropTasks({
   onUpdateTasksPriority,
   onUpdateBackLogsPriority,
   onRemoveTaskFromBackLogs,
-  onPushTaskToDailyTasks
+  onPushTaskToDailyTasks,
+  onSaveTask
 }) {
   const [ list, setList ] = useState(data);
   const [ dragging, setDragging ] = useState(false);
@@ -37,6 +38,13 @@ function DragNDropTasks({
 
     return priorityChanging && !dragging && isDraggingTargetDiffrent;
   };
+
+  useEffect(
+    () => {
+      setList(data);
+    },
+    [ data ]
+  );
 
   useEffect(
     () => {
@@ -129,7 +137,22 @@ function DragNDropTasks({
     return 'dnd-item';
   };
 
-  function renderDnDGroup(grp, grpI) {
+  const handleClickOnTaskCheckbox = async (grpI, itemI) => {
+    let newList = JSON.parse(JSON.stringify(list));
+    let oldList = JSON.parse(JSON.stringify(list));
+    let taskToUpdate = { ...list[grpI].items[itemI] };
+    taskToUpdate.isDone = !taskToUpdate.isDone;
+    newList[grpI].items[itemI].isDone = taskToUpdate.isDone;
+
+    try {
+      setList(newList);
+      await onSaveTask(taskToUpdate);
+    } catch (error) {
+      setList(oldList);
+    }
+  };
+
+  function renderDnDGroup(grp, grpI, isBackLog) {
     return (
       <div
         key={grp.title}
@@ -155,7 +178,12 @@ function DragNDropTasks({
           >
             <div className="item-container">
               <div className="item-checkbox-container">
-                <div className="item-checkbox">
+                <div
+                  className="item-checkbox"
+                  onClick={() => {
+                    handleClickOnTaskCheckbox(grpI, itemI, isBackLog);
+                  }}
+                >
                   {item.isDone ? (
                     <AiOutlineCheckCircle style={{ width: '1.8rem', height: '1.8rem', marginLeft: '-2px' }} />
                   ) : (
@@ -190,8 +218,8 @@ function DragNDropTasks({
       {list.map(
         (grp, grpI) =>
           grp.title !== 'Backlog'
-            ? renderDnDGroup(grp, grpI)
-            : isShowingBackLog && grp.items.length > 0 ? renderDnDGroup(grp, grpI) : null
+            ? renderDnDGroup(grp, grpI, false)
+            : isShowingBackLog && grp.items.length > 0 ? renderDnDGroup(grp, grpI, true) : null
       )}
     </div>
   );
@@ -203,7 +231,8 @@ DragNDropTasks.propTypes = {
   onUpdateTasksPriority: PropTypes.func.isRequired,
   onUpdateBackLogsPriority: PropTypes.func.isRequired,
   onRemoveTaskFromBackLogs: PropTypes.func.isRequired,
-  onPushTaskToDailyTasks: PropTypes.func.isRequired
+  onPushTaskToDailyTasks: PropTypes.func.isRequired,
+  onSaveTask: PropTypes.func.isRequired
 };
 
 export default DragNDropTasks;
