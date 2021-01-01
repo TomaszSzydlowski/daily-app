@@ -8,8 +8,8 @@ import { loadTasks, updateTasksPriority, pushTaskToDailyTasks, saveTask } from '
 import { loadBackLog, updateBackLogsPriority, removeTaskFromBackLogs } from '../../redux/actions/backLogActions';
 import Spinner from '../common/Spinner';
 import './ManagePlanPage.css';
-import { VscAdd } from 'react-icons/vsc';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import AddForm from './AddForm';
 
 const currentDate = new Date().toISOString().slice(0, 10);
 export function ManagePlanPage({
@@ -75,26 +75,17 @@ export function ManagePlanPage({
       {props.loading ? (
         <Spinner />
       ) : (
-        <div>
-          <div className="drag-n-drop">
-            <DragNDropTasks
-              data={dragNDropTasksData}
-              onUpdateTasksPriority={updateTasksPriority}
-              onUpdateBackLogsPriority={updateBackLogsPriority}
-              onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
-              onPushTaskToDailyTasks={pushTaskToDailyTasks}
-              isShowingBackLog={isShowingBackLog()}
-              onSaveTask={saveTask}
-            />
-            <div className="add-new-container">
-              <div className="item-add-new-container">
-                <div className="item-add-new-icon">
-                  <VscAdd style={{ width: 'inherit', height: 'inherit' }} />
-                </div>
-              </div>
-              <div className="item-content">Add new</div>
-            </div>
-          </div>
+        <div className="drag-n-drop">
+          <DragNDropTasks
+            data={dragNDropTasksData}
+            onUpdateTasksPriority={updateTasksPriority}
+            onUpdateBackLogsPriority={updateBackLogsPriority}
+            onRemoveTaskFromBackLogs={removeTaskFromBackLogs}
+            onPushTaskToDailyTasks={pushTaskToDailyTasks}
+            isShowingBackLog={isShowingBackLog()}
+            onSaveTask={saveTask}
+          />
+          <AddForm />
         </div>
       )}
     </div>

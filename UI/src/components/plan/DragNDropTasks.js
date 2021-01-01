@@ -5,7 +5,7 @@ import { BsCircle, BsTrash } from 'react-icons/bs';
 import { FaRegCalendarCheck } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 
-function DragNDropTasks({
+export default function DragNDropTasks({
   data,
   isShowingBackLog,
   onUpdateTasksPriority,
@@ -234,5 +234,3 @@ DragNDropTasks.propTypes = {
   onPushTaskToDailyTasks: PropTypes.func.isRequired,
   onSaveTask: PropTypes.func.isRequired
 };
-
-export default DragNDropTasks;
