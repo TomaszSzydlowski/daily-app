@@ -10,6 +10,7 @@ import Spinner from '../common/Spinner';
 import './ManagePlanPage.css';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import AddForm from './AddForm';
+import { newTask } from '../../../tools/mockData';
 
 const currentDate = new Date().toISOString().slice(0, 10);
 export function ManagePlanPage({
@@ -23,7 +24,10 @@ export function ManagePlanPage({
   saveTask,
   ...props
 }) {
+  const [ task, setTask ] = useState(newTask);
   const [ datePlan, setDatePlan ] = useState(currentDate);
+  const [ saving, setSaving ] = useState(false);
+  const [ errors, setErrors ] = useState({});
 
   useEffect(
     () => {
@@ -39,7 +43,40 @@ export function ManagePlanPage({
     [ datePlan ]
   );
 
-  function handleChange(event) {
+  async function handleNewTaskSave(event) {
+    event.preventDefault();
+    if (!formIsValid()) return;
+    setSaving(true);
+
+    try {
+      await saveTask(task);
+    } catch (error) {
+      setSaving(false);
+    }
+  }
+
+  function formIsValid() {
+    const { content, toDoDate } = task;
+    const errors = {};
+
+    if (!content) errors.content = 'Content is required.';
+    if (!toDoDate) errors.toDoDate = 'Date is required.';
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
+
+  function handleChangeNewTask(event) {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log(value);
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value
+    }));
+  }
+
+  function handleChangeDatePlan(event) {
     setDatePlan(event.target.value);
   }
 
@@ -55,6 +92,13 @@ export function ManagePlanPage({
     });
   }
 
+  useEffect(
+    () => {
+      console.log(task);
+    },
+    [ task ]
+  );
+
   return (
     <div>
       <div id="plan-menu-header">
@@ -64,7 +108,7 @@ export function ManagePlanPage({
             onClick={() => addDays(-1)}
           />
         </div>
-        <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChange} />
+        <DataPicker id="plan-main-data-picker" value={datePlan} onChange={handleChangeDatePlan} />
         <div className="arrow-container">
           <FiChevronRight
             style={{ width: 'inherit', height: 'inherit', color: 'inherit' }}
@@ -85,7 +129,7 @@ export function ManagePlanPage({
             isShowingBackLog={isShowingBackLog()}
             onSaveTask={saveTask}
           />
-          <AddForm />
+          <AddForm task={task} saving={saving} onChange={handleChangeNewTask} />
         </div>
       )}
     </div>

@@ -1,25 +1,40 @@
 .input-container {
-  height: 50px;
+  height: 30px;
   padding-left: 1.0rem;
   padding-right: 1.0rem;
 }
 
+.options-container {
+  padding-left: 1.0rem;
+  padding-right: 1.0rem;
+  height: 30px;
+}
+
 .date-container {
-  height: 50px;
-  margin: auto;
+  width: 135px;
 }
 
 .add-mode-on-container {
   background-color: white;
   color: rgb(40, 40, 46);
-  margin-left: 3.0rem;
-  margin-right: 3.0rem;
-  min-height: 100px;
+
+  min-height: 78px;
   border-radius: 10px;
   border: solid 1px #e1e1e1;
-  padding: 0.5rem;
+  padding: 8px;
+}
+
+.add-mode-on-main-container {
+  margin-left: 3.0rem;
+  margin-right: 3.0rem;
 }
 
 .MuiInputBase-root {
   width: 100%;
+}
+
+.custom-btn {
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-right: 10px;
 }
